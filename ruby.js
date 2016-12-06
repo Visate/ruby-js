@@ -59,7 +59,7 @@ bot.on("message", msg => {
 bot.on("error", console.error);
 bot.on("warn", console.warn);
 
-bot.login(token);
+bot.login(config.bot.token);
 
 bot.reload = (command) => {
   return new Promise((resolve, reject) => {
