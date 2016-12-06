@@ -1,5 +1,5 @@
 // Introduce command
-var Config = require("../config.json");
+var config = require("../config.json");
 
 exports.help = {
   name: "introduce",
@@ -17,7 +17,7 @@ exports.config = {
 exports.run = (bot, msg, suffix) => {
   let msgArray = [];
   msgArray.push(`Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^`);
-  msgArray.push(`If you want to see what I can do, use \`${Config.prefix}\``);
+  msgArray.push(`If you want to see what I can do, use \`${config.settings.prefix}help\``);
   msgArray.push(`If you have any questions, feel free to ask my creator Visate :blush:`);
   msg.channel.sendMessage(msgArray);
 };

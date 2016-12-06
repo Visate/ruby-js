@@ -34,9 +34,10 @@ bot.on("ready", () => {
 bot.on("message", msg => {
   // tracking prefix used for later
   let uPrefix;
-  if (msg.content.startsWith(config.prefix)) uPrefix = config.prefix;
+  if (msg.content.startsWith(config.settings.prefix)) uPrefix = config.settings.prefix;
   else if (msg.content.startsWith("!")) uPrefix = "!";
   else return;
+
   // return conditions
   if (msg.author.id === bot.user.id) return;
   if (msg.author.bot) return;
@@ -53,6 +54,7 @@ bot.on("message", msg => {
     if (perms < cmd.config.permLevel) return;
     if ((!cmd.config.hasOwnProperty("alternateInvoke") || (cmd.config.hasOwnProperty("alternateInvoke") && !cmd.config.alternateInvoke)) && uPrefix === "!") return;
     cmd.run(bot, msg, suffix);
+    log(`Command run by ${msg.author.username} in ${msg.guild.name} (#${msg.channel.name}): ${msg.content}`);
   }
 });
 
@@ -100,13 +102,13 @@ bot.checkPerms = (msg) => {
 
   // returns a permissions level that gets sent to the command handler
   // largely done by comparisons with other roles
-  if (trialMod.position <= topRole.position) permlvl = 1;
-  if (mod.position <= topRole.position) permlvl = 2;
-  if (admin.position <= topRole.position) permlvl = 3;
-  if (superAdmin.position <= topRole.position) permlvl = 4;
-  if (trustedEmployee.position <= topRole.position) permlvl = 5;
-  if (ultimatePower.position <= topRole.position) permlvl = 6;
+  if (trialMod && trialMod.position <= topRole.position) permlvl = 1;
+  if (mod && mod.position <= topRole.position) permlvl = 2;
+  if (admin && admin.position <= topRole.position) permlvl = 3;
+  if (superAdmin && superAdmin.position <= topRole.position) permlvl = 4;
+  if (trustedEmployee && trustedEmployee.position <= topRole.position) permlvl = 5;
+  if (ultimatePower && ultimatePower.position <= topRole.position) permlvl = 6;
   if (member.id === guild.ownerID) permlvl = 7;
-  if (config.permissions.master.contains(member.id)) permlvl = 8;
+  if (config.permissions.master.includes(member.id)) permlvl = 8;
   return permlvl;
 };
