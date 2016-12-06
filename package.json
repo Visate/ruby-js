@@ -3,13 +3,13 @@
   "version": "2.0.0",
   "description": "A Discord bot created using discord.js",
   "main": "ruby.js",
-  "repository": "",
+  "repository": "bitbucket:Visate/ruby",
   "author": "Richard Gan <richardg887@me.com>",
   "license": "MIT",
-  "repository": "bitbucket:Visate/ruby",
   "dependencies": {
     "discord.js": "^10.0.1",
     "forever-monitor": "^1.7.1",
+    "moment": "^2.17.1",
     "node-opus": "^0.2.2"
   }
 }
