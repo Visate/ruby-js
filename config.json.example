@@ -1,0 +1,28 @@
+{
+  "bot": {
+    "token": "discord token here"
+  },
+
+  "settings": {
+    "prefix": "prefix here"
+  },
+
+  "permissions": {
+    "master": ["defines bypass permissions, can be one id", "or a list of them"]
+  },
+
+  "modes": {
+    "nyaabot": false,
+    "tablebot": false
+  },
+
+  "defaults": {
+    "volume": 20
+  },
+
+  "api_keys": {
+    "anilist_id": "anilist id",
+    "anilist_secret": "anilist secret",
+    "soundcloud_id": "soundcloud id"
+  }
+}

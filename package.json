@@ -1,26 +1,15 @@
 {
   "name": "ruby",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "A Discord bot created using discord.js",
   "main": "ruby.js",
   "repository": "",
   "author": "Richard Gan <richardg887@me.com>",
+  "license": "MIT",
+  "repository": "bitbucket:Visate/ruby",
   "dependencies": {
-    "async": "~0.2.8",
     "discord.js": "^10.0.1",
-    "express": "~3.2.4",
     "forever-monitor": "^1.7.1",
-    "googleapis": "^14.2.0",
-    "html-entities": "^1.2.0",
-    "mathjs": "^3.5.3",
-    "nani": "^1.2.0",
-    "node-opus": "^0.2.2",
-    "opusscript": "0.0.1",
-    "request": "^2.78.0",
-    "socket.io": "~0.9.14",
-    "to-title-case": "^1.0.0",
-    "xml2js": "^0.4.17",
-    "xregexp": "^3.1.1",
-    "ytdl-core": "^0.7.19"
+    "node-opus": "^0.2.2"
   }
 }
