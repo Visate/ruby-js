@@ -58,6 +58,7 @@ bot.on("message", msg => {
   else if (msg.content.startsWith("!")) uPrefix = "!";
   // checking for server mention
   else if (msg.content.includes("~") && msg.content.toLowerCase().includes("server")) {
+    if (msg.channel.name === "nyaa-log" || msg.channel.name === "nyaa" || msg.channel.name === "ruby-log") return;
     let end = msg.content.toLowerCase().indexOf("server");
     let start = msg.content.lastIndexOf("~", end) + 1;
     let query = msg.content.toLowerCase().substring(start, end).trim();
