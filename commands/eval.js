@@ -16,9 +16,8 @@ exports.config = {
 exports.run = (bot, msg, suffix) => {
   try {
     let evaled = eval(suffix);
-    if (typeof evaled !== "string") evaled = require('util').inspect(evaled);
-    msg.channel.sendMessage(`\`\`\`x1\n${bot.cleanText(evaled)}\n\`\`\``);
+    let result = msg.channel.sendCode("x1", bot.cleanText(evaled));
   } catch (err) {
-    msg.channel.sendMessage(`\`\`\`x1\nError: ${bot.cleanText(err)}\n\`\`\``);
+    msg.channel.sendCode("x1", `Error: ${bot.cleanText(err)}`);
   }
 };
