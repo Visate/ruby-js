@@ -6,7 +6,7 @@ exports.help = {
   extendedhelp: "Reloads the command file if it's been updated or modified."
 };
 
-exports.conf = {
+exports.config = {
   enabled: true,
   guildOnly: false,
   aliases: ["r"],

@@ -5,7 +5,7 @@ exports.help = {
   extendedhelp: "Ping/Pong command. I wonder what this does?"
 };
 
-exports.conf = {
+exports.config = {
   enabled: true,
   guildOnly: false,
   aliases: [],

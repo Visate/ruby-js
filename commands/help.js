@@ -43,7 +43,7 @@ exports.run = (bot, msg, suffix) => {
     msgArray.push(`= ${cmd.help.name} =`);
     if (cmd.help.usage) msgArray.push(`Usage:: ${cmd.help.name} ${cmd.help.usage}\n`);
     else msgArray.push(`Usage:: ${cmd.help.name}\n`);
-    msgArray.push(${cmd.help.extendedhelp});
+    msgArray.push(`${cmd.help.extendedhelp}`);
     msg.channel.sendCode("asciidoc", msgArray);
   }
 };
