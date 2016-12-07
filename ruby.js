@@ -82,7 +82,7 @@ bot.on("guildMemberAdd", member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   log(`${member.user.username} (${member.id}) joined ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(`Join: \`${member.user.username}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`Join: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
 
   if (config.modes.nyaabot) {
 
@@ -100,7 +100,7 @@ bot.on("guildMemberAdd", member => {
       guild.defaultChannel.sendMessage(msgArray);
 
       let pmArray = [];
-      pmArray.push(`Hi ${member.user.username}!`);
+      pmArray.push(`Hi ${bot.cleanText(member.user.username)}!`);
       pmArray.push(`Welcome to our server - We're excited for you to join us!~`);
       pmArray.push(`We have a few rules here to ensure everyone has a great time, so please go over them in the #read-the-rules channel :heart:`);
       pmArray.push(`If you have any questions, feel free to ask the moderation team. Also check out the #help channel as it has a lot of useful information.`);
@@ -117,7 +117,7 @@ bot.on("guildMemberRemove", member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   log(`${member.user.username} (${member.id}) left ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(`Leave: \`${member.user.username}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`Leave: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
 
   if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(◕︵◕) ${member} left the server. Bye~`);
 });
@@ -130,7 +130,7 @@ bot.on("userUpdate", (oldUser, newUser) => {
       if (member) {
         let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
         if (nyaaCh) {
-          nyaaCh.sendMessage(`Name Change - UserID: #${newUser.id}\n${oldUser.username} --> \`${newUser.username}\``);
+          nyaaCh.sendMessage(`Name Change - UserID: #${newUser.id}\n${bot.cleanText(oldUser.username)} --> \`${bot.cleanText(newUser.username)}\``);
           count++;
         }
       }
@@ -239,3 +239,9 @@ bot.checkPerms = (msg) => {
   if (config.permissions.master.includes(member.id)) permlvl = 8;
   return permlvl;
 };
+
+// function to fix text
+bot.cleanText = (text) => {
+  if (typeof text === "string") return text.replace(/`/g, "`\u200b").replace(/@/g, "@\u200b");
+  else return text;
+}
