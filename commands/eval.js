@@ -2,7 +2,7 @@
 exports.help = {
   name: "eval",
   usage: "<expression>",
-  description: "Runs arbitrary Javascript",
+  description: "Runs arbitrary Javascript.",
   extendedhelp: "Runs arbitrary Javascript code and returns the output. Expression may contain multiple lines, reserved for bot master."
 };
 
