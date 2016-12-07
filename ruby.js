@@ -1,5 +1,11 @@
+// Disable listener limit
+require('events').EventEmitter.prototype._maxListeners = 0;
+// Libraries and constants
 const Discord = require("discord.js");
-const bot = new Discord.Client({disableEveryone: true, fetchAllMembers: true});
+const bot = new Discord.Client({
+  disableEveryone: true,
+  fetchAllMembers: true,
+});
 const config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
@@ -9,30 +15,42 @@ const log = (msg) => {
 };
 
 // Command handler
+// Command and aliases collections
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 // Read all the command files
-fs.readdir("./commands/", (err, files) => {
-  if (err) console.error(err);
-  log(`Loading a total of ${files.length} commands...`);
-  files.forEach(f => {
-    let command = require(`./commands/${f}`);
-    log(`Loading command: ${command.help.name}`);
-    // Setting references to command collections
-    bot.commands.set(command.help.name, command);
-    command.config.aliases.forEach(alias => {
-      bot.aliases.set(alias, command.help.name);
+bot.readCmds = () => {
+  fs.readdir("./commands/", (err, files) => {
+    if (err) console.error(err);
+    log(`Loading a total of ${files.length} commands...`);
+    files.forEach(f => {
+      let command = require(`./commands/${f}`);
+      log(`Loading command: ${command.help.name}`);
+      // Setting references to command collections
+      bot.commands.set(command.help.name, command);
+      command.config.aliases.forEach(alias => {
+        bot.aliases.set(alias, command.help.name);
+      });
     });
   });
-});
+}
+
+bot.readCmds();
+
 
 bot.on("ready", () => {
   log(`Logged in as ${bot.user.username}!`);
   log(`Serving ${bot.users.size} users in ${bot.channels.size} channels of ${bot.guilds.size} servers.`);
+  log(`-----------------`);
+
+  bot.homeServer = bot.guilds.find(guild => guild.id === "235144885101920256");
+  bot.homeServer.fetchMember(config.permissions.master[0]).then(visate => {
+    bot.homeServer.defaultChannel.sendMessage(`${visate}\n${bot.user.username}: **READY**`);
+  });
 });
 
 bot.on("message", msg => {
-  // tracking prefix used for later
+  // tracking prefix used and checking if one was used at all
   let uPrefix;
   if (msg.content.startsWith(config.settings.prefix)) uPrefix = config.settings.prefix;
   else if (msg.content.startsWith("!")) uPrefix = "!";
@@ -58,11 +76,120 @@ bot.on("message", msg => {
   }
 });
 
+// Logging
+bot.on("guildMemberAdd", member => {
+  let guild = member.guild;
+  let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
+  log(`${member.user.username} (${member.id}) joined ${guild.name}`);
+
+  if (nyaaCh) nyaaCh.sendMessage(`Join: \`${member.user.username}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+
+  if (config.modes.nyaabot) {
+
+    if (guild.id === "130616817625333761") guild.defaultChannel.sendMessage(`Welcome to the server, ${member}!~ :heart:`);
+
+    else {
+      let guestRole = guild.roles.find(role => role.name === "Guest");
+      let rules = guild.channels.find(channel => channel.name === "read-the-rules");
+      let help = guild.channels.find(channel => channel.name === "help");
+
+      let msgArray = [];
+      msgArray.push(`${member} has just joined us! **Say hi ヾ(〃^∇^)ﾉ** :heart:`);
+      msgArray.push(`Please ${rules} and check out the ${help} channel if you're new to Discord.`);
+      msgArray.push(`If you have any questions feel free to ask the moderation team **(Do not ask NyaaKoneko, she has no time for you)**`);
+      guild.defaultChannel.sendMessage(msgArray);
+
+      let pmArray = [];
+      pmArray.push(`Hi ${member.user.username}!`);
+      pmArray.push(`Welcome to our server - We're excited for you to join us!~`);
+      pmArray.push(`We have a few rules here to ensure everyone has a great time, so please go over them in the #read-the-rules channel :heart:`);
+      pmArray.push(`If you have any questions, feel free to ask the moderation team. Also check out the #help channel as it has a lot of useful information.`);
+      pmArray.push(`Enjoy your stay :heart:`);
+      member.sendMessage(pmArray);
+
+      member.addRole(guestRole);
+    }
+  }
+});
+
+bot.on("guildMemberRemove", member => {
+  let guild = member.guild;
+  let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
+  log(`${member.user.username} (${member.id}) left ${guild.name}`);
+
+  if (nyaaCh) nyaaCh.sendMessage(`Leave: \`${member.user.username}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+
+  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(◕︵◕) ${member} left the server. Bye~`);
+});
+
+bot.on("userUpdate", (oldUser, newUser) => {
+  if (oldUser.username !== newUser.username) {
+    let count = 0;
+    bot.guilds.forEach(guild => {
+      let member = guild.members.find(member => member.id === newUser.id);
+      if (member) {
+        let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
+        if (nyaaCh) {
+          nyaaCh.sendMessage(`Name Change - UserID: #${newUser.id}\n${oldUser.username} --> \`${newUser.username}\``);
+          count++;
+        }
+      }
+    });
+
+    log(`UserID #${newUser.id} changed name from ${oldUser.username} to ${newUser.username}. Logged in ${count} servers.`);
+  }
+});
+
+bot.on("messageDelete", message => {
+  let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
+
+  let msgArray = [];
+  msgArray.push(`Message Delete: ${message.author.username} (${message.author.id}) in channel #${message.channel.name}\n`);
+  msgArray.push(message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__"));
+  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+});
+
+bot.on("messageDeleteBulk", messages => {
+  let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
+
+  let msgArray = [];
+  msgArray.push(`Message Bulk Delete:\n`);
+  messages.forEach(message => {
+    msgArray.push(`${message.author.username} (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
+  });
+  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+});
+
+bot.on("messageUpdate", (oldMessage, newMessage) => {
+  let nyaaLogCh = newMessage.guild.channels.find(channel => channel.name === "nyaa-log");
+
+  let msgArray = [];
+  msgArray.push(`Message Edit: ${newMessage.author.username} (${newMessage.author.id}) in channel #${newMessage.channel.name}\n`);
+  msgArray.push(`Before: ${oldMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
+  msgArray.push(`After: ${newMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
+  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+});
+
+bot.on("guildBanAdd", (guild, user) => {
+  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(◕︵◕) Oh no! ${user} just got banned!\nPlease try to avoid walking the same path as them :heart:`);
+});
+
+bot.on("guildBanRemove", (guild, user) => {
+  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(▰˘◡˘▰) Yay! ${user} just got unbanned!\nWelcome them back, and help them stay in line this time :heart:`);
+});
+
+// Forces an exit on disconnect
+bot.on("disconnect", () => {
+  log(`Disconnected from Discord!`);
+  process.exit(0);
+});
+
 bot.on("error", console.error);
 bot.on("warn", console.warn);
 
 bot.login(config.bot.token);
 
+// function to reload any commands
 bot.reload = (command) => {
   return new Promise((resolve, reject) => {
     try {
