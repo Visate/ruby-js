@@ -10,6 +10,9 @@ const config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
 
+// Lists
+const nyaaServers = require("./lists/nyaa_servers.js");
+
 const log = (msg) => {
   console.log(`[${moment().format("YYYY-MM-DD HH:mm:ss")}] ${msg}`);
 };
@@ -49,10 +52,18 @@ bot.on("ready", () => {
 });
 
 bot.on("message", msg => {
-  // tracking prefix used and checking if one was used at all
+  // tracking prefix used
   let uPrefix;
   if (msg.content.startsWith(config.settings.prefix)) uPrefix = config.settings.prefix;
   else if (msg.content.startsWith("!")) uPrefix = "!";
+  // checking for server mention
+  else if (msg.content.includes("~") && msg.content.toLowerCase().includes("server")) {
+    let end = msg.content.toLowerCase().indexOf("server");
+    let start = msg.content.lastIndexOf("~", end) + 1;
+    let query = msg.content.toLowerCase().substring(start, end).trim();
+    nyaaServers.linkServer(msg, query);
+    return;
+  }
   else return;
 
   // return conditions

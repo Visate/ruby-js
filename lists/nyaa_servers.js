@@ -1,4 +1,5 @@
 // Server invite lister
+var moment = require("moment");
 
 function findServer(query) {
   query = query.toLowerCase();
