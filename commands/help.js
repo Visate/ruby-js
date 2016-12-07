@@ -26,12 +26,12 @@ exports.run = (bot, msg, suffix) => {
       if (perms < cmd.config.permLevel) return;
       if (!cmd.config.enabled) return;
       if (cmd.config.guildOnly && !msg.guild) return;
-      let msg = `${cmd.help.name}`;
-      if (cmd.help.usage) msg += ` ${cmd.help.usage}`;
-      msg += `:: ${cmd.help.description}`;
-      msgArray.push(msg);
+      let message = `${cmd.help.name}`;
+      if (cmd.help.usage) message += ` ${cmd.help.usage}`;
+      message += `:: ${cmd.help.description}`;
+      msgArray.push(message);
     });
-    if (msg.guild) message.channel.sendMessage(`:mailbox_with_mail: ${msg.author}, the commands have been direct messaged to you! :heart:`);
+    if (msg.guild) msg.channel.sendMessage(`:mailbox_with_mail: ${msg.author}, the commands have been direct messaged to you! :heart:`);
     msg.author.sendCode("asciidoc", msgArray);
   }
 
