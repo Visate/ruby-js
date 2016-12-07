@@ -14,7 +14,7 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  let channel = message.channel;
-  message.delete();
+  let channel = msg.channel;
+  msg.delete();
   channel.sendMessage(suffix);
 };
