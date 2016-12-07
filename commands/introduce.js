@@ -21,8 +21,11 @@ exports.run = (bot, msg, suffix) => {
   msgArray.push(`If you have any questions, feel free to ask my creator Visate :blush:`);
   msgArray.push("```");
   msgArray.push(`Statistics:`);
-  msgArray.push(`★ Mem Usage    : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`)
-  msgArray.push(`★ Uptime       : ${bot.uptime}`);
+  msgArray.push(`★ Mem Usage    : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`);
+  let totalSec = bot.uptime / 1000;
+  let mins = ~~(totalSec / 60);
+  let secs = ~~(totalSec % 60);
+  msgArray.push(`★ Uptime       : ${mins}:${secs}`);
   msgArray.push(`★ Users        : ${bot.users.size}`);
   msgArray.push(`★ Servers      : ${bot.guilds.size}`);
   msgArray.push(`★ Channels     : ${bot.channels.size}`);
