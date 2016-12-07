@@ -69,9 +69,9 @@ bot.on("message", msg => {
 
   if (cmd) {
     if (!cmd.config.enabled) return;
-    if (guildOnly && !message.guild) return;
+    if (guildOnly && !msg.guild) return;
     if (perms < cmd.config.permLevel) return;
-    if ((!cmd.config.hasOwnProperty("alternateInvoke") || (cmd.config.hasOwnProperty("alternateInvoke") && !cmd.config.alternateInvoke)) && uPrefix === "!") return;
+    if (uPrefix === "!" && !cmd.config.alternateInvoke) return;
     cmd.run(bot, msg, suffix);
     log(`Command run by ${msg.author.username} in ${msg.guild.name} (#${msg.channel.name}): ${msg.content}`);
   }
