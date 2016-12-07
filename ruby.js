@@ -162,7 +162,7 @@ bot.on("messageDelete", message => {
 });
 
 bot.on("messageDeleteBulk", messages => {
-  let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
+  let nyaaLogCh = messages.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
   msgArray.push(`Message Bulk Delete:\n`);
