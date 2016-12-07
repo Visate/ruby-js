@@ -1,6 +1,4 @@
 // Eval command
-var config = require("../config.json");
-
 exports.help = {
   name: "eval",
   usage: "<expression>",
