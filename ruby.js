@@ -69,7 +69,7 @@ bot.on("message", msg => {
 
   if (cmd) {
     if (!cmd.config.enabled) return;
-    if (guildOnly && !msg.guild) return;
+    if (cmd.config.guildOnly && !msg.guild) return;
     if (perms < cmd.config.permLevel) return;
     if (uPrefix === "!" && !cmd.config.alternateInvoke) return;
     cmd.run(bot, msg, suffix);
