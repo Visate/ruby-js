@@ -934,7 +934,7 @@ var commands = {
 
         collector.on('message', message => {
           if (message.content.toLowerCase() === "yes") collector.stop('delete');
-          else if (message.content.toLowerCase() === "no") collection.stop('abort');
+          else if (message.content.toLowerCase() === "no") collector.stop('abort');
         });
 
         collector.on('end', (collection, reason) => {
