@@ -4,7 +4,8 @@
   },
 
   "settings": {
-    "prefix": "prefix here"
+    "prefix": "prefix here",
+    "maxPurge": 20
   },
 
   "permissions": {
@@ -12,17 +13,24 @@
   },
 
   "modes": {
-    "nyaabot": false,
-    "tablebot": false
+    "nyaabot": false
   },
 
   "defaults": {
     "volume": 20
   },
 
-  "api_keys": {
-    "anilist_id": "anilist id",
-    "anilist_secret": "anilist secret",
-    "soundcloud_id": "soundcloud id"
+  "apiKeys": {
+    "anilistId": "anilist id for anime/manga command",
+    "anilistSecret": "anilist secret",
+    "soundclouId": "soundcloud id for music"
+  },
+
+  "firebase": {
+    "apiKey": "firebase api key",
+    "authDomain": "firebase auth domain",
+    "databaseURL": "firebase database url",
+    "storageBucket": "firebase storage bucket",
+    "messagingSenderId": "firebase messaging sender id"
   }
 }
