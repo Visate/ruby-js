@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^10.0.1",
+    "firebase": "^3.6.3",
     "forever-monitor": "^1.7.1",
     "moment": "^2.17.1",
     "node-opus": "^0.2.2"
