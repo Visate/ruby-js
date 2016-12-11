@@ -9,13 +9,10 @@ const bot = new Discord.Client({
 const config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
+const log = require("./scripts/log.js");
 
 // Lists
 const nyaaServers = require("./lists/nyaa_servers.js");
-
-const log = (msg) => {
-  console.log(`[${moment().format("YYYY-MM-DD HH:mm:ss")}] ${msg}`);
-};
 
 // Command handler
 // Command and aliases collections
@@ -27,6 +24,7 @@ bot.readCmds = () => {
     if (err) console.error(err);
     log(`Loading a total of ${files.length} commands...`);
     files.forEach(f => {
+      if (f.substring(f.length - 3) !== ".js") return;
       let command = require(`./commands/${f}`);
       log(`Loading command: ${command.help.name}`);
       // Setting references to command collections
@@ -46,8 +44,8 @@ bot.on("ready", () => {
   log(`-----------------`);
 
   bot.homeServer = bot.guilds.find(guild => guild.id === "235144885101920256");
-  bot.homeServer.fetchMember(config.permissions.master[0]).then(visate => {
-    bot.homeServer.defaultChannel.sendMessage(`${visate}\n${bot.user.username}: **READY**`);
+  bot.homeServer.fetchMember(config.permissions.master[0]).then(master => {
+    bot.homeServer.defaultChannel.sendMessage(`${master}\n${bot.user.username}: **READY**`);
   });
 });
 
