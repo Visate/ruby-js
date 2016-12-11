@@ -1,5 +1,5 @@
 // Help command
-var config = require("../config.json");
+const config = require("../config.json");
 
 exports.help = {
   name: "help",
