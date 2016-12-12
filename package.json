@@ -7,7 +7,7 @@
   "author": "Richard Gan <richardg887@me.com>",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^10.0.1",
+    "discord.js": "github:hydrabolt/discord.js#indev",
     "firebase": "^3.6.3",
     "forever-monitor": "^1.7.1",
     "moment": "^2.17.1",
