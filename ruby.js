@@ -10,6 +10,8 @@ const config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
 const log = require("./scripts/log.js");
+bot.musicHandler = require("./scripts/musichandler.js");
+bot.database = require("./scripts/database.js");
 
 // Lists
 const nyaaServers = require("./lists/nyaa_servers.js");
