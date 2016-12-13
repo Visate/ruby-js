@@ -56,3 +56,7 @@ exports.run = (bot, msg, suffix) => {
     help.run(bot, msg, "");
   }
 };
+
+exports.getCommands = () => {
+  return subCommands;
+};
