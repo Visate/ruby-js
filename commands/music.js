@@ -7,7 +7,7 @@ const log = require("../scripts/log.js");
 // Command handler
 const subCommands = new Discord.Collection();
 const aliases = new Discord.Collection();
-fs.readdir("./music/", (err, files) => {
+fs.readdir("./commands/music/", (err, files) => {   // weird behaviour, since it will be imported must declare from commands/music/
   if (err) console.error(err);
   log(`Loading a total of ${files.length} music commands...`);
   files.forEach(f => {
