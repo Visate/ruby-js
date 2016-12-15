@@ -10,7 +10,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["k"],
+  aliases: [],
   permLevel: 3
 };
 
@@ -66,8 +66,8 @@ exports.run = (bot, msg, suffix) => {
     };
 
     let msgPM = [];
-    msgPM.push("Oh no! It appears that you have been kicked by " + message.author.username + ".");
-    msgPM.push("**Reason:** " + reason);
+    msgPM.push(`Oh no! It appears that you have been kicked by ${message.author.username}.`);
+    msgPM.push(`**Reason:** ${reason}`);
     msgPM.push("\nIf you feel that this was unjust, feel free to talk to NyaaKoneko#1495 about it. You are welcome to join back with this link, please behave this time~ :heart:");
     guild.fetchInvites().then(function(invites) {
       let invite = invites.find(invite => invite.maxAge === 0 && invite.temporary === false && invite.channel.name === "casual-lobby");
@@ -84,8 +84,11 @@ exports.run = (bot, msg, suffix) => {
 
       member.sendMessage(msgPM).then(() => {
         member.kick().then(() => {
-          rubyLogCh.sendMessage("", {embed: logMsg}).then(() => msg.channel.sendMessage("^-^").then(m => m.delete(5000)));
+          rubyLogCh.sendMessage("", {embed: logMsg}).then(() => {
+            msg.channel.sendMessage("^-^").then(m => m.delete(5000));
+          });
         });
       });
+    });
   });
 };

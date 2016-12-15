@@ -10,7 +10,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["b"],
+  aliases: [],
   permLevel: 5
 };
 
@@ -66,8 +66,8 @@ exports.run = (bot, msg, suffix) => {
     };
 
     let msgPM = [];
-    msgPM.push("Oh no! It appears that you have been banned by " + message.author.username + ".");
-    msgPM.push("**Reason:** " + reason);
+    msgPM.push(`Oh no! It appears that you have been banned by ${msg.author.username}.`);
+    msgPM.push(`**Reason:** ${reason}`);
     msgPM.push("\nIf you feel that this was unjust, feel free to appeal your ban using the form linked below~ :heart:");
     msgPM.push("https://goo.gl/forms/0YX3IVGvmXPylEwD2");
     member.sendMessage(msgPM).then(() => {

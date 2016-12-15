@@ -10,7 +10,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["b"],
+  aliases: [],
   permLevel: 5
 };
 
@@ -32,7 +32,7 @@ exports.run = (bot, msg, suffix) => {
 
   guild.fetchBans().then(bans => {
     let user = bans.find(u => u.id === userid);
-    if (!user) return msg.channel.sendMessage(`${messsage.author}, cannot find a user with that query in the ban list!`);
+    if (!user) return msg.channel.sendMessage(`${messsage.author}, cannot find a user with that id in the ban list!`);
     let caseNum;
     rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
       let pastCase = msgs.array()[0];
