@@ -239,6 +239,7 @@ bot.checkPerms = (msg) => {
     let superAdmin = roles.find(role => role.name === "Super Admin");
     let trustedEmployee = roles.find(role => role.name === "Trusted Employee");
     let ultimatePower = roles.find(role => role.name === "Ultimate Power");
+    let sarahMods = roles.find(role => role.name === "My Trusted Mods");    // Sarah's Vanity server mods
 
     // returns a permissions level that gets sent to the command handler
     // largely done by comparisons with other roles
@@ -247,6 +248,7 @@ bot.checkPerms = (msg) => {
     if (admin && admin.position <= topRole.position) permlvl = 3;
     if (superAdmin && superAdmin.position <= topRole.position) permlvl = 4;
     if (trustedEmployee && trustedEmployee.position <= topRole.position) permlvl = 5;
+    if (sarahMods && sarahMods.position <= topRole.position) permlvl = 5;
     if (ultimatePower && ultimatePower.position <= topRole.position) permlvl = 6;
     if (member.id === guild.ownerID) permlvl = 7;
   }
