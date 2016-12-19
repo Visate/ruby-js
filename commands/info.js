@@ -2,7 +2,7 @@
 var config = require("../config.json");
 
 exports.help = {
-  name: "introduce",
+  name: "info",
   description: "Sends some information about myself.",
   extendedhelp: "Tells you a little bit of information about myself."
 };
@@ -10,7 +10,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: false,
-  aliases: ["info", "stats", "statistics"],
+  aliases: ["introduce", "stats", "statistics"],
   permLevel: 0
 };
 
