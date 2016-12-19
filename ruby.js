@@ -97,13 +97,14 @@ bot.on("guildMemberAdd", member => {
   log(`${member.user.username} (${member.id}) joined ${guild.name}`);
 
   if (nyaaCh) nyaaCh.sendMessage(`Join: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+  let guestRole = guild.roles.find(role => role.name === "Guest");
+  member.addRole(guestRole);
 
   if (config.modes.nyaabot) {
 
     if (guild.id === "130616817625333761") guild.defaultChannel.sendMessage(`Welcome to the server, ${member}!~ :heart:`);
 
     else {
-      let guestRole = guild.roles.find(role => role.name === "Guest");
       let rules = guild.channels.find(channel => channel.name === "read-the-rules");
       let help = guild.channels.find(channel => channel.name === "help");
 
@@ -120,8 +121,6 @@ bot.on("guildMemberAdd", member => {
       pmArray.push(`If you have any questions, feel free to ask the moderation team. Also check out the #help channel as it has a lot of useful information.`);
       pmArray.push(`Enjoy your stay :heart:`);
       member.sendMessage(pmArray);
-
-      member.addRole(guestRole);
     }
   }
 });
@@ -165,7 +164,7 @@ bot.on("messageDelete", message => {
 });
 
 bot.on("messageDeleteBulk", messages => {
-  if (!message.guild) return;
+  if (!messages.first().guild) return;
   let nyaaLogCh = messages.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
