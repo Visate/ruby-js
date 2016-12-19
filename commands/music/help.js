@@ -1,5 +1,6 @@
 // Help command
 const config = require("../../config.json");
+const helpOrder = require("./helporder.json");
 
 exports.help = {
   name: "help",
@@ -23,6 +24,7 @@ exports.run = (bot, msg, suffix) => {
   if (!suffix) {
     msgArray.push("= Music Commands =\n");
     msgArray.push(`[Use ${config.settings.prefix}music help <command> for details]\n`);
+    let cmdArray = [];
     commands.forEach(cmd => {
       if (perms < cmd.config.permLevel) return;
       if (!cmd.config.enabled) return;
@@ -30,8 +32,13 @@ exports.run = (bot, msg, suffix) => {
       let message = `${cmd.help.name}`;
       if (cmd.help.usage) message += ` ${cmd.help.usage}`;
       message += `:: ${cmd.help.description}`;
-      msgArray.push(message);
+      cmdArray[helpOrder[cmd.help.name]] = message;
     });
+    for (let i = 0; i < cmdArray.length; ) {
+      if (cmdArray[i] === undefined) cmdArray.splice(i, 1);
+      else i++;
+    }
+    msgArray.push(cmdArray.join("\n"));
     if (msg.guild) msg.channel.sendMessage(`:mailbox_with_mail: ${msg.author}, the commands have been direct messaged to you! :heart:`);
     msg.author.sendCode("asciidoc", msgArray);
   }

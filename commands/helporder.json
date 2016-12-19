@@ -1,0 +1,19 @@
+{
+  "help": 0,
+  "warn": 1,
+  "kick": 2,
+  "ban": 3,
+  "unban": 4,
+  "gban": 5,
+  "gunban": 6,
+  "purge": 7,
+  "info": 8,
+  "ping": 9,
+  "music": 10,
+  "whois": 11,
+  "say": 30,
+  "eval": 31,
+  "shutdown": 32,
+  "restart": 33,
+  "reload": 34
+}

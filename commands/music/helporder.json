@@ -1,0 +1,14 @@
+{
+  "help": 0,
+  "join": 1,
+  "leave": 2,
+  "play": 3,
+  "stream": 4,
+  "np": 5,
+  "queue": 6,
+  "skip": 7,
+  "resume": 8,
+  "pause": 9,
+  "stop": 10,
+  "volume": 11
+}
