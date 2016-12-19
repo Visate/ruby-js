@@ -46,7 +46,7 @@ exports.run = (bot, msg, suffix) => {
     }
     if (isNaN(caseNum)) caseNum = 1;
 
-    let/ msgArray = [];
+    let msgArray = [];
     msgArray.push(`**Action:**          Ban`);
     msgArray.push(`**Channel:**       ${msg.channel.name}`);
     msgArray.push(`**User:**             ${member.user.username}#${member.user.discriminator} (${member.id})`);
