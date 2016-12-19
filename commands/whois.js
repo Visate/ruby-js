@@ -1,5 +1,5 @@
 const moment = require("moment");
-const stripIndents = require("common-tags".stripIndents);
+const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "whois",
@@ -16,5 +16,5 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  
+
 };
