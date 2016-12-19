@@ -155,6 +155,7 @@ bot.on("userUpdate", (oldUser, newUser) => {
 });
 
 bot.on("messageDelete", message => {
+  if (!message.guild) return;
   let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
@@ -164,6 +165,7 @@ bot.on("messageDelete", message => {
 });
 
 bot.on("messageDeleteBulk", messages => {
+  if (!message.guild) return;
   let nyaaLogCh = messages.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
@@ -175,6 +177,7 @@ bot.on("messageDeleteBulk", messages => {
 });
 
 bot.on("messageUpdate", (oldMessage, newMessage) => {
+  if (!newMessage.guild) return;
   let nyaaLogCh = newMessage.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
