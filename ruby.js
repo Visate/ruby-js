@@ -133,7 +133,7 @@ bot.on("guildMemberRemove", member => {
 
   if (nyaaCh) nyaaCh.sendMessage(`Leave: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
 
-  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(◕︵◕) ${member} left the server. Bye~`);
+  guild.defaultChannel.sendMessage(`(◕︵◕) ${member} left the server. Bye~`);
 });
 
 bot.on("userUpdate", (oldUser, newUser) => {
@@ -188,11 +188,11 @@ bot.on("messageUpdate", (oldMessage, newMessage) => {
 });
 
 bot.on("guildBanAdd", (guild, user) => {
-  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(◕︵◕) Oh no! ${user} just got banned!\nPlease try to avoid walking the same path as them :heart:`);
+  guild.defaultChannel.sendMessage(`(◕︵◕) Oh no! ${user} just got banned!\nPlease try to avoid walking the same path as them :heart:`);
 });
 
 bot.on("guildBanRemove", (guild, user) => {
-  if (config.modes.nyaabot) guild.defaultChannel.sendMessage(`(▰˘◡˘▰) Yay! ${user} just got unbanned!\nWelcome them back, and help them stay in line this time :heart:`);
+  guild.defaultChannel.sendMessage(`(▰˘◡˘▰) Yay! ${user} just got unbanned!\nWelcome them back, and help them stay in line this time :heart:`);
 });
 
 // Forces an exit on disconnect
