@@ -84,8 +84,9 @@ bot.on("message", msg => {
     if (cmd.config.guildOnly && !msg.guild) return;
     if (perms < cmd.config.permLevel) return;
     if (uPrefix === "!" && !cmd.config.alternateInvoke) return;
+    let location = msg.guild ? `${msg.guild.name} (#${msg.channel.name})` : "private messages";
     cmd.run(bot, msg, suffix);
-    log(`Command run by ${msg.author.username} in ${msg.guild.name} (#${msg.channel.name}): ${msg.content}`);
+    log(`Command run by ${msg.author.username} in ${location}: ${msg.content}`);
   }
 });
 
