@@ -1,6 +1,5 @@
 // Help command
-const config = require("../config.json");
-const commands = bot.commands.get("music").getCommands();
+const config = require("../../config.json");
 
 exports.help = {
   name: "help",
@@ -19,6 +18,7 @@ exports.config = {
 exports.run = (bot, msg, suffix) => {
   let perms = bot.checkPerms(msg);
   let msgArray = [];
+  let commands = bot.commands.get("music").getCommands();
 
   if (!suffix) {
     msgArray.push("= Music Commands =\n");

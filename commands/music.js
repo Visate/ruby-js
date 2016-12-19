@@ -7,7 +7,7 @@ const log = require("../scripts/log.js");
 // Command handler
 const subCommands = new Discord.Collection();
 const aliases = new Discord.Collection();
-fs.readdir("./commands/music/", (err, files) => {   // weird behaviour, since it will be imported must declare from commands/music/
+fs.readdir(`${__dirname}/music`, (err, files) => {   // weird behaviour, since it will be imported must declare from commands/music/
   if (err) console.error(err);
   log(`Loading a total of ${files.length} music commands...`);
   files.forEach(f => {
@@ -48,12 +48,12 @@ exports.run = (bot, msg, suffix) => {
     if (!subCmd.config.enabled) return;
     if (subCmd.config.guildOnly && !msg.guild) return;
     if (perms < subCmd.config.permLevel) return;
-    subCmd.run(bot, msg, suffix);
+    subCmd.run(bot, msg, subSuffix);
   }
 
   else {
     let help = subCommands.get("help");
-    help.run(bot, msg, "");
+    help.run(bot, msg);
   }
 };
 
