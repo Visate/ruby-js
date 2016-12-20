@@ -1,5 +1,6 @@
 // Introduce command
-var config = require("../config.json");
+const config = require("../config.json");
+const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "info",
@@ -15,20 +16,23 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  let msgArray = [];
-  msgArray.push(`Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^`);
-  msgArray.push(`If you want to see what I can do, use \`${config.settings.prefix}help\``);
-  msgArray.push(`If you have any questions, feel free to ask my creator Visate :blush:`);
-  msgArray.push("```");
-  msgArray.push(`Statistics:`);
-  msgArray.push(`★ Mem Usage    : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`);
   let totalSec = bot.uptime / 1000;
   let mins = ~~(totalSec / 60);
   let secs = ~~(totalSec % 60);
-  msgArray.push(`★ Uptime       : ${mins}:${secs}`);
-  msgArray.push(`★ Users        : ${bot.users.size}`);
-  msgArray.push(`★ Servers      : ${bot.guilds.size}`);
-  msgArray.push(`★ Channels     : ${bot.channels.size}`);
-  msgArray.push("```");
-  msg.channel.sendMessage(msgArray);
+  let text = stripIndents`
+  Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^
+  If you want to see what I can do, use \`${config.settings.prefix}help\`
+  If you have any questions, feel free to ask my creator Visate#7752 :blush:
+  \`\`\`asciidoc
+  = Statistics =
+  
+  ★ Library      :: discord.js
+  ★ Mem Usage    :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
+  ★ Uptime       :: ${mins}:${secs}
+  ★ Users        :: ${bot.users.size}
+  ★ Servers      :: ${bot.guilds.size}
+  ★ Channels     :: ${bot.channels.size}
+  \`\`\``;
+
+  msg.channel.sendMessage(text)
 };
