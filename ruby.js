@@ -10,6 +10,7 @@ const config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
 const log = require("./scripts/log.js");
+const stripIndents = require("common-tags").stripIndents;
 bot.musicHandler = require("./scripts/musichandler.js");
 bot.database = require("./scripts/database.js");
 
@@ -96,7 +97,7 @@ bot.on("guildMemberAdd", member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   log(`${member.user.username} (${member.id}) joined ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(`Join: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`**Join:** \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss UTC")}`);
   let guestRole = guild.roles.find(role => role.name === "Guest");
   member.addRole(guestRole);
 
@@ -108,19 +109,23 @@ bot.on("guildMemberAdd", member => {
       let rules = guild.channels.find(channel => channel.name === "read-the-rules");
       let help = guild.channels.find(channel => channel.name === "help");
 
-      let msgArray = [];
-      msgArray.push(`${member} has just joined us! **Say hi ヾ(〃^∇^)ﾉ** :heart:`);
-      msgArray.push(`Please ${rules} and check out the ${help} channel if you're new to Discord.`);
-      msgArray.push(`If you have any questions feel free to ask the moderation team **(Do not ask NyaaKoneko, she has no time for you)**`);
-      guild.defaultChannel.sendMessage(msgArray);
+      let msg = stripIndents`
+      ${member} has just joined us! **Say hi ヾ(〃^∇^)ﾉ** :heart:
+      Please ${rules} and check out the ${help} channel if you're new to Discord.
+      If you have any questions feel free to ask the moderation team **(Do not ask NyaaKoneko, she has no time for you)**
+      `;
 
-      let pmArray = [];
-      pmArray.push(`Hi ${bot.cleanText(member.user.username)}!`);
-      pmArray.push(`Welcome to our server - We're excited for you to join us!~`);
-      pmArray.push(`We have a few rules here to ensure everyone has a great time, so please go over them in the #read-the-rules channel :heart:`);
-      pmArray.push(`If you have any questions, feel free to ask the moderation team. Also check out the #help channel as it has a lot of useful information.`);
-      pmArray.push(`Enjoy your stay :heart:`);
-      member.sendMessage(pmArray);
+      guild.defaultChannel.sendMessage(msg);
+
+      let pm = stripIndents`
+      Hi ${bot.cleanText(member.user.username)}!
+      Welcome to our server - We're excited for you to join us!~
+      We have a few rules here to ensure everyone has a great time, so please go over them in the #read-the-rules channel :heart:
+      If you have any questions, feel free to ask the moderation team. Also check out the #help channel as it has a lot of useful information.
+      Enjoy your stay :heart:
+      `;
+
+      member.sendMessage(pm);
     }
   }
 });
@@ -130,7 +135,7 @@ bot.on("guildMemberRemove", member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   log(`${member.user.username} (${member.id}) left ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(`Leave: \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY at HH:mm:ss UTC")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`**Leave:** \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss UTC")}`);
 
   guild.defaultChannel.sendMessage(`(◕︵◕) ${member} left the server. Bye~`);
 });
@@ -143,7 +148,7 @@ bot.on("userUpdate", (oldUser, newUser) => {
       if (member) {
         let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
         if (nyaaCh) {
-          nyaaCh.sendMessage(`Name Change - UserID: #${newUser.id}\n${bot.cleanText(oldUser.username)} --> \`${bot.cleanText(newUser.username)}\``);
+          nyaaCh.sendMessage(`**Name Change** - UserID: #${newUser.id}\n${bot.cleanText(oldUser.username)} --> \`${bot.cleanText(newUser.username)}\``);
           count++;
         }
       }
@@ -157,10 +162,12 @@ bot.on("messageDelete", message => {
   if (!message.guild) return;
   let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
 
-  let msgArray = [];
-  msgArray.push(`Message Delete: ${message.author.username} (${message.author.id}) in channel #${message.channel.name}\n`);
-  msgArray.push(message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__"));
-  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+  let msg = stripIndents`
+  **Message Delete:** ${message.author.username} (${message.author.id}) in channel #${message.channel.name}
+  ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
+  `;
+
+  nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
 });
 
 bot.on("messageDeleteBulk", messages => {
@@ -168,9 +175,9 @@ bot.on("messageDeleteBulk", messages => {
   let nyaaLogCh = messages.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
-  msgArray.push(`Message Bulk Delete:\n`);
+  msgArray.push(`**Message Bulk Delete:**`);
   messages.forEach(message => {
-    msgArray.push(`${message.author.username} (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
+    msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
   });
   nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
 });
@@ -179,11 +186,13 @@ bot.on("messageUpdate", (oldMessage, newMessage) => {
   if (!newMessage.guild) return;
   let nyaaLogCh = newMessage.guild.channels.find(channel => channel.name === "nyaa-log");
 
-  let msgArray = [];
-  msgArray.push(`Message Edit: ${newMessage.author.username} (${newMessage.author.id}) in channel #${newMessage.channel.name}\n`);
-  msgArray.push(`Before: ${oldMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
-  msgArray.push(`After: ${newMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
-  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+  let msg = stripIndents`
+  **Message Edit:** ${newMessage.author.username} (${newMessage.author.id}) in channel #${newMessage.channel.name}
+  **Before:** ${oldMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
+  **After:** ${newMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
+  `;
+
+  nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
 });
 
 bot.on("guildBanAdd", (guild, user) => {
