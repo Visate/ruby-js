@@ -36,7 +36,7 @@ exports.run = (bot, msg, suffix) => {
   originGuild.fetchBans().then(bans => {
     user = bans.get(userQuery);
     if (!user) user = originGuild.members.has(userQuery) ? originGuild.members.get(userQuery).user : {username: "?", discriminator: "?", id: userQuery, placeholder: true};
-    if (!user.placeholder) pmStatus = messageUser(user);
+    if (!user.placeholder) pmStatus = messageUser(user, msg, reason);
     processGban(bot, msg, originGuild, originChannel, user, reason, pmStatus).then((bannedUser, count) => {
       msg.channel.sendMessage(`${msg.author}, ${bannedUser.username} (${bannedUser.id}) was banned across ${count} servers ^-^`);
     }).catch((bannedUser, count, countNoBan) => {
@@ -45,7 +45,7 @@ exports.run = (bot, msg, suffix) => {
   });
 };
 
-function messageUser(user) {
+function messageUser(user, msg, reason) {
   let msgPM = stripIndents`
   Oh no! It appears that you have been global banned by ${msg.author.username}.
   **Reason:** ${reason}
@@ -54,7 +54,11 @@ function messageUser(user) {
   ${config.resources.banForm}
   `;
 
-  user.sendMessage(msgPM).then(() => return true).catch(() => return false);
+  user.sendMessage(msgPM).then(() => {
+    return true;
+  }).catch(() => {
+    return false;
+  });
 }
 
 function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatusInit) {
@@ -85,7 +89,7 @@ function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatu
           if (user.username === "?" && user.discriminator === "?") {
             if (typeof bannedUser !== "string") {
               user = bannedUser.user ? bannedUser.user : bannedUser;
-              if (!pmStatus) pmStatus = messageUser(user);
+              if (!pmStatus) pmStatus = messageUser(user, msg, reason);
             }
           }
 
