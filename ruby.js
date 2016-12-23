@@ -196,6 +196,7 @@ bot.on("messageUpdate", (oldMessage, newMessage) => {
 });
 
 bot.on("guildBanAdd", (guild, user) => {
+  if (!guild.members.has(user.id)) return;
   guild.defaultChannel.sendMessage(`(◕︵◕) Oh no! ${user} just got banned!\nPlease try to avoid walking the same path as them :heart:`);
 });
 
