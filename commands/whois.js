@@ -52,7 +52,7 @@ exports.run = (bot, msg, suffix) => {
       });
     }
 
-    else members.push(memberList.find(m => m.id === suffix));
+    else members.push(memberList.get(suffix));
   }
 
   if (members.length > 1) {
@@ -69,15 +69,11 @@ exports.run = (bot, msg, suffix) => {
   else if (members.length === 1 && members[0] !== null && members[0] !== undefined) {
     let member = members[0];
     let randomID = createID();
-    let roles = "";
-    member.roles.forEach(r => {
-      if (r.name === '@everyone') return;
-      roles += `\`${r.name}\` `;
-    });
+
     let details = stripIndents`
     • User:                  \`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}\`
     • ID:                      \u200A${member.id}
-    • Roles:                \u2009${member.roles.size > 1 ? roles : "`@everyone`"}
+    • Roles:                \u2009${member.roles.map(r => `\`${r.name}\``).join(" ")}
     • Date Joined:    \u2006${member.joinedAt.toUTCString()}
     • Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
     ${member.presence.game ? `${member.presence.game.streaming ? `• Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `• Playing:             ${member.presence.game.name}`}` : randomID}
