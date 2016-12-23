@@ -1,4 +1,5 @@
 // Gban command
+const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "gunban",
@@ -34,7 +35,7 @@ exports.run = (bot, msg, suffix) => {
     if (!user) user = {username: "?", discriminator: "?", id: userQuery};
     processGunban(bot, msg, originGuild, user, reason).then((unbanUser, count) => {
       msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count} servers ^-^`);
-    }).catch((unbanUser, count, countNoUnban)) => {
+    }).catch((unbanUser, count, countNoUnban) => {
       msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count - countNoUnban} servers ^-^ (failed on ${countNoUnban} servers)`);
     });
   });
@@ -64,7 +65,7 @@ function processGunban(bot, msg, originGuild, user, reason) {
         if (isNaN(caseNum)) caseNum = 1;
 
         guild.unban(user.id).then(unbanUser => {
-          if (user.username === "?" && member.discriminator === "?" && typeof unbanUser !== "string") user = unbanUser;
+          if (user.username === "?" && user.discriminator === "?" && typeof unbanUser !== "string") user = unbanUser;
 
           let logDetails = stripIndents`
           **Action:**          Global Unban
@@ -90,14 +91,14 @@ function processGunban(bot, msg, originGuild, user, reason) {
           rubyLogCh.sendMessage("", {embed: logMsg});
           count++;
 
-          if (count === bot.guilds.size - 1 && countNoBan === 0) resolve(user, count);
-          else if (count === bot.guilds.size - 1 && countNoBan > 0) reject(user, count, countNoBan);
+          if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
+          else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
         }).catch(() => {
           count++;
-          countNoBan++;
+          countNoUnban++;
 
-          if (count === bot.guilds.size - 1 && countNoBan === 0) resolve(user, count);
-          else if (count === bot.guilds.size - 1 && countNoBan > 0) reject(user, count, countNoBan);
+          if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
+          else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
         });
       });
     });
