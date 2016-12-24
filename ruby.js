@@ -6,7 +6,7 @@ const bot = new Discord.Client({
   disableEveryone: true,
   fetchAllMembers: true,
 });
-const config = require("./config.json");
+var config = require("./config.json");
 const fs = require("fs");
 const moment = require("moment");
 const log = require("./scripts/log.js");
@@ -303,4 +303,14 @@ bot.checkPerms = (msg) => {
 bot.cleanText = (text) => {
   if (typeof text === "string") return text.replace(/`/g, "`\u200b").replace(/@/g, "@\u200b");
   else return text;
+};
+
+// reloading the config
+bot.reloadConfig = () => {
+  try {
+    delete require.cache[require.resolve("./config.json")];
+    config = require("./config.json");
+  } catch (e) {
+    log(`Error when reloading config: ${e}`);
+  }
 };
