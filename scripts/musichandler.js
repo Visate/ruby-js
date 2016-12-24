@@ -140,7 +140,7 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
       player.streaming = false;
       player.stream = null;
     }
-    if (!player.playing) play(msg.guild, song);
+    if (!player.playing) play(bot, msg.guild, song);
   }
 };
 
