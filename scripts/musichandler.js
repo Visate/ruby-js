@@ -30,7 +30,7 @@ function play(bot, guild, song) {
   player.dispatcher = player.vChannel.connection.playStream(stream, {volume: player.volume / 50, passes: 2});
   player.playing = true;
 
-  player.dispatcher.once("end", () => {
+  player.dispatcher.on("end", () => {
     let oldSong = player.queue.shift();
     if (player.looping) player.queue.push(oldSong);
     play(player.guild, player.queue[0]);
