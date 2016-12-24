@@ -23,7 +23,6 @@ exports.run = (bot, msg) => {
     });
 
     bot.musicHandler.createPlayer(msg, djMode);
-    msg.channel.sendMessage(`Connected to voice channel ${msg.member.voiceChannel.name} and binding to ${msg.channel}.`);
 
     connection.on("disconnect", () => {
       let player = bot.musicHandler.getPlayer(msg.guild);

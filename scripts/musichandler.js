@@ -61,6 +61,8 @@ exports.createPlayer = (msg, djModeStatus) => {
     queue: [],
     timeout: null
   };
+
+  msg.channel.sendMessage(`Connected to voice channel ${msg.member.voiceChannel.name} and binding to ${msg.channel}.`);
 };
 
 exports.deletePlayer = guild => {
