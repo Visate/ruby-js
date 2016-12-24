@@ -10,25 +10,34 @@ list.set("r-a-d.io", {
   queueUrl: "https://r-a-d.io",
   url: "https://stream.r-a-d.io/main.mp3",
   np: () => {
-    let np;
-    request("https://r-a-d.io/api", (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        let info = JSON.parse(body);
-        np = info["main"]["np"];
-      }
-    });
-
-    return np;
+    updateRadio();
+    if (radioJSON === {}) return "Unknown";
+    return radioJSON["np"];
   }
 });
 names.push("r-a-d.io");
+var radioJSON;
+var radioTimeout;
+function updateRadio() {
+  request("https://r-a-d.io/api", (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      radioJSON = JSON.parse(body);
+      let timeRemaining = radioJSON["end_time"] - radioJSON["current"];
+      if (radioTimeout) clearTimeout(radioTimeout);
+      radioTimeout = setTimeout(() => {
+        updateRadio();
+      }, timeRemaining * 1000);
+    }
+  });
+}
+updateRadio();
 
 list.set("listen.moe", {
   name: "listen.moe",
   queueUrl: "https://listen.moe",
   url: "https://listen.moe/stream",
   np: () => {
-    if (listenMoeJSON === {}) return;
+    if (listenMoeJSON === {}) return "Unknown";
     return `${listenMoeJSON.song_name} - ${listenMoeJSON.artist_name}`;
   }
 });
