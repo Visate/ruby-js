@@ -132,7 +132,7 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
         icon_url: msg.author.avatarURL
       },
       description: stripIndents`
-      :thumbsup: ${queueUrl ? `[${songTitle}](${queueUrl})` : `**${songTitle}**`} (${songLength === "unknown" ? "(?:??)" : songLength})
+      :thumbsup: ${queueUrl ? `[${songTitle}](${queueUrl})` : `**${songTitle}**`} (${songLength === "unknown" ? "?:??" : songLength})
       **Position:** ${position}`
     };
     msg.channel.sendEmbed(embed);
