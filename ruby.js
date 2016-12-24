@@ -207,7 +207,7 @@ bot.on("guildBanRemove", (guild, user) => {
 
 // event to help with music
 bot.on("voiceStateUpdate", (oldMember, newMember) => {
-  let player = bot.musicHandler.getPlayer(newMember.guild);
+  let player = bot.musicHandler.getPlayer(bot, newMember.guild);
   if (!player) return;
   if (oldMember.voiceChannel.id === newMember.voiceChannel.id) return; // return early if no change in ch
 
