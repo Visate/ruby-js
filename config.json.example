@@ -23,7 +23,8 @@
   "apiKeys": {
     "anilistId": "anilist id for anime/manga command",
     "anilistSecret": "anilist secret",
-    "soundclouId": "soundcloud id for music"
+    "soundcloudId": "soundcloud id for music",
+    "osuKey": "osu id for osu commands"
   },
 
   "firebase": {

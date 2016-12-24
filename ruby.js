@@ -1,5 +1,5 @@
 // Disable listener limit
-require('events').EventEmitter.prototype._maxListeners = 0;
+require("events").EventEmitter.prototype._maxListeners = 0;
 // Libraries and constants
 const Discord = require("discord.js");
 const bot = new Discord.Client({
@@ -44,7 +44,7 @@ bot.readCmds();
 bot.on("ready", () => {
   log(`Logged in as ${bot.user.username}!`);
   log(`Serving ${bot.users.size} users in ${bot.channels.size} channels of ${bot.guilds.size} servers.`);
-  log(`-----------------`);
+  log("-----------------");
 
   bot.homeServer = bot.guilds.find(guild => guild.id === "235144885101920256");
   bot.homeServer.fetchMember(config.permissions.master[0]).then(master => {
@@ -175,7 +175,7 @@ bot.on("messageDeleteBulk", messages => {
   let nyaaLogCh = messages.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
-  msgArray.push(`**Message Bulk Delete:**`);
+  msgArray.push("**Message Bulk Delete:**");
   messages.forEach(message => {
     msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
   });
@@ -204,9 +204,38 @@ bot.on("guildBanRemove", (guild, user) => {
   guild.defaultChannel.sendMessage(`(▰˘◡˘▰) Yay! ${user} just got unbanned!\nWelcome them back, and help them stay in line this time :heart:`);
 });
 
+// event to help with music
+bot.on("voiceStateUpdate", (oldMember, newMember) => {
+  let player = bot.musicHandler.getPlayer(newMember.guild);
+  if (!player) return;
+  if (oldMember.voiceChannel.id === newMember.voiceChannel.id) return; // return early if no change in ch
+
+  // inactivity timeout
+  if (player.vChannel.members.size === 1) bot.musicHandler.startTimeout(newMember.guild);
+  else if (player.vChannel.members.size > 1 && player.timeout) bot.musicHandler.cancelTimeout(newMember.guild);
+
+  let permLvl = bot.checkPerms({guild: newMember.guild, member: newMember, author: newMember.user});
+
+  if (permLvl === 0) return;  // return early if person leaving has no perms
+
+  player.vChannel.members.forEach(member => {
+    if (bot.checkPerms({guild: member.guild, member: member, author: member.user}) > 1) return;  // return early if there are still djs in the room
+  });
+
+  // dj moved or left voice channel
+  if (player.vChannel.id === oldMember.voiceChannel.id && (!newMember.voiceChannel || newMember.voiceChannel.id !== player.vChannel.id)) {
+    bot.musicHandler.setDJMode(newMember.guild, false);
+  }
+
+  // dj entered channel
+  else if (player.vChannelid === newMember.voiceChannel.id) {
+    bot.musicHandler.setDJMode(newMember.guild, true);
+  }
+});
+
 // Forces an exit on disconnect
 bot.on("disconnect", () => {
-  log(`Disconnected from Discord!`);
+  log("Disconnected from Discord!");
   process.exit(0);
 });
 

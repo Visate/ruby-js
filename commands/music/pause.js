@@ -1,7 +1,7 @@
 exports.help = {
   name: "pause",
-  description: `Pauses music playback.`,
-  extendedhelp: `Pauses music playback. Cannot be used in stream mode.`
+  description: "Pauses music playback.",
+  extendedhelp: "Pauses music playback. Cannot be used in stream mode."
 };
 
 exports.config = {
@@ -11,6 +11,10 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
-  // placeholder
+exports.run = (bot, msg) => {
+  let player = bot.musicHandler.getPlayer(msg.guild.id);
+  if (player) {
+    if (!bot.musicHandler.checkDJ(bot, msg)) return;
+    bot.musicHandler.pausePlayback(msg);
+  }
 };

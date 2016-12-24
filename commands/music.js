@@ -25,7 +25,7 @@ exports.help = {
   name: "music",
   usage: "<subcommand>",
   description: `Music bot commands, ${config.settings.prefix}music help`,
-  extendedhelp: "Commands to use the music bot! Use ${config.settings.prefix}music help to list all the commands."
+  extendedhelp: `Commands to use the music bot! Use ${config.settings.prefix}music help to list all the commands.`
 };
 
 exports.config = {
@@ -45,9 +45,12 @@ exports.run = (bot, msg, suffix) => {
   else if (aliases.has(subCommand)) subCmd = subCommands.get(aliases.get(subCommand));
 
   if (subCmd) {
+    let player = bot.musicHandler.getPlayer(msg.guild.id);
     if (!subCmd.config.enabled) return;
     if (subCmd.config.guildOnly && !msg.guild) return;
     if (perms < subCmd.config.permLevel) return;
+    if (subCmd.help.name !== "join" && !player) return msg.channel.sendMessage(`I haven't joined a voice channel yet! Summon me to a voice channel with \`${config.settings.prefix}music join\` first!`);
+    if (subCmd.help.name !== "help" && player && msg.member.voiceChannel.id !== player.vChannel.id) return msg.channel.sendMessage("You aren't in the active voice channel!");
     subCmd.run(bot, msg, subSuffix);
   }
 

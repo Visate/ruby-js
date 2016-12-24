@@ -1,4 +1,5 @@
 // Help command
+const stripIndents = require("common-tags").stripIndents;
 const config = require("../../config.json");
 const helpOrder = require("./helporder.json");
 
@@ -48,10 +49,12 @@ exports.run = (bot, msg, suffix) => {
     if (perms < cmd.config.permLevel) return;
     if (!cmd.config.enabled) return;
     if (cmd.config.guildOnly && !msg.guild) return;
-    msgArray.push(`= ${cmd.help.name} =`);
-    if (cmd.help.usage) msgArray.push(`Usage:: ${cmd.help.name} ${cmd.help.usage}\n`);
-    else msgArray.push(`Usage:: ${cmd.help.name}\n`);
-    msgArray.push(`${cmd.help.extendedhelp}`);
-    msg.channel.sendCode("asciidoc", msgArray);
+    let helpDetails = stripIndents`
+    = ${cmd.help.name} =
+    Usage:: ${cmd.help.name} ${cmd.help.usage ? cmd.help.usage : ""}
+
+    ${cmd.help.extendedhelp}
+    `;
+    msg.channel.sendCode("asciidoc", helpDetails);
   }
 };
