@@ -33,7 +33,7 @@ function play(bot, guild, song) {
   player.dispatcher.on("end", () => {
     let oldSong = player.queue.shift();
     if (player.looping) player.queue.push(oldSong);
-    play(player.guild, player.queue[0]);
+    play(bot, player.guild, player.queue[0]);
   });
 
   player.dispatcher.on("error", err => {
