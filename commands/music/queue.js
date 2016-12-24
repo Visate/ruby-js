@@ -16,7 +16,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix = 1) => {
+exports.run = (bot, msg, suffix) => {
   let player = bot.musicHandler.getPlayer(bot, msg.guild);
   if (player) {
     let queueMsg;
@@ -37,7 +37,7 @@ exports.run = (bot, msg, suffix = 1) => {
     }
 
     else if (player.playing) {
-      if (isNaN(suffix)) suffix = 1;
+      if (isNaN(suffix) || suffix === "") suffix = 1;
       let maxPages = Math.ceil(player.queue.length / 10);
       if (suffix > maxPages) suffix = maxPages;
       let startingIndex = (parseInt(suffix, 10) - 1) * 10;
