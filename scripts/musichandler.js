@@ -5,7 +5,7 @@ const request = require("request");
 const stripIndents = require("common-tags").stripIndents;
 
 function play(bot, guild, song) {
-  let player = bot.connections.get(guild.id);
+  let player = bot.connections[guild.id];
   if (!player) return;
   else if (!song) {
     player.tChannel.sendMessage("The queue is empty! Better add some more songs~");
