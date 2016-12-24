@@ -23,7 +23,7 @@ exports.run = (bot, msg, suffix) => {
 
   if (suffix.toLowerCase() === "random" || !suffix) stream = streams.randomStream();
   else if (streams.hasStream(suffix)) stream = streams.getStream(suffix);
-  else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:\n${streams.getStreams().map(stream => stream.getName()).join(", ")}`);
+  else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:\n${streams.getStreams().map(stream => stream.name).join(", ")}`);
   else return msg.channel.sendMessage(`Invalid stream name, use \`${config.settings.prefix}music stream list\` to view available streams!~`);
 
   if (stream) bot.musicHandler.startStreaming(bot, msg, stream);
