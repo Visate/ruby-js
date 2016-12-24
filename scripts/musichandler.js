@@ -2,6 +2,7 @@
 const config = require("../config.json");
 const ytdl = require("ytdl-core");
 const request = require("request");
+const stripIndents = require("common-tags").stripIndents;
 const connections = {};
 
 function play(guild, song) {
@@ -13,7 +14,16 @@ function play(guild, song) {
     return;
   }
 
-  player.tChannel.sendMessage(`Playing **${song.title}** (${song.length}) requested by **${song.requestedBy}** \`[${song.length}]\``);
+  let embed = {
+    color: 3447003,
+    author: {
+      name: `${song.requestedBy.username}#${song.requestedBy.discriminator} (${song.requestedBy.id})`,
+      icon_url: song.requestedBy.avatarURL
+    },
+    description: `${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : song.length})`,
+    image: song.thumbnail
+  };
+  player.tChannel.sendEmbed(embed);
   let stream;
   if (song.source === "youtube") stream = ytdl(song.url, {filter: "audioonly"});
   else if (song.source === "soundcloud" || song.source === "other") stream = request(song.url);
@@ -98,13 +108,14 @@ exports.startStreaming = (msg, stream) => {
   }
 };
 
-exports.addToQueue = (msg, songTitle, songLength, queueUrl, songUrl, songSource) => {
+exports.addToQueue = (msg, songTitle, songLength, thumbnail, queueUrl, songUrl, songSource) => {
   let player = connections[msg.guild.id];
   if (player) {
     let song = {
       title: songTitle,
       requestedBy: msg.author,
       length: songLength,
+      thumbnail: thumbnail,
       queueUrl: queueUrl,
       url: songUrl,
       source: songSource
@@ -113,7 +124,17 @@ exports.addToQueue = (msg, songTitle, songLength, queueUrl, songUrl, songSource)
     player.queue.push(song);
     let position = "Up next!";
     if (player.queue.length > 1) position = player.queue.length - 1;
-    msg.channel.sendMessage(`Queued **${song.title}** (${song.length}) requested by **${song.requestedBy}**~ Position in queue: ${position}`);
+    let embed = {
+      color: 3447003,
+      author: {
+        name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
+        icon_url: msg.author.avatarURL
+      },
+      description: stripIndents`
+      :thumbsup: ${queueUrl ? `[${songTitle}](${queueUrl})` : `**${songTitle}**`} (${songLength === "unknown" ? "(?:??)" : songLength})
+      **Position:** ${position}`
+    };
+    msg.channel.sendEmbed(embed);
     if (!player.playing) play(msg.guild, song);
   }
 };
@@ -152,7 +173,7 @@ exports.skipSong = (bot, msg) => {
   let player = connections[msg.guild.id];
   if (player && player.playing) {
     if (permLvl > 1) {
-      msg.channel.sendMessage("Skipped!").then(() => player.dispatcher.end());
+      msg.channel.sendMessage(`Skipped ${player.queue[0].title}!`).then(() => player.dispatcher.end());
     }
 
     else if (!player.djMode) {
@@ -161,7 +182,7 @@ exports.skipSong = (bot, msg) => {
       player.skipVote += 1;
       if (player.skipVote >= player.skipRequired) {
         player.skipVote = 0;
-        msg.channel.sendMessage("Skipped!").then(() => player.dispatcher.end());
+        msg.channel.sendMessage(`Skipped ${player.queue[0].title}!`).then(() => player.dispatcher.end());
       }
       else msg.channel.sendMessage(`Vote to skip acknowledged! Required votes to skip: **${player.skipRequired - player.skipVote} votes** \`[${player.skipVote}/${player.skipRequired}]\``);
     }

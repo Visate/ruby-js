@@ -12,7 +12,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["q"],
+  aliases: ["q", "np", "playing"],
   permLevel: 0
 };
 
@@ -32,6 +32,7 @@ exports.run = (bot, msg, suffix = 1) => {
       ${player.stream.np()} from [${player.stream.name}](${player.stream.queueUrl})
 
       **Total streaming time:** ${min}:${sec}
+      \u200b
       `;
     }
 
@@ -44,17 +45,29 @@ exports.run = (bot, msg, suffix = 1) => {
       if (!currentSong) return msg.channel.sendMessage("There's nothing playing right now!");
 
       queueMsg = stripIndents`
-      __**Song queue, page ${suffix}**__
-      ${player.queue.slice(startingIndex, startingIndex + 10).map(song => `**-** ${song.queueUrl ? `[${song.title}](${song.queueUrl})` : song.title} (${song.length === "unknown" ? "?:??" : song.length})`).join("\n")}
+      __**Song queue for ${player.vChannel.name}, page ${suffix}**__
+      ${player.queue.slice(startingIndex, startingIndex + 10).map(song => `**-** ${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} requested by **${song.requestedBy.username}** (${song.length === "unknown" ? "?:??" : song.length})`).join("\n")}
       ${maxPages > 1 ? `\nUse \`${config.settings.prefix}music queue <page>\` to view a specific page.\n` : ""}
 
       **Now playing:** ${currentSong.queueUrl ? `[${currentSong.title}](${currentSong.queueUrl})` : currentSong.title}
       **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${min}:${sec} / ${currentSong.length} (${bot.musicHandler.songTimeLeft(msg.guild, min, sec)} left)
       **Total queue time:** ${bot.getQueueLength(msg.guild)}
+      \u200b
       `;
     }
 
-    if (queueMsg) return msg.channel.sendEmbed(queueMsg);
+    if (queueMsg) return msg.channel.sendEmbed({
+      color: 3447003,
+      author: {
+        name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
+        icon_url: msg.author.avatarURL
+      },
+      description: queueMsg,
+      footer: {
+        text: "Music Queue",
+        icon_url: bot.user.avatarURL
+      }
+    });
     else return msg.channel.sendMessage("There's nothing playing right now!");
   }
 };
