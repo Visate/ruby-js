@@ -97,7 +97,7 @@ exports.run = (bot, msg, suffix) => {
 function processKick(msg, logCh, logMsg, member, msgPM) {
   member.sendMessage(msgPM).then(() => {
     member.kick().then(() => {
-      logCh.sendMessage("", {embed: logMsg}).then(() => {
+      logCh.sendEmbed(logMsg).then(() => {
         msg.channel.sendMessage("^-^").then(m => m.delete(5000));
       });
     });

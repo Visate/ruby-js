@@ -1,4 +1,5 @@
 // Unban command
+const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "unban",
@@ -26,8 +27,8 @@ exports.run = (bot, msg, suffix) => {
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
-  if (!suffix) return msg.channel.sendMessage(`${msg.author}, please provide a user mention and a reason~`).then(m => m.delete(5000));
-  else if (!userid) return msg.channel.sendMessage(`${msg.author}, please mention the user you are banning~`).then(m => m.delete(5000));
+  if (!suffix) return msg.channel.sendMessage(`${msg.author}, please provide a user ID and a reason~`).then(m => m.delete(5000));
+  else if (!userid) return msg.channel.sendMessage(`${msg.author}, please provide the ID of the user you are unbanning~`).then(m => m.delete(5000));
   else if (reason === "") return msg.channel.sendMessage(`${msg.author}, please include a reason in your report~`).then(m => m.delete(5000));
 
   guild.fetchBans().then(bans => {
@@ -50,7 +51,7 @@ exports.run = (bot, msg, suffix) => {
       let logDetails = stripIndents`
       **Action:**          Unban
       **Channel:**       ${msg.channel.name}
-      **User:**             ${member.user.username}#${member.user.discriminator} (${member.id})
+      **User:**             ${user.username}#${user.discriminator} (${user.id})
       **Reason:**        ${reason}
       \u200b
       `;
@@ -69,7 +70,7 @@ exports.run = (bot, msg, suffix) => {
       };
 
       guild.unban(user).then(() => {
-        rubyLogCh.sendMessage("", {embed: logMsg}).then(() => {
+        rubyLogCh.sendEmbed(logMsg).then(() => {
           msg.channel.sendMessage("^-^").then(m => m.delete(5000));
         });
       });

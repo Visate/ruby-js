@@ -68,7 +68,7 @@ exports.run = (bot, msg, suffix) => {
       }
     };
 
-    rubyLogCh.sendMessage("", {embed: logMsg}).then(() => {
+    rubyLogCh.sendEmbed(logMsg).then(() => {
       msg.channel.sendMessage("^-^").then(m => m.delete(5000));
     });
   });

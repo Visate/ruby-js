@@ -88,7 +88,7 @@ function processGunban(bot, msg, originGuild, user, reason) {
             }
           };
 
-          rubyLogCh.sendMessage("", {embed: logMsg});
+          rubyLogCh.sendEmbed(logMsg);
           count++;
 
           if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);

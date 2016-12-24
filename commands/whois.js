@@ -1,5 +1,4 @@
 // Whois command
-const moment = require("moment");
 const stripIndents = require("common-tags").stripIndents;
 const config = require("../config.json");
 const createID = require("../scripts/createid.js");
@@ -82,7 +81,7 @@ exports.run = (bot, msg, suffix) => {
 
     details = details.replace(`\n${randomID}`, "");  // correct spacing if there is no game
 
-    let mesg = {
+    let embed = {
       color: 3447003,
       author: {
         name: `${member.user.username}#${member.user.discriminator} (${member.id})`,
@@ -103,7 +102,7 @@ exports.run = (bot, msg, suffix) => {
       }
     };
 
-    msg.channel.sendMessage("", { embed: mesg });
+    msg.channel.sendEmbed(embed);
   }
 
   else msg.channel.sendMessage("No users were found with that search!");

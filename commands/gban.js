@@ -115,7 +115,7 @@ function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatu
             }
           };
 
-          rubyLogCh.sendMessage("", {embed: logMsg});
+          rubyLogCh.sendEmbed(logMsg);
           count++;
 
           if (count === bot.guilds.size - 1 && countNoBan === 0) resolve(user, count);
