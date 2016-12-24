@@ -53,11 +53,6 @@ exports.run = (bot, msg, suffix) => {
     if (subCmd.help.name !== "help" && player && msg.member.voiceChannel.id !== player.vChannel.id) return msg.channel.sendMessage("You aren't in the active voice channel!");
     subCmd.run(bot, msg, subSuffix);
   }
-
-  else {
-    let help = subCommands.get("help");
-    help.run(bot, msg);
-  }
 };
 
 exports.getCommands = () => {

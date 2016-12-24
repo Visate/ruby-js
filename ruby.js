@@ -209,7 +209,7 @@ bot.on("guildBanRemove", (guild, user) => {
 bot.on("voiceStateUpdate", (oldMember, newMember) => {
   let player = bot.musicHandler.getPlayer(bot, newMember.guild);
   if (!player) return;
-  if (oldMember.voiceChannel.id === newMember.voiceChannel.id) return; // return early if no change in ch
+  if (newMember.voiceChannel && oldMember.voiceChannel && oldMember.voiceChannel.id === newMember.voiceChannel.id) return; // return early if no change in ch
 
   // inactivity timeout
   if (player.vChannel.members.size === 1) bot.musicHandler.startTimeout(bot, newMember.guild);
@@ -224,12 +224,12 @@ bot.on("voiceStateUpdate", (oldMember, newMember) => {
   });
 
   // dj moved or left voice channel
-  if (player.vChannel.id === oldMember.voiceChannel.id && (!newMember.voiceChannel || newMember.voiceChannel.id !== player.vChannel.id)) {
+  if (oldMember.voiceChannel && player.vChannel.id === oldMember.voiceChannel.id && (!newMember.voiceChannel || newMember.voiceChannel.id !== player.vChannel.id)) {
     bot.musicHandler.setDJMode(bot, newMember.guild, false);
   }
 
   // dj entered channel
-  else if (player.vChannelid === newMember.voiceChannel.id) {
+  else if (newMember.voiceChannel && player.vChannel.id === newMember.voiceChannel.id) {
     bot.musicHandler.setDJMode(bot, newMember.guild, true);
   }
 });
