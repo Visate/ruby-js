@@ -45,7 +45,7 @@ exports.run = (bot, msg, suffix) => {
   else if (aliases.has(subCommand)) subCmd = subCommands.get(aliases.get(subCommand));
 
   if (subCmd) {
-    let player = bot.musicHandler.getPlayer(msg.guild.id);
+    let player = bot.musicHandler.getPlayer(bot, msg.guild.id);
     if (!subCmd.config.enabled) return;
     if (subCmd.config.guildOnly && !msg.guild) return;
     if (perms < subCmd.config.permLevel) return;

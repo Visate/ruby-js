@@ -12,6 +12,7 @@ const moment = require("moment");
 const log = require("./scripts/log.js");
 const stripIndents = require("common-tags").stripIndents;
 bot.musicHandler = require("./scripts/musichandler.js");
+bot.connections = {};
 bot.database = require("./scripts/database.js");
 
 // Lists
@@ -211,8 +212,8 @@ bot.on("voiceStateUpdate", (oldMember, newMember) => {
   if (oldMember.voiceChannel.id === newMember.voiceChannel.id) return; // return early if no change in ch
 
   // inactivity timeout
-  if (player.vChannel.members.size === 1) bot.musicHandler.startTimeout(newMember.guild);
-  else if (player.vChannel.members.size > 1 && player.timeout) bot.musicHandler.cancelTimeout(newMember.guild);
+  if (player.vChannel.members.size === 1) bot.musicHandler.startTimeout(bot, newMember.guild);
+  else if (player.vChannel.members.size > 1 && player.timeout) bot.musicHandler.cancelTimeout(bot, newMember.guild);
 
   let permLvl = bot.checkPerms({guild: newMember.guild, member: newMember, author: newMember.user});
 
@@ -224,12 +225,12 @@ bot.on("voiceStateUpdate", (oldMember, newMember) => {
 
   // dj moved or left voice channel
   if (player.vChannel.id === oldMember.voiceChannel.id && (!newMember.voiceChannel || newMember.voiceChannel.id !== player.vChannel.id)) {
-    bot.musicHandler.setDJMode(newMember.guild, false);
+    bot.musicHandler.setDJMode(bot, newMember.guild, false);
   }
 
   // dj entered channel
   else if (player.vChannelid === newMember.voiceChannel.id) {
-    bot.musicHandler.setDJMode(newMember.guild, true);
+    bot.musicHandler.setDJMode(bot, newMember.guild, true);
   }
 });
 

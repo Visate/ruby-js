@@ -33,7 +33,7 @@ exports.run = (bot, msg, suffix) => {
         if (sec < 10) sec = `0${sec}`;
         let ytURL = `https://www.youtube.com/watch?v=${info["video_id"]}`;
 
-        bot.musicHandler.addToQueue(msg, info["title"], `${min}:${sec}`, info["thumbnail_url"], ytURL, ytURL, "youtube");
+        bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["thumbnail_url"], ytURL, ytURL, "youtube");
       });
     }
 
@@ -49,14 +49,14 @@ exports.run = (bot, msg, suffix) => {
           let sec = totalSec % 60;
           if (sec < 10) sec = `0${sec}`;
 
-          bot.musicHandler.addToQueue(msg, info["title"], `${min}:${sec}`, info["artwork_url"], info["permalink_url"], `${info["stream_url"]}?client_id=${config.apiKeys.soundcloudId}`, "soundcloud");
+          bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["artwork_url"], info["permalink_url"], `${info["stream_url"]}?client_id=${config.apiKeys.soundcloudId}`, "soundcloud");
         }
       });
     }
 
     else if (permLvl > 4) {
       // attempt any link streaming
-      bot.musicHandler.addToQueue(msg, suffix, "unknown", null, suffix, suffix, "other");
+      bot.musicHandler.addToQueue(bot, msg, suffix, "unknown", null, suffix, suffix, "other");
     }
   }
 

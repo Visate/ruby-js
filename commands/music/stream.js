@@ -18,7 +18,7 @@ exports.config = {
 
 exports.run = (bot, msg, suffix) => {
   let stream;
-  if (bot.musicHandler.isPlaying(msg.guild)) return msg.channel.sendMessage("Stop music playback first before you request a stream!");
+  if (bot.musicHandler.isPlaying(bot, msg.guild)) return msg.channel.sendMessage("Stop music playback first before you request a stream!");
   if (!bot.musicHandler.checkDJ(bot, msg)) return;
 
   if (suffix.toLowerCase() === "random" || !suffix) stream = streams.randomStream();
@@ -26,5 +26,5 @@ exports.run = (bot, msg, suffix) => {
   else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:\n${streams.getStreams().map(stream => stream.getName()).join(", ")}`);
   else return msg.channel.sendMessage(`Invalid stream name, use \`${config.settings.prefix}music stream list\` to view available streams!~`);
 
-  if (stream) bot.musicHandler.startStreaming(msg, stream);
+  if (stream) bot.musicHandler.startStreaming(bot, msg, stream);
 };

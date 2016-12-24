@@ -12,10 +12,10 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  let player = bot.musicHandler.getPlayer(msg.guild);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild);
   if (player && bot.musicHandler.checkDJ(bot, msg)) {
     msg.channel.sendMessage("Stopping all music playback!").then(() => {
-      bot.musicHandler.stopPlayback(msg.guild);
+      bot.musicHandler.stopPlayback(bot, msg.guild);
     });
   }
 };

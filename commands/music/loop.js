@@ -12,11 +12,11 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  let player = bot.musicHandler.getPlayer(msg.guild);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild);
   if (!bot.musicHandler.checkDJ(bot, msg)) return;
 
   if (player) {
-    let state = bot.musicHandler.toggleLooping(msg.guild);
+    let state = bot.musicHandler.toggleLooping(bot, msg.guild);
     if (state) return msg.channel.sendMessage("Now looping the queue!");
     else if (!state) return msg.channel.sendMessage("Looping disabled!");
   }

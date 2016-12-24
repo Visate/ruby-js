@@ -12,9 +12,9 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  let player = bot.musicHandler.getPlayer(msg.guild.id);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild.id);
   if (player) {
     if (!bot.musicHandler.checkDJ(bot, msg)) return;
-    bot.musicHandler.resumePlayback(msg);
+    bot.musicHandler.resumePlayback(bot, msg);
   }
 };

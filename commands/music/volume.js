@@ -13,15 +13,15 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  let player = bot.musicHandler.getPlayer(msg.guild);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild);
   let volumeQuery = Math.round(parseInt(suffix), 10);
   if (player) {
     if (bot.musicHandler.checkDJ(bot, msg) && !isNaN(volumeQuery)) {
       if (volumeQuery > 100) volumeQuery = 100;
       if (volumeQuery < 0) volumeQuery = 0;
-      bot.musicHandler.setVolume(msg.guild, volumeQuery);
+      bot.musicHandler.setVolume(bot, msg.guild, volumeQuery);
     }
-    let currentVolume = bot.musicHandler.getVolume(msg.guild);
+    let currentVolume = bot.musicHandler.getVolume(bot, msg.guild);
     msg.channel.sendMessage(`Volume: ${currentVolume} [${volumeBar(currentVolume)}]`);
   }
 };

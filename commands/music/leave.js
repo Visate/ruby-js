@@ -12,7 +12,7 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  let player = bot.musicHandler.getPlayer(msg.guild.id);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild.id);
   if (msg.member.voiceChannel.id !== player.vChannel.id) return msg.channel.sendMessage("You aren't connected to the active voice channel!");
   if (player && bot.musicHandler.checkDJ(bot, msg)) {
     player.vChannel.connection.disconnect();

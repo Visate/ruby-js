@@ -3,10 +3,9 @@ const config = require("../config.json");
 const ytdl = require("ytdl-core");
 const request = require("request");
 const stripIndents = require("common-tags").stripIndents;
-const connections = {};
 
-function play(guild, song) {
-  let player = connections.get(guild.id);
+function play(bot, guild, song) {
+  let player = bot.connections.get(guild.id);
   if (!player) return;
   else if (!song) {
     player.tChannel.sendMessage("The queue is empty! Better add some more songs~");
@@ -40,12 +39,12 @@ function play(guild, song) {
   player.dispatcher.on("error", err => {
     player.tChannel.sendMessage(`Error occurred during playback: ${err}`);
     player.queue.shift();
-    play(player.guild, player.queue[0]);
+    play(bot, player.guild, player.queue[0]);
   });
 }
 
-exports.createPlayer = (msg, djModeStatus) => {
-  connections[msg.guild.id] = {
+exports.createPlayer = (bot, msg, djModeStatus) => {
+  bot.connections[msg.guild.id] = {
     djMode: djModeStatus,
     guild: msg.guild,
     vChannel: msg.member.voiceChannel,
@@ -65,20 +64,20 @@ exports.createPlayer = (msg, djModeStatus) => {
   msg.channel.sendMessage(`Connected to voice channel ${msg.member.voiceChannel.name} and binding to ${msg.channel}.`);
 };
 
-exports.deletePlayer = guild => {
-  connections[guild.id] = undefined;
+exports.deletePlayer = (bot, guild) => {
+  bot.connections[guild.id] = undefined;
 };
 
-exports.getPlayer = guild => {
-  return connections[guild.id];
+exports.getPlayer = (bot, guild) => {
+  return bot.connections[guild.id];
 };
 
-exports.setDJMode = (guild, djModeStatus) => {
-  if (connections[guild.id]) connections[guild.id].djMode = djModeStatus;
+exports.setDJMode = (bot, guild, djModeStatus) => {
+  if (bot.connections[guild.id]) bot.connections[guild.id].djMode = djModeStatus;
 };
 
 exports.checkDJ = (bot, msg) => {
-  let player = connections[msg.guild.id];
+  let player = bot.connections[msg.guild.id];
   if (player) {
     if (!player.djMode) return true;
     else if (player.djMode && bot.checkPerms(msg) > 1) return true;
@@ -86,20 +85,20 @@ exports.checkDJ = (bot, msg) => {
   return false;
 };
 
-exports.isPlaying = guild => {
-  return connections[guild.id] ? connections[guild.id].playing : false;
+exports.isPlaying = (bot, guild) => {
+  return bot.connections[guild.id] ? bot.connections[guild.id].playing : false;
 };
 
-exports.isStreaming = guild => {
-  return connections[guild.id] ? connections[guild.id].streaming : false;
+exports.isStreaming = (bot, guild) => {
+  return bot.connections[guild.id] ? bot.connections[guild.id].streaming : false;
 };
 
-exports.setDispatcher = (guild, d) => {
-  if (connections[guild.id]) connections[guild.id].dispatcher = d;
+exports.setDispatcher = (bot, guild, dispatcher) => {
+  if (bot.connections[guild.id]) bot.connections[guild.id].dispatcher = dispatcher;
 };
 
-exports.startStreaming = (msg, stream) => {
-  let player = connections[msg.guild.id];
+exports.startStreaming = (bot, msg, stream) => {
+  let player = bot.connections[msg.guild.id];
   if (player && stream) {
     player.dispatcher = player.vChannel.connection.playStream(request(stream.url), {volume: player.volume / 50, passes: 2});
     player.streaming = true;
@@ -110,8 +109,8 @@ exports.startStreaming = (msg, stream) => {
   }
 };
 
-exports.addToQueue = (msg, songTitle, songLength, thumbnail, queueUrl, songUrl, songSource) => {
-  let player = connections[msg.guild.id];
+exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, songUrl, songSource) => {
+  let player = bot.connections[msg.guild.id];
   if (player) {
     let song = {
       title: songTitle,
@@ -137,34 +136,38 @@ exports.addToQueue = (msg, songTitle, songLength, thumbnail, queueUrl, songUrl, 
       **Position:** ${position}`
     };
     msg.channel.sendEmbed(embed);
+    if (player.streaming) {
+      player.streaming = false;
+      player.stream = null;
+    }
     if (!player.playing) play(msg.guild, song);
   }
 };
 
-exports.toggleLooping = guild => {
-  let player = connections[guild.id];
+exports.toggleLooping = (bot, guild) => {
+  let player = bot.connections[guild.id];
   if (player.looping) player.looping = false;
   else if (!player.looping) player.looping = true;
   return player.looping;
 };
 
-exports.stopPlayback = guild => {
-  let player = connections[guild.id];
+exports.stopPlayback = (bot, guild) => {
+  let player = bot.connections[guild.id];
   player.streaming = false;
   player.playing = false;
   player.queue = [];
   player.dispatcher.end();
 };
 
-exports.pausePlayback = msg => {
-  let player = connections[msg.guild.id];
+exports.pausePlayback = (bot, msg) => {
+  let player = bot.connections[msg.guild.id];
   if (!player.streaming) {
     if (!player.dispatcher.paused) msg.channel.sendMessage("Pausing playback!").then(() => player.dispatcher.pause());
   }
 };
 
-exports.resumePlayback = msg => {
-  let player = connections[msg.guild.id];
+exports.resumePlayback = (bot, msg) => {
+  let player = bot.connections[msg.guild.id];
   if (!player.streaming) {
     if (player.dispatcher.paused) msg.channel.sendMessage("Resuming playback!").then(() => player.dispatcher.resume());
   }
@@ -172,7 +175,7 @@ exports.resumePlayback = msg => {
 
 exports.skipSong = (bot, msg) => {
   let permLvl = bot.checkPerms(msg);
-  let player = connections[msg.guild.id];
+  let player = bot.connections[msg.guild.id];
   if (player && player.playing) {
     if (permLvl > 1) {
       msg.channel.sendMessage(`Skipped ${player.queue[0].title}!`).then(() => player.dispatcher.end());
@@ -191,31 +194,8 @@ exports.skipSong = (bot, msg) => {
   }
 };
 
-exports.getNowPlaying = guild => {
-  let player = connections[guild.id];
-  if (player && (player.streaming || player.playing)) {
-    let milliSec = player.dispatcher.time;
-    let totalSec = ~~(milliSec / 1000);
-    let min = ~~(totalSec / 60);
-    let sec = totalSec % 60;
-    if (sec < 10) {
-      sec = `0${sec}`;
-    }
-
-    if (player.streaming) {
-      return `**${player.stream.np()}** streaming from **${player.stream.name}** [${min}:${sec}]`;
-    }
-
-    else if (player.playing) {
-      return `**${player.queue[0].title}** requested by **${player.queue[0].requestedBy.username}** \`[${min}:${sec}/${player.queue[0].length}]\``;
-    }
-  }
-
-  return null;
-};
-
-exports.getQueueLength = guild => {
-  let player = connections[guild.id];
+exports.getQueueLength = (bot, guild) => {
+  let player = bot.connections[guild.id];
   if (player && player.playing) {
     let totalMin = 0;
     let totalSec = 0;
@@ -240,8 +220,8 @@ exports.getQueueLength = guild => {
   return null;
 };
 
-exports.songTimeLeft = (guild, min, sec) => {
-  let player = connections[guild.id];
+exports.songTimeLeft = (bot, guild, min, sec) => {
+  let player = bot.connections[guild.id];
   if (player && player.playing) {
     let currentSong = player.queue[0];
     if (!currentSong) return null;
@@ -258,22 +238,22 @@ exports.songTimeLeft = (guild, min, sec) => {
   }
 };
 
-exports.getVolume = guild => {
-  let player = connections[guild.id];
+exports.getVolume = (bot, guild) => {
+  let player = bot.connections[guild.id];
   if (player) return player.volume;
   return null;
 };
 
-exports.setVolume = (guild, volume) => {
-  let player = connections[guild.id];
+exports.setVolume = (bot, guild, volume) => {
+  let player = bot.connections[guild.id];
   if (player) {
     player.volume = volume;
     if (player.dispatcher) player.dispatcher.setVolume(player.volume / 50);
   }
 };
 
-exports.startTimeout = guild => {
-  let player = connections[guild.id];
+exports.startTimeout = (bot, guild) => {
+  let player = bot.connections[guild.id];
   console.log(`Starting music timeout for ${guild.name}`);
   player.timeout = setTimeout(() => {
     player.tChannel.sendMessage("Disconnecting from voice due to voice channel inactivity.");
@@ -281,8 +261,8 @@ exports.startTimeout = guild => {
   }, 300000);
 };
 
-exports.cancelTimeout = guild => {
-  let player = connections[guild.id];
+exports.cancelTimeout = (bot, guild) => {
+  let player = bot.connections[guild.id];
   if (player && player.timeout) {
     clearTimeout(player.timeout);
     player.timeout = null;

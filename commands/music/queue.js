@@ -17,7 +17,7 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix = 1) => {
-  let player = bot.musicHandler.getPlayer(msg.guild);
+  let player = bot.musicHandler.getPlayer(bot, msg.guild);
   if (player) {
     let queueMsg;
     let milliSec = player.dispatcher.time;
@@ -50,8 +50,8 @@ exports.run = (bot, msg, suffix = 1) => {
       ${maxPages > 1 ? `\nUse \`${config.settings.prefix}music queue <page>\` to view a specific page.\n` : ""}
 
       **Now playing:** ${currentSong.queueUrl ? `[${currentSong.title}](${currentSong.queueUrl})` : currentSong.title}
-      **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${min}:${sec} / ${currentSong.length} (${bot.musicHandler.songTimeLeft(msg.guild, min, sec)} left)
-      **Total queue time:** ${bot.getQueueLength(msg.guild)}
+      **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${min}:${sec} / ${currentSong.length} (${bot.musicHandler.songTimeLeft(bot, msg.guild, min, sec)} left)
+      **Total queue time:** ${bot.musicHandler.getQueueLength(bot, msg.guild)}
       \u200b
       `;
     }
