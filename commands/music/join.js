@@ -17,7 +17,7 @@ exports.run = (bot, msg) => {
 
   msg.member.voiceChannel.join().then(connection => {
     let djMode = false;
-    msg.member.voiceChannel.forEach(m => {
+    msg.member.voiceChannel.members.forEach(m => {
       if (m.id === bot.user.id) return;
       if (bot.checkPerms({guild: m.guild, member: m, author: m.user}) > 1) djMode = true;
     });
