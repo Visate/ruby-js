@@ -262,7 +262,6 @@ exports.setVolume = (bot, guild, volume) => {
 
 exports.startTimeout = (bot, guild) => {
   let player = bot.connections[guild.id];
-  console.log(`Starting music timeout for ${guild.name}`);
   player.timeout = setTimeout(() => {
     player.tChannel.sendMessage("Disconnecting from voice due to voice channel inactivity.");
     player.vChannel.connection.disconnect();
