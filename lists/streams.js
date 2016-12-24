@@ -10,12 +10,15 @@ list.set("r-a-d.io", {
   queueUrl: "https://r-a-d.io",
   url: "https://stream.r-a-d.io/main.mp3",
   np: () => {
+    let np;
     request("https://r-a-d.io/api", (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        let jsonObj = JSON.parse(body);
-        return jsonObj["main"]["np"];
+        let info = JSON.parse(body);
+        np = info["main"]["np"];
       }
     });
+
+    return np;
   }
 });
 names.push("r-a-d.io");
