@@ -33,7 +33,7 @@ exports.run = (bot, msg, suffix) => {
         if (sec < 10) sec = `0${sec}`;
         let ytURL = `https://www.youtube.com/watch?v=${info["video_id"]}`;
 
-        bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["thumbnail_url"], ytURL, ytURL, "youtube");
+        bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["iurlmaxres"], ytURL, ytURL, "youtube");
       });
     }
 

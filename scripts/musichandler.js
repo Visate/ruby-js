@@ -19,8 +19,14 @@ function play(bot, guild, song) {
       name: `${song.requestedBy.username}#${song.requestedBy.discriminator} (${song.requestedBy.id})`,
       icon_url: song.requestedBy.avatarURL
     },
-    description: `${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : song.length})`,
-    image: song.thumbnail
+    description: `${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : song.length})\n\u200b`,
+    image: {
+      url: song.thumbnail
+    },
+    footer: {
+      text: "Now Playing",
+      icon_url: bot.user.avatarURL
+    }
   };
   player.tChannel.sendEmbed(embed);
   let stream;
@@ -112,6 +118,7 @@ exports.startStreaming = (bot, msg, stream) => {
 exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, songUrl, songSource) => {
   let player = bot.connections[msg.guild.id];
   if (player) {
+    if (typeof thumbnail === "string") thumbnail.replace("http://", "https://");
     let song = {
       title: songTitle,
       requestedBy: msg.author,
