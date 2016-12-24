@@ -19,7 +19,7 @@ function play(bot, guild, song) {
       name: `${song.requestedBy.username}#${song.requestedBy.discriminator} (${song.requestedBy.id})`,
       icon_url: song.requestedBy.avatarURL
     },
-    description: `${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : song.length})\n\u200b`,
+    description: `${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : song.length})`,
     image: {
       url: song.thumbnail
     },
@@ -146,6 +146,7 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
     if (player.streaming) {
       player.streaming = false;
       player.stream = null;
+      player.dispatcher.end();
     }
     if (!player.playing) play(bot, msg.guild, song);
   }
