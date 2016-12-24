@@ -12,7 +12,7 @@ list.set("r-a-d.io", {
   np: () => {
     updateRadio();
     if (radioJSON === {}) return "Unknown";
-    return radioJSON["np"];
+    return radioJSON["main"]["np"];
   }
 });
 names.push("r-a-d.io");
