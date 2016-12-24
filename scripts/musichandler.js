@@ -266,7 +266,7 @@ exports.startTimeout = (bot, guild) => {
   player.timeout = setTimeout(() => {
     player.tChannel.sendMessage("Disconnecting from voice due to voice channel inactivity.");
     player.vChannel.connection.disconnect();
-  }, 300000);
+  }, 3000);
 };
 
 exports.cancelTimeout = (bot, guild) => {

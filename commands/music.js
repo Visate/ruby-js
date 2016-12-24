@@ -50,7 +50,7 @@ exports.run = (bot, msg, suffix) => {
     if (subCmd.config.guildOnly && !msg.guild) return;
     if (perms < subCmd.config.permLevel) return;
     if (subCmd.help.name !== "join" && subCmd.help.name !== "help" && !player) return msg.channel.sendMessage(`I haven't joined a voice channel yet! Summon me to a voice channel with \`${config.settings.prefix}music join\` first!`);
-    if (subCmd.help.name !== "help" && player && msg.member.voiceChannel.id !== player.vChannel.id) return msg.channel.sendMessage("You aren't in the active voice channel!");
+    if (subCmd.help.name !== "help" && player && (!msg.member.voiceChannel || msg.member.voiceChannel.id !== player.vChannel.id)) return msg.channel.sendMessage("You aren't in the active voice channel!");
     subCmd.run(bot, msg, subSuffix);
   }
 };
