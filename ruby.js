@@ -159,6 +159,7 @@ bot.on("userUpdate", (oldUser, newUser) => {
 
 bot.on("messageDelete", message => {
   if (!message.guild) return;
+  if (message.content === "") return;
   let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msg = stripIndents`
