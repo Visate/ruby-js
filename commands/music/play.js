@@ -1,6 +1,9 @@
-const ytdl = require("ytdl-core");
-const request = require("request");
 const config = require("../../config.json");
+const YouTubeAPI = require("simple-youtube-api");
+const ytdl = require("ytdl-core");
+const YouTube = new YouTubeAPI(config.apiKeys.googleAPIKey);
+const request = require("request");
+
 
 exports.help = {
   name: "play",
@@ -20,48 +23,45 @@ exports.run = (bot, msg, suffix) => {
   let permLvl = bot.checkPerms(msg);
   if (!bot.musicHandler.checkDJ(bot, msg)) return;
 
-  if (suffix.includes("http")) {
-    if (suffix.search(/<http.+>/) !== -1) suffix = suffix.slice(1, -1);
-    if (suffix.includes("youtube") || suffix.includes("youtu.be")) {
-      // Youtube streaming
-      ytdl.getInfo(suffix, (err, info) => {
-        if (err) return msg.channel.sendMessage(`Error occured on adding song: ${err}`);
+  let url = suffix.replace(/<(.+)>/g, "$1");
 
-        let totalSec = parseInt(info["length_seconds"], 10);
+  if (url.match(/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/)) {
+    // Soundcloud streaming
+    request(`https://api.soundcloud.com/resolve?url=${suffix}&client_id=${config.apiKeys.soundcloudId}`, (error, response, body) => {
+      if (error) return msg.channel.sendMessage(`Error occured on adding song: ${error}`);
+      else if (!error && response.statusCode === 200) {
+        let info = JSON.parse(body);
+        let milliSec = parseInt(info["duration"], 10);
+        let totalSec = ~~(milliSec / 1000);
         let min = ~~(totalSec / 60);
         let sec = totalSec % 60;
         if (sec < 10) sec = `0${sec}`;
-        let ytURL = `https://www.youtube.com/watch?v=${info["video_id"]}`;
 
-        bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["iurlmaxres"], ytURL, ytURL, "youtube");
-      });
-    }
+        bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["artwork_url"], info["permalink_url"], `${info["stream_url"]}?client_id=${config.apiKeys.soundcloudId}`, "soundcloud");
+      }
+    });
+  }
 
-    else if (suffix.match(/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/)) {
-      // Soundcloud streaming
-      request(`https://api.soundcloud.com/resolve?url=${suffix}&client_id=${config.apiKeys.soundcloudId}`, (error, response, body) => {
-        if (error) return msg.channel.sendMessage(`Error occured on adding song: ${error}`);
-        else if (!error && response.statusCode === 200) {
-          let info = JSON.parse(body);
-          let milliSec = parseInt(info["duration"], 10);
-          let totalSec = ~~(milliSec / 1000);
-          let min = ~~(totalSec / 60);
-          let sec = totalSec % 60;
-          if (sec < 10) sec = `0${sec}`;
-
-          bot.musicHandler.addToQueue(bot, msg, info["title"], `${min}:${sec}`, info["artwork_url"], info["permalink_url"], `${info["stream_url"]}?client_id=${config.apiKeys.soundcloudId}`, "soundcloud");
-        }
-      });
-    }
-
-    else if (permLvl > 4) {
-      // attempt any link streaming
-      bot.musicHandler.addToQueue(bot, msg, suffix, "unknown", null, suffix, suffix, "other");
-    }
+  else if (permLvl > 4 && url.match(/^https?:\/\/(.*)$/) && !url.match(/(youtube.com|youtu.be)/)) {
+    bot.musicHandler.addToQueue(bot, msg, suffix, "unknown", null, suffix, suffix, "other");
   }
 
   else {
-    // youtube search
+    YouTube.getVideo(url).then(video => {
+      let min = ~~(video.durationSeconds / 60);
+      let sec = video.durationSeconds % 60;
+      if (sec < 10) sec = `0${sec}`;
 
+      bot.musicHandler.addToQueue(bot, msg, video.title, `${min}:${sec}`, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+    }).catch(() => {
+      YouTube.searchVideos(url, 1).then(videos => {
+        let video = videos[0];
+        let min = ~~(video.durationSeconds / 60);
+        let sec = video.durationSeconds % 60;
+        if (sec < 10) sec = `0${sec}`;
+
+        bot.musicHandler.addToQueue(bot, msg, video.title, `${min}:${sec}`, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+      }).catch(() => msg.channel.sendMessage("Error occured on adding song: Unable to obtain a search result."));
+    });
   }
 };
