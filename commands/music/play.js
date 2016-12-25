@@ -51,16 +51,16 @@ exports.run = (bot, msg, suffix) => {
       let min = ~~(video.durationSeconds / 60);
       let sec = video.durationSeconds % 60;
       if (sec < 10) sec = `0${sec}`;
-
       bot.musicHandler.addToQueue(bot, msg, video.title, `${min}:${sec}`, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
     }).catch(() => {
+      // Search for one video
       YouTube.searchVideos(url, 1).then(videos => {
-        let video = videos[0];
-        let min = ~~(video.durationSeconds / 60);
-        let sec = video.durationSeconds % 60;
-        if (sec < 10) sec = `0${sec}`;
-
-        bot.musicHandler.addToQueue(bot, msg, video.title, `${min}:${sec}`, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+        YouTube.getVideoByID(videos[0].id).then(video => {
+          let min = ~~(video.durationSeconds / 60);
+          let sec = video.durationSeconds % 60;
+          if (sec < 10) sec = `0${sec}`;
+          bot.musicHandler.addToQueue(bot, msg, video.title, `${min}:${sec}`, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+        }).catch(err => msg.channel.sendMessage(`Error occured on adding song: ${err}`));
       }).catch(() => msg.channel.sendMessage("Error occured on adding song: Unable to obtain a search result."));
     });
   }
