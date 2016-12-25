@@ -22,7 +22,8 @@ exports.run = (bot, msg, suffix) => {
   if (!modes.includes(suffix)) return;
   else config.modes[suffix] = config.modes[suffix] ? false : true;
 
-  fs.writeFileSync("../config.json", JSON.stringify(config, null, 2));
+  fs.writeFileSync("/root/ruby/config.json", JSON.stringify(config, null, 2));
+  console.log(__dirname);
   msg.channel.sendMessage(`Mode "${suffix}": ${config.modes[suffix]}`);
   bot.reloadConfig();
 };

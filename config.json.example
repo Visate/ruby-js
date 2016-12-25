@@ -5,7 +5,11 @@
 
   "settings": {
     "prefix": "prefix here",
-    "maxPurge": 20
+    "maxPurge": 2000
+  },
+
+  "resources": {
+    "banForm": "google form link to ban form"
   },
 
   "permissions": {
@@ -21,10 +25,8 @@
   },
 
   "apiKeys": {
-    "anilistId": "anilist id for anime/manga command",
-    "anilistSecret": "anilist secret",
     "soundcloudId": "soundcloud id for music",
-    "osuKey": "osu id for osu commands"
+    "googleAPIKey": "google api key for search"
   },
 
   "firebase": {
