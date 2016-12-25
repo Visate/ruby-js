@@ -67,7 +67,7 @@ exports.run = (bot, msg, suffix) => {
         m.delete();
         lastMsg.delete();
         index++;
-        if (index > count - 1) collector.stop("finished");
+        if (index === count) return collector.stop("finished");
         YouTube.getVideoByID(videos[index].id).then(video => {
           currentVideo = video;
           lastMsg = msg.channel.sendEmbed({

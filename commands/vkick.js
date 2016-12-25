@@ -64,7 +64,7 @@ function processVkick(msg, member) {
   msg.guild.createChannel(createID(), "voice").then(channel => {
     member.setVoiceChannel(channel).then(() => {
       channel.delete();
-      msg.channel.sendMessage("^-^");
+      msg.channel.sendMessage("^-^").then(m => m.delete(5000));
     });
   });
 }
