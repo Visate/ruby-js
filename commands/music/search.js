@@ -53,7 +53,7 @@ exports.run = (bot, msg, suffix) => {
           text: "Music Search",
           icon_url: bot.user.avatarURL
         }
-      });
+      }).then(m => lastMsg = m);
     });
     collector.on("message", m => {
       if (!currentVideo) return;
@@ -89,7 +89,7 @@ exports.run = (bot, msg, suffix) => {
               text: "Music Search",
               icon_url: bot.user.avatarURL
             }
-          });
+          }).then(m => lastMsg = m);
         });
       }
       else if (m.content === "exit") {
