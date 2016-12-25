@@ -1,15 +1,14 @@
 const config = require("../../config.json");
 const YouTubeAPI = require("simple-youtube-api");
-const ytdl = require("ytdl-core");
 const YouTube = new YouTubeAPI(config.apiKeys.googleAPIKey);
 const request = require("request");
 
 
 exports.help = {
   name: "play",
-  usage: "<URL|search>",
-  description: "Adds a song to the queue. Can be YouTube/SoundCloud URL or search.",
-  extendedhelp: "Adds a song to the music queue, and if nothing is already playing, starts playback. You may send either a YouTube/SoundCloud URL or a search query which will search on YouTube."
+  usage: "<URL|YouTube Video ID|search>",
+  description: "Adds a song to the queue. Can be YouTube/SoundCloud URL, YouTube Video ID or search.",
+  extendedhelp: "Adds a song to the music queue, and if nothing is already playing, starts playback. You may send either a YouTube/SoundCloud URL, YouTube Video Id or a search query which will search on YouTube. If you have sufficient permissions, you can also queue an external URL."
 };
 
 exports.config = {
@@ -25,7 +24,8 @@ exports.run = (bot, msg, suffix) => {
 
   let url = suffix.replace(/<(.+)>/g, "$1");
 
-  if (url.match(/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/)) {
+  if (url.match(/^https?:\/\/(www.)?youtube.com\/playlist\?(.*)$/)) return msg.channel.sendMessage(`Use \`${config.settings.prefix}music playlist <playlist>\` to queue a YouTube playlist!`);
+  if (url.match(/^https?:\/\/(www.)?(soundcloud.com|snd.sc)\/(.*)$/)) {
     // Soundcloud streaming
     request(`https://api.soundcloud.com/resolve?url=${suffix}&client_id=${config.apiKeys.soundcloudId}`, (error, response, body) => {
       if (error) return msg.channel.sendMessage(`Error occured on adding song: ${error}`);

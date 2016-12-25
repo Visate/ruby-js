@@ -132,6 +132,7 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
     player.queue.push(song);
     let position = "Up next!";
     if (player.queue.length > 1) position = player.queue.length - 1;
+    if (player.looping) typeof position === "number" ? position += 1 : position = 1;
     let embed = {
       color: 3447003,
       author: {

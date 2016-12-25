@@ -51,7 +51,7 @@ exports.run = (bot, msg, suffix) => {
 
       **Now playing:** ${currentSong.queueUrl ? `[${currentSong.title}](${currentSong.queueUrl})` : currentSong.title}
       **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${min}:${sec} / ${currentSong.length} (${bot.musicHandler.songTimeLeft(bot, msg.guild, min, sec)} left)
-      **Total queue time:** ${bot.musicHandler.getQueueLength(bot, msg.guild)}
+      **Total queue time:** ${bot.musicHandler.getQueueLength(bot, msg.guild)}${player.looping ? `\n**Looping ${player.queue.length} songs**` : ""}
       \u200b
       `;
     }
