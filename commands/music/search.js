@@ -32,6 +32,7 @@ exports.run = (bot, msg, suffix) => {
     let collector = msg.channel.createCollector(m => m.author === msg.author, {time: 60000});
     let currentVideo;
     let lastMsg;
+    let visible = false;
     YouTube.getVideoByID(videos[index].id).then(video => {
       currentVideo = video;
       lastMsg = msg.channel.sendEmbed({
@@ -53,10 +54,13 @@ exports.run = (bot, msg, suffix) => {
           text: "Music Search",
           icon_url: bot.user.avatarURL
         }
-      }).then(m => lastMsg = m);
+      }).then(m => {
+        lastMsg = m;
+        visible = true;
+      });
     });
     collector.on("message", m => {
-      if (!currentVideo) return;
+      if (!currentVideo || !lastMsg || !visible) return m.delete();
       if (m.content === "y") {
         m.delete();
         lastMsg.delete();
@@ -66,6 +70,7 @@ exports.run = (bot, msg, suffix) => {
       else if (m.content === "n") {
         m.delete();
         lastMsg.delete();
+        visible = false;
         index++;
         if (index === count) return collector.stop("finished");
         YouTube.getVideoByID(videos[index].id).then(video => {
@@ -89,7 +94,10 @@ exports.run = (bot, msg, suffix) => {
               text: "Music Search",
               icon_url: bot.user.avatarURL
             }
-          }).then(m => lastMsg = m);
+          }).then(m => {
+            lastMsg = m;
+            visible = true;
+          });
         });
       }
       else if (m.content === "exit") {
