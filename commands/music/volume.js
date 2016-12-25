@@ -8,7 +8,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["vol", "v"],
+  aliases: ["vol"],
   permLevel: 0
 };
 
