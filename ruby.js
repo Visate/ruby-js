@@ -183,6 +183,7 @@ bot.on("messageDeleteBulk", messages => {
 
 bot.on("messageUpdate", (oldMessage, newMessage) => {
   if (!newMessage.guild) return;
+  if (oldMessage.content === newMessage.content) return;
   let nyaaLogCh = newMessage.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msg = stripIndents`
