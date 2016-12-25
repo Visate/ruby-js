@@ -21,8 +21,8 @@ exports.run = (bot, msg, suffix) => {
   let userQuery = suffix.split(" ")[0];
   let reason = suffix.substring(userQuery.length + 1);
 
-  if (userQuery.startsWith("<@!")) userQuery = userQuery.substring(3, userQuery.length - 1);
-  else if (userQuery.startsWith("<@")) userQuery = userQuery.substring(2, userQuery.length - 1);
+  if (userQuery.startsWith("<@!")) userQuery = userQuery.slice(3, -1);
+  else if (userQuery.startsWith("<@")) userQuery = userQuery.slice(2, -1);
 
   if (!suffix) return msg.channel.sendMessage(`${msg.author}, please provide a user ID or mention and a reason~`).then(m => m.delete(5000));
   if (isNaN(userQuery)) return msg.channel.sendMessage(`${msg.author}, please provide a valid user ID or mention~`).then(m => m.delete(5000));
@@ -31,8 +31,7 @@ exports.run = (bot, msg, suffix) => {
   let user;
   originGuild.fetchBans().then(bans => {
     user = bans.get(userQuery);
-    if (!user) user = originGuild.members.get(userQuery);
-    if (!user) user = {username: "?", discriminator: "?", id: userQuery};
+    if (!user) user = originGuild.members.has(userQuery) ? originGuild.members.get(userQuery).user : {username: "?", discriminator: "?", id: userQuery, placeholder: true};
     processGunban(bot, msg, originGuild, user, reason).then((unbanUser, count) => {
       msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count} servers ^-^`);
     }).catch((unbanUser, count, countNoUnban) => {
@@ -46,14 +45,22 @@ function processGunban(bot, msg, originGuild, user, reason) {
   let countNoUnban = 0;
 
   return new Promise((resolve, reject) => {
+
+    function checkPromise() {
+      if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
+      else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
+    }
+
     bot.guilds.forEach(guild => {
       if (guild.id === "235144885101920256") return; // exempt testing server
+      count++;
+
       let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
       let caseNum;
       rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
-        let pastCase = msgs.array()[0];
-        if (msgs.size === 0) caseNum = 1;
+        let pastCase = msgs.first();
+        if (!pastCase) caseNum = 1;
         else if (pastCase.embeds.length === 0) {
           let caseTxt = pastCase.content.split("\n")[0];
           caseNum = parseInt(caseTxt.substring(21, caseTxt.indexOf(" |")), 10) + 1;
@@ -65,7 +72,7 @@ function processGunban(bot, msg, originGuild, user, reason) {
         if (isNaN(caseNum)) caseNum = 1;
 
         guild.unban(user.id).then(unbanUser => {
-          if (user.username === "?" && user.discriminator === "?" && typeof unbanUser !== "string") user = unbanUser;
+          if (user.placeholder && typeof unbanUser !== "string") user = unbanUser;
 
           let logDetails = stripIndents`
           **Action:**          Global Unban
@@ -89,16 +96,10 @@ function processGunban(bot, msg, originGuild, user, reason) {
           };
 
           rubyLogCh.sendEmbed(logMsg);
-          count++;
-
-          if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
-          else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
+          checkPromise();
         }).catch(() => {
-          count++;
           countNoUnban++;
-
-          if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
-          else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
+          checkPromise();
         });
       });
     });

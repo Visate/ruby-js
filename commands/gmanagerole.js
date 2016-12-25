@@ -11,7 +11,7 @@ exports.config = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 7
+  permLevel: 6
 };
 
 exports.run = (bot, msg, suffix) => {

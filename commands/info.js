@@ -11,21 +11,20 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: false,
-  aliases: ["introduce", "stats", "statistics"],
+  aliases: ["introduce", "stats", "statistics", "uptime"],
   permLevel: 0
 };
 
 exports.run = (bot, msg) => {
-  let totalSec = bot.uptime / 1000;
-  let mins = ~~(totalSec / 60);
-  let secs = ~~(totalSec % 60);
-
+  let hours = ~~(bot.uptime / 3600000) % 24;
+  let minutes = ~~(bot.uptime / 60000) % 60;
+  let seconds = ~~(bot.uptime / 1000) % 60;
   let embed = {
     color: 3447003,
     description: stripIndents`
     Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^
     If you want to see what I can do, use \`${config.settings.prefix}help\`
-    If you have any questions, feel free to ask my creator Visate#7752 :blush:
+    If you have any questions, feel free to ask my creator <@97198953430257664> :blush:
 
     **${bot.user.username} Statistics**
     `,
@@ -41,17 +40,17 @@ exports.run = (bot, msg) => {
         inline: true
       },
       {
-        name: "❯ Uptime",
-        value: `${mins}:${secs}`,
-        inline: true
-      },
-      {
         name: "❯ General Info",
         value: stripIndents`
         ★ Guilds: ${bot.guilds.size}
         ★ Channels: ${bot.channels.size}
         ★ Users: ${bot.users.size}
         `,
+        inline: true
+      },
+      {
+        name: "❯ Uptime",
+        value: `${hours} ${hours === 1 ? "hour" : "hours"}, ${minutes} ${minutes === 1 ? "minute" : "minutes"} and ${seconds} ${seconds === 1 ? "second" : "seconds"}`,
         inline: true
       }
     ],

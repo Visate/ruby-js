@@ -47,7 +47,7 @@ exports.run = (bot, msg, suffix) => {
       members.push(m);
     });
 
-    if (members.length === 0) return msg.channel.sendMessage("No voice users were found with this user query, try something else~");
+    if (members.length === 0) return msg.channel.sendMessage(`${msg.author}, no voice users were found with that user query, try something else~`).then(m => m.delete(5000));
     else if (members.length === 1) processVkick(msg, members[0]);
     else if (members.length > 1) {
       let idsInfo = stripIndents`

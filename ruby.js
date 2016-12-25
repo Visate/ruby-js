@@ -48,9 +48,7 @@ bot.on("ready", () => {
   log("-----------------");
 
   bot.homeServer = bot.guilds.find(guild => guild.id === "235144885101920256");
-  bot.homeServer.fetchMember(config.permissions.master[0]).then(master => {
-    bot.homeServer.defaultChannel.sendMessage(`${master}\n${bot.user.username}: **READY**`);
-  });
+  bot.homeServer.defaultChannel.sendMessage(`${bot.homeServer.members.get(config.permissions.master[0])}\n${bot.user.username}: **READY**`);
 });
 
 bot.on("message", msg => {
@@ -98,7 +96,7 @@ bot.on("guildMemberAdd", member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   log(`${member.user.username} (${member.id}) joined ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(`**Join:** \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss UTC")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`**Join:** \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`);
   let guestRole = guild.roles.find(role => role.name === "Guest");
   member.addRole(guestRole);
 

@@ -17,13 +17,12 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  suffix = suffix.toLowerCase();
-  let modes = ["nyaabot"];
-  if (suffix === "modes") return msg.channel.sendMessage(`**Available Modes:**\n${modes.join(", ")}`);
+  let modes = Object.keys(config.modes);
+  if (suffix.toLowerCase() === "modes") return msg.channel.sendMessage(`**Available Modes:**\n${modes.join(", ")}`);
   if (!modes.includes(suffix)) return;
   else config.modes[suffix] = config.modes[suffix] ? false : true;
 
-  fs.writeFileSync("../config.json", JSON.stringfy(config, null, 2));
+  fs.writeFileSync("../config.json", JSON.stringify(config, null, 2));
   msg.channel.sendMessage(`Mode "${suffix}": ${config.modes[suffix]}`);
   bot.reloadConfig();
 };

@@ -11,7 +11,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: false,
-  aliases: ["math", "evaluate"],
+  aliases: ["calc", "math", "evaluate"],
   permLevel: 0
 };
 

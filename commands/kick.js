@@ -23,8 +23,8 @@ exports.run = (bot, msg, suffix) => {
   let reason = suffix.substring(userQuery.length + 1);
   let userid;
 
-  if (userQuery.startsWith("<@!")) userid = userQuery.substring(3, userQuery.length - 1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.substring(2, userQuery.length - 1);
+  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
+  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -34,12 +34,13 @@ exports.run = (bot, msg, suffix) => {
 
   let member = guild.members.get(userid);
 
-  if (!member.bannable) return msg.channel.sendMessage("I cannot kick this user!").then(m => m.delete(5000));
+  if (!member) return msg.channel.sendMessage(`${msg.author}, I cannot find that user!`).then(m => m.delete(5000));
+  if (!member.bannable) return msg.channel.sendMessage(`${msg.author}, I cannot kick that user!`).then(m => m.delete(5000));
 
   let caseNum;
   rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
-    let pastCase = msgs.array()[0];
-    if (msgs.size === 0) caseNum = 1;
+    let pastCase = msgs.first();
+    if (!pastCase) caseNum = 1;
     else if (pastCase.embeds.length === 0) {
       let caseTxt = pastCase.content.split("\n")[0];
       caseNum = parseInt(caseTxt.substring(21, caseTxt.indexOf(" |")), 10) + 1;
@@ -72,15 +73,15 @@ exports.run = (bot, msg, suffix) => {
     };
 
     let msgPM = stripIndents`
-    Oh no! It appears that you have been kicked by ${msg.author.username}.
+    Oh no! It appears that you have been kicked by ${msg.author.username}#${msg.author.discriminator}.
     **Reason:** ${reason}
 
     If you feel that this was unjust, feel free to talk to NyaaKoneko#1495 about it. You are welcome to join back with this link, please behave this time~ :heart:
     `;
     guild.fetchInvites().then(function(invites) {
       let invite = invites.find(invite => invite.maxAge === 0 && invite.temporary === false && invite.channel.id === guild.defaultChannel.id);
-      if (invite === null | invite === undefined) {
-        guild.defaultChannel.createInvite({maxAge: 0}).then((inviteLobby) => {
+      if (!invite) {
+        guild.defaultChannel.createInvite({maxAge: 0}).then(inviteLobby => {
           let url = inviteLobby.url;
           msgPM += `\n${url}`;
           processKick(msg, rubyLogCh, logMsg, member, msgPM);

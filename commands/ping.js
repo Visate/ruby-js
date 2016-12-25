@@ -13,8 +13,7 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  msg.channel.sendMessage("Ping?")
-    .then(message => {
-      message.edit(`Pong! (took: ${message.createdTimestamp - msg.createdTimestamp}ms)`);
-    });
+  msg.channel.sendMessage("Ping?").then(message => {
+    message.edit(`Pong! (took: ${message.createdTimestamp - msg.createdTimestamp}ms)`);
+  });
 };

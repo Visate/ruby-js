@@ -1,7 +1,6 @@
 // Whois command
 const stripIndents = require("common-tags").stripIndents;
 const config = require("../config.json");
-const createID = require("../scripts/createid.js");
 
 exports.help = {
   name: "whois",
@@ -12,7 +11,7 @@ exports.help = {
 
 exports.config = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: ["userinfo"],
   permLevel: 0
 };
@@ -55,31 +54,25 @@ exports.run = (bot, msg, suffix) => {
   }
 
   if (members.length > 1) {
-    let msgArray = [];
-    msgArray.push(`Multiple users were found with that search, run the command with \`${config.settings.prefix}whois <id>\``);
-    members.forEach(m => {
-      let userMsg = m.nickname ? `**${m.user.username} (${m.nickname}):** ${m.id}` : `**${m.user.username}:** ${m.id}`;
-      msgArray.push(userMsg);
-    });
-
-    msg.channel.sendMessage(msgArray);
-  }
-
-  else if (members.length === 1 && members[0] !== null && members[0] !== undefined) {
-    let member = members[0];
-    let randomID = createID();
-
-    let details = stripIndents`
-    • User:                  \`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}\`
-    • ID:                      \u200A${member.id}
-    • Roles:                \u2009${member.roles.map(r => `\`${r.name}\``).join(" ")}
-    • Date Joined:    \u2006${member.joinedAt.toUTCString()}
-    • Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
-    ${member.presence.game ? `${member.presence.game.streaming ? `• Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `• Playing:             ${member.presence.game.name}`}` : randomID}
-    \u200b
+    let idsInfo = stripIndents`
+    Multiple users were found with that search, run the command with \`${config.settings.prefix}whois <id>\`
+    ${members.map(m => `**${m.user.username}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
     `;
 
-    details = details.replace(`\n${randomID}`, "");  // correct spacing if there is no game
+    msg.channel.sendMessage(idsInfo);
+  }
+
+  else if (members.length === 1 && members[0]) {
+    let member = members[0];
+
+    let details = stripIndents`
+    • User:                  \`${bot.cleanText(`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}`)}\`
+    • ID:                      \u200A${member.id}
+    • Roles:                \u2009${member.roles.map(r => `\`${bot.cleanText(r.name)}\``).join(" ")}
+    • Date Joined:    \u2006${member.joinedAt.toUTCString()}
+    • Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
+    ${member.presence.game ? `${member.presence.game.streaming ? `• Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `• Playing:             ${member.presence.game.name}`}\n\u200b` : "\u200b"}
+    `;
 
     let embed = {
       color: 3447003,

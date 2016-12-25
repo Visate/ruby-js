@@ -28,10 +28,9 @@ exports.run = (bot, msg, suffix) => {
       if (perms < cmd.config.permLevel) return;
       if (!cmd.config.enabled) return;
       if (cmd.config.guildOnly && !msg.guild) return;
-      let message = `${cmd.help.name}`;
-      if (cmd.help.usage) message += ` ${cmd.help.usage}`;
-      message += `:: ${cmd.help.description}`;
-      cmdArray[helpOrder[cmd.help.name]] = message;
+      let message = `${cmd.help.name}${cmd.help.usage ? ` ${cmd.help.usage}` : ""}:: ${cmd.help.description}`;
+      if (helpOrder[cmd.help.name]) cmdArray[helpOrder[cmd.help.name]] = message;
+      else cmdArray.push(message);
     });
     for (let i = 0; i < cmdArray.length; ) {
       if (cmdArray[i] === undefined) cmdArray.splice(i, 1);

@@ -22,8 +22,8 @@ exports.run = (bot, msg, suffix) => {
   let reason = suffix.substring(userQuery.length + 1);
   let userid = userQuery;
 
-  if (userQuery.startsWith("<@!")) userid = userQuery.substring(3, userQuery.length - 1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.substring(2, userQuery.length - 1);
+  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
+  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -36,8 +36,8 @@ exports.run = (bot, msg, suffix) => {
     if (!user) return msg.channel.sendMessage(`${msg.author}, cannot find a user with that id in the ban list!`);
     let caseNum;
     rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
-      let pastCase = msgs.array()[0];
-      if (msgs.size === 0) caseNum = 1;
+      let pastCase = msgs.first();
+      if (!pastCase) caseNum = 1;
       else if (pastCase.embeds.length === 0) {
         let caseTxt = pastCase.content.split("\n")[0];
         caseNum = parseInt(caseTxt.substring(21, caseTxt.indexOf(" |")), 10) + 1;

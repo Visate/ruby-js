@@ -18,7 +18,7 @@ exports.config = {
 
 exports.run = (bot, msg, suffix) => {
   let rollQuery = suffix.toLowerCase();
-  if (rollQuery !== "") {
+  if (rollQuery) {
     if (rollQuery.includes("d")) diceRoll(msg, rollQuery);
     else if (rollQuery.includes("-")) {
       let min = parseInt(rollQuery.split("-")[0], 10);
