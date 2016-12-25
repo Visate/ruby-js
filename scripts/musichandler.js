@@ -3,6 +3,7 @@ const config = require("../config.json");
 const ytdl = require("ytdl-core");
 const request = require("request");
 const stripIndents = require("common-tags").stripIndents;
+const shuffle = require("./shuffle.js");
 
 function play(bot, guild, song) {
   let player = bot.connections[guild.id];
@@ -149,7 +150,64 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
       player.stream = null;
       player.dispatcher.end();
     }
-    if (!player.playing) play(bot, msg.guild, song);
+    if (!player.playing) play(bot, msg.guild, player.queue[0]);
+  }
+};
+
+exports.addPlaylistToQueue = (bot, msg, YouTube, videos) => {
+  return new Promise((resolve, reject) => {
+    let player = bot.connections[msg.guild.id];
+    let total = videos.length;
+    let progress = 0;
+    let failed = 0;
+
+    function checkPromise() {
+      if (progress === total) {
+        if (player.streaming) {
+          player.streaming = false;
+          player.stream = null;
+          player.dispatcher.end();
+        }
+        if (!player.playing) play(bot, msg.guild, player.queue[0]);
+        resolve(total, failed);
+      }
+    }
+
+    if (player) {
+      videos.forEach(video => {
+        YouTube.getVideoByID(video.id).then(v => {
+          progress++;
+          let min = ~~(v.durationSeconds / 60);
+          let sec = v.durationSeconds % 60;
+          if (sec < 10) sec = `0${sec}`;
+          let song = {
+            title: v.title,
+            requestedBy: msg.author,
+            length: `${min}:${sec}`,
+            thumbnail: `https://img.youtube.com/vi/${v.id}/mqdefault.jpg`,
+            queueUrl: v.url,
+            url: v.url,
+            source: "youtube"
+          };
+          player.queue.push(song);
+          checkPromise();
+        }).catch(() => {
+          progress++;
+          failed++;
+          checkPromise();
+        });
+      });
+    }
+
+    else reject();
+  });
+};
+
+exports.shuffleQueue = (bot, msg) => {
+  let player = bot.connections[msg.guild.id];
+  if (player && player.playing) {
+    player.queue = [player.queue[0]].concat(shuffle(player.queue.slice(1)));
+    msg.channel.sendMessage("Music queue has been shuffled!");
   }
 };
 

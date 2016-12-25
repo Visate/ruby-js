@@ -3,12 +3,15 @@
   "join": 1,
   "leave": 2,
   "play": 3,
-  "stream": 4,
-  "queue": 5,
-  "loop": 6,
-  "skip": 7,
-  "resume": 8,
-  "pause": 9,
-  "stop": 10,
-  "volume": 11
+  "search": 4,
+  "playlist": 5,
+  "stream": 6,
+  "queue": 7,
+  "loop": 8,
+  "shuffle": 9,
+  "skip": 10,
+  "resume": 11,
+  "pause": 12,
+  "stop": 13,
+  "volume": 14
 }
