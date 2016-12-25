@@ -22,7 +22,7 @@ exports.run = (bot, msg, suffix) => {
       bot.musicHandler.setVolume(bot, msg.guild, volumeQuery);
     }
     let currentVolume = bot.musicHandler.getVolume(bot, msg.guild);
-    msg.channel.sendMessage(`Volume: ${currentVolume} [${volumeBar(currentVolume)}]`);
+    msg.channel.sendMessage(`Volume: ${currentVolume} [${volumeBar(currentVolume / 5)}]`);
   }
 };
 
