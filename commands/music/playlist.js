@@ -8,7 +8,7 @@ exports.help = {
   name: "playlist",
   usage: "[number of videos] <playlist>",
   description: "Queues a YouTube playlist.",
-  extendedhelp: "Queues a YouTube playlist. If no number is specified, the first 50 videos will be added to the queue."
+  extendedhelp: "Queues a YouTube playlist. If no number is specified, the first 50 videos will be added to the queue. Can only grab a maximum of 50."
 };
 
 exports.config = {
@@ -19,6 +19,8 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
+  if (!bot.musicHandler.checkDJ(bot, msg)) return;
+
   let count = 50;
   let playlistQuery = suffix;
   if (!isNaN(suffix.split(" ")[0])) {
@@ -26,6 +28,7 @@ exports.run = (bot, msg, suffix) => {
     playlistQuery = suffix.split(" ").slice(1).join(" ");
   }
 
+  if (count > 50) count = 50;
   if (!playlistQuery) return msg.channel.sendMessage("Please provide a link to a playlist!");
 
   YouTube.getPlaylist(playlistQuery).then(playlist => {
@@ -46,6 +49,6 @@ exports.run = (bot, msg, suffix) => {
         };
         msg.channel.sendEmbed(embed);
       });
-    }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist while fetching videos: ${err}`));
-  }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist while fetching playlist: ${err}`));
+    }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
+  }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
 };
