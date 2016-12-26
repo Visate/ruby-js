@@ -26,9 +26,9 @@ exports.run = (bot, msg, suffix) => {
     playlistQuery = suffix.split(" ").slice(1).join(" ");
   }
 
-  YouTube.getPlaylist(playlistQuery).then(results => {
-    results[0].getVideos(count).then(videos => {
-      bot.musicHandler.addPlaylistToQueue(bot, msg, YouTube, videos).then((length, failed) => {
+  YouTube.getPlaylist(playlistQuery).then(playlist => {
+    playlist.getVideos(count).then(videos => {
+      bot.musicHandler.addPlaylistToQueue(bot, msg, YouTube, videos).then(videoCount => {
         let embed = {
           color: 3447003,
           author: {
@@ -36,10 +36,14 @@ exports.run = (bot, msg, suffix) => {
             icon_url: msg.author.avatarURL
           },
           description: stripIndents`
-          :thumbsup: Added ${length - failed} ${length - failed !== 1 ? "videos" : "video"} from playlist [${results[0].title}](${results[0].url}) to the queue!`
+          :thumbsup: Added **${videoCount} ${videoCount !== 1 ? "videos" : "video"}** from playlist [${playlist.title}](${playlist.url}) to the queue!`,
+          footer: {
+            text: "Music Playlist",
+            icon_url: bot.user.avatarURL
+          }
         };
         msg.channel.sendEmbed(embed);
-      }).catch(() => msg.channel.sendMessage("Error occurred on adding playlist: There's no active player in this guild!"));
+      });
     }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
   }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
 };

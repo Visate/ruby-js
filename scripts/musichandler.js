@@ -155,7 +155,7 @@ exports.addToQueue = (bot, msg, songTitle, songLength, thumbnail, queueUrl, song
 };
 
 exports.addPlaylistToQueue = (bot, msg, YouTube, videos) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     let player = bot.connections[msg.guild.id];
     let total = videos.length;
     let progress = 0;
@@ -169,37 +169,33 @@ exports.addPlaylistToQueue = (bot, msg, YouTube, videos) => {
           player.dispatcher.end();
         }
         if (!player.playing) play(bot, msg.guild, player.queue[0]);
-        resolve(total, failed);
+        resolve(total - failed);
       }
     }
 
-    if (player) {
-      videos.forEach(video => {
-        YouTube.getVideoByID(video.id).then(v => {
-          progress++;
-          let min = ~~(v.durationSeconds / 60);
-          let sec = v.durationSeconds % 60;
-          if (sec < 10) sec = `0${sec}`;
-          let song = {
-            title: v.title,
-            requestedBy: msg.author,
-            length: `${min}:${sec}`,
-            thumbnail: `https://img.youtube.com/vi/${v.id}/mqdefault.jpg`,
-            queueUrl: v.url,
-            url: v.url,
-            source: "youtube"
-          };
-          player.queue.push(song);
-          checkPromise();
-        }).catch(() => {
-          progress++;
-          failed++;
-          checkPromise();
-        });
+    videos.forEach(video => {
+      YouTube.getVideoByID(video.id).then(v => {
+        progress++;
+        let min = ~~(v.durationSeconds / 60);
+        let sec = v.durationSeconds % 60;
+        if (sec < 10) sec = `0${sec}`;
+        let song = {
+          title: v.title,
+          requestedBy: msg.author,
+          length: `${min}:${sec}`,
+          thumbnail: `https://img.youtube.com/vi/${v.id}/mqdefault.jpg`,
+          queueUrl: v.url,
+          url: v.url,
+          source: "youtube"
+        };
+        player.queue.push(song);
+        checkPromise();
+      }).catch(() => {
+        progress++;
+        failed++;
+        checkPromise();
       });
-    }
-
-    else reject();
+    });
   });
 };
 
