@@ -27,7 +27,7 @@ exports.run = (bot, msg) => {
       {
         name: "❯ Channels",
         value: stripIndents`
-        ⭑ ${guild.channels.filter(c => c.type === "text").size} Text, ${guild.channels.filter(c => c.type === "voice")} Voice
+        ⭑ ${guild.channels.filter(c => c.type === "text").size} Text, ${guild.channels.filter(c => c.type === "voice").size} Voice
         ⭑ Default: ${guild.defaultChannel}${guild.afkChannelID ? `\n⭑ AFK: ${guild.channels.get(guild.afkChannelID)}`: ""}`,
         inline: true
       },
