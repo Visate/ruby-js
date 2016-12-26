@@ -26,6 +26,8 @@ exports.run = (bot, msg, suffix) => {
     playlistQuery = suffix.split(" ").slice(1).join(" ");
   }
 
+  if (!playlistQuery) return msg.channel.sendMessage("Please provide a link to a playlist!");
+
   YouTube.getPlaylist(playlistQuery).then(playlist => {
     playlist.getVideos(count).then(videos => {
       bot.musicHandler.addPlaylistToQueue(bot, msg, YouTube, videos).then(videoCount => {
@@ -44,6 +46,6 @@ exports.run = (bot, msg, suffix) => {
         };
         msg.channel.sendEmbed(embed);
       });
-    }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
-  }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist: ${err}`));
+    }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist while fetching videos: ${err}`));
+  }).catch(err => msg.channel.sendMessage(`Error occurred on adding playlist while fetching playlist: ${err}`));
 };
