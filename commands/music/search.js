@@ -8,7 +8,7 @@ exports.help = {
   name: "search",
   usage: "[number of results] <search>",
   description: "Searches YouTube for a video.",
-  extendedhelp: "Searches YouTube for a video. Defaults to 5 results if a number isn't provided. If the first character of the video is a number, enclose the search in quotation marks."
+  extendedhelp: "Searches YouTube for a video. Defaults to 5 results if a number isn't provided. If the first character of the video is a number, enclose the search in quotation marks. Only searches up to a maximum of 50 videos."
 };
 
 exports.config = {
@@ -19,6 +19,8 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
+  if (!bot.musicHandler.checkDJ(bot, msg)) return;
+  
   let index = 0;
   let count = 5;
   let search = suffix;
@@ -27,9 +29,10 @@ exports.run = (bot, msg, suffix) => {
     count = parseInt(suffix.split(" ")[0], 10);
     search = suffix.split(" ").slice(1).join(" ");
   }
+  if (count > 50) count = 50;
 
   YouTube.searchVideos(search, count).then(videos => {
-    let collector = msg.channel.createCollector(m => m.author === msg.author, {time: 60000});
+    let collector = msg.channel.createCollector(m => m.author === msg.author, {time: 10000 * count});
     let currentVideo;
     let lastMsg;
     let visible = false;
