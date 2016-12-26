@@ -42,9 +42,9 @@ exports.run = (bot, msg) => {
       {
         name: "❯ General Info",
         value: stripIndents`
-        ★ Guilds: ${bot.guilds.size}
-        ★ Channels: ${bot.channels.size}
-        ★ Users: ${bot.users.size}
+        ⭑ Guilds: ${bot.guilds.size}
+        ⭑ Channels: ${bot.channels.size}
+        ⭑ Users: ${bot.users.size}
         `,
         inline: true
       },

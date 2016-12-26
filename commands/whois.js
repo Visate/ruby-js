@@ -66,11 +66,11 @@ exports.run = (bot, msg, suffix) => {
     let member = members[0];
 
     let details = stripIndents`
-    • User:                  \`${bot.cleanText(`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}`)}\`
-    • ID:                      \u200A${member.id}
-    • Roles:                \u2009${member.roles.map(r => `\`${bot.cleanText(r.name)}\``).join(" ")}
-    • Date Joined:    \u2006${member.joinedAt.toUTCString()}
-    • Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
+    ⭑ User:                  \`${bot.cleanText(`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}`)}\`
+    ⭑ ID:                      \u200A${member.id}
+    ⭑ Roles:                \u2009${member.roles.map(r => `\`${bot.cleanText(r.name)}\``).join(" ")}
+    ⭑ Date Joined:    \u2006${member.joinedAt.toUTCString()}
+    ⭑ Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
     ${member.presence.game ? `${member.presence.game.streaming ? `• Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `• Playing:             ${member.presence.game.name}`}\n\u200b` : "\u200b"}
     `;
 
