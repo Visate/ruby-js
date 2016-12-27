@@ -11,6 +11,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
+  alternateInvoke: true,
   aliases: [],
   permLevel: 1
 };

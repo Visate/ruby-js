@@ -13,6 +13,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
+  alternateInvoke: true,
   aliases: ["voicekick"],
   permLevel: 4
 };
