@@ -168,7 +168,7 @@ bot.on("messageDelete", message => {
   ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
   `;
 
-  nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
+  if (nyaaLogCh) nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
 });
 
 bot.on("messageDeleteBulk", messages => {
@@ -182,7 +182,7 @@ bot.on("messageDeleteBulk", messages => {
     if (message.system) return;
     msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
   });
-  nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
+  if (nyaaLogCh) nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
 });
 
 bot.on("messageUpdate", (oldMessage, newMessage) => {
@@ -196,7 +196,7 @@ bot.on("messageUpdate", (oldMessage, newMessage) => {
   **After:** ${newMessage.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
   `;
 
-  nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
+  if (nyaaLogCh) nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
 });
 
 bot.on("guildBanAdd", (guild, user) => {
