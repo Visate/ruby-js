@@ -160,6 +160,7 @@ bot.on("userUpdate", (oldUser, newUser) => {
 bot.on("messageDelete", message => {
   if (!message.guild) return;
   if (message.content === "") return;
+  if (message.system) return;
   let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msg = stripIndents`
@@ -177,6 +178,8 @@ bot.on("messageDeleteBulk", messages => {
   let msgArray = [];
   msgArray.push("**Message Bulk Delete:**");
   messages.forEach(message => {
+    if (message.content === "") return;
+    if (message.system) return;
     msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
   });
   nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
