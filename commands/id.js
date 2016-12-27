@@ -25,7 +25,7 @@ exports.run = (bot, msg, suffix) => {
       let query = suffix.toLowerCase();
       let members = msg.guild.members.filter(m => m.user.username.toLowerCase().includes(query) || (m.nickname && m.nickname.toLowerCase().includes(query)));
 
-      if (members.length > 1) {
+      if (members.size > 1) {
         return msg.channel.sendMessage(stripIndents`
           Multiple users were found with that search.
           ${members.map(m => `**${m.user.username}#${m.user.discriminator}:** ${m.id}`).join("\n")}
