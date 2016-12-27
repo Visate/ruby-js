@@ -5,7 +5,7 @@ exports.help = {
   name: "id",
   usage: "[user]",
   description: "Displays your or someone else's Discord ID.",
-  extendedhelp: "Displays your or someone else's Discord ID."
+  extendedhelp: "Displays your or someone else's Discord ID. Only displays your ID in private messages."
 };
 
 exports.config = {
@@ -16,9 +16,11 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  let user = msg.author;
+  let user;
 
-  if (msg.guild && suffix) {
+  if (!msg.guild || !suffix) user = msg.author;
+
+  else if (msg.guild && suffix) {
     if (suffix.startsWith("<@!")) user = msg.guild.members.get(suffix.slice(3, -1)).user;
     else if (suffix.startsWith("<@")) user = msg.guild.members.get(suffix.slice(2, -1)).user;
     else {
@@ -31,9 +33,11 @@ exports.run = (bot, msg, suffix) => {
           ${members.map(m => `**${m.user.username}#${m.user.discriminator}:** ${m.id}`).join("\n")}
         `);
       }
-      else if (members.length === 1) user = members[0].user;
+      else if (members.size === 1) user = members.first().user;
     }
   }
 
+  if (!user) return msg.channel.sendMessage("No users were found with that search!");
+  
   msg.channel.sendMessage(`**${user.username}#${user.discriminator}**'s ID is ${user.id}`);
 };
