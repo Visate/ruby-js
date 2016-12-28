@@ -1,0 +1,802 @@
+{
+  "roles": [
+    {
+      "name": "Princess Overlord",
+      "color": "#f9b7ff",
+      "hoist": true,
+      "permissions": ["ADMINISTRATOR"]
+    },
+    {
+      "name": "~Nyaa Bot Family",
+      "color": "#ff00a1",
+      "hoist": true,
+      "permissions": ["ADMINISTRATOR"]
+    },
+    {
+      "name": "Ultimate Power",
+      "color": "#f433ff",
+      "hoist": true,
+      "permissions": ["ADMINISTRATOR"],
+      "mentionable": true
+    },
+    {
+      "name": "Trusted Employee",
+      "color": "#f62bc5",
+      "hoist": true,
+      "permissions": ["MANAGE_ROLES_OR_PERMISSIONS", "MANAGE_CHANNELS", "KICK_MEMBERS", "BAN_MEMBERS", "CREATE_INSTANT_INVITE",
+        "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "MUTE_MEMBERS", "DEAFEN_MEMBERS", "MOVE_MEMBERS", "USE_VAD"],
+      "mentionable": true
+    },
+    {
+      "name": "Temp Help",
+      "color": "#42ffbc",
+      "hoist": true,
+      "permissions": ["ADMINISTRATOR"]
+    },
+    {
+      "name": "Super Admin",
+      "color": "#e74c3c",
+      "hoist": true,
+      "permissions": ["MANAGE_ROLES_OR_PERMISSIONS", "KICK_MEMBERS",
+        "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "MOVE_MEMBERS", "USE_VAD"],
+      "mentionable": true
+    },
+    {
+      "name": "Admin",
+      "color": "#10f615",
+      "hoist": true,
+      "permissions": ["KICK_MEMBERS",
+        "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"],
+      "mentionable": true
+    },
+    {
+      "name": "Moderator",
+      "color": "#2ecc71",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"],
+      "mentionable": true
+    },
+    {
+      "name": "Trial Moderator",
+      "color": "#ff87f1",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Bot Creator",
+      "color": "#e91e63",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Pm me please! I want friends ♥",
+      "color": "#8bc0f1",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Country",
+      "color": "#a23bec",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Tourist",
+      "color": "#3498db",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Guest",
+      "color": "#effba0",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "USE_VAD"]
+    },
+    {
+      "name": "Server Bots",
+      "color": "#ffc5d6",
+      "hoist": true,
+      "permissions": ["READ_MESSAGES", "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS"]
+    },
+  ],
+
+  "channels": [
+    {
+      "name": "mods",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "READ_MESSAGES": false
+          }
+        },
+        {
+          "name": "Trial Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "help",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "read-the-rules",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "bot-commands",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "announcements",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": false
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        },
+      ]
+    },
+    {
+      "name": "voice-chat",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "karaoke",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "bot-testing",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "games",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "pics-gifs",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "anime-manga",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "twitch",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "videos-audio",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "meetup",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "nyaa-servers",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "community-servers",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "suggestions",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "ruby-log",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "READ_MESSAGES": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        },
+        {
+          "name": "Trial Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "nyaa",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "READ_MESSAGES": false
+          }
+        },
+        {
+          "name": "Trial Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "nyaa-log",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "READ_MESSAGES": false,
+            "SEND_MESSAGES": false,
+            "MANAGE_MESSAGES": false
+          }
+        },
+        {
+          "name": "Trial Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "modteam-bios",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "READ_MESSAGES": false
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "public-bios",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "roleplay",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "selfies",
+      "type": "text",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "❤ Mods",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
+            "CONNECT": false
+          }
+        },
+        {
+          "name": "Moderator",
+          "type": "role",
+          "options": {
+            "CONNECT": true
+          }
+        },
+        {
+          "name": "Admin",
+          "type": "role",
+          "options": {
+            "CONNECT": true
+          }
+        },
+        {
+          "name": "Super Admin",
+          "type": "role",
+          "options": {
+            "CONNECT": true
+          }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "CONNECT": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "❤ Nyaa",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎤 Voice Chat",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎵 Karaoke 🎵",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "☕ Chill out Lounge",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚮 Watching Anime",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎮 Gaming",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "┌﴾ →♥ AFK ♥← ﴿┐",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "SPEAK": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "└﴾ →♥ AFK ♥← ﴿┘",
+      "type": "voice",
+      "overwrites": [
+        {
+          "name": "@everyone",
+          "type": "role",
+          "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "CONNECT": false
+          }
+        }
+      ]
+    },
+  ]
+}
