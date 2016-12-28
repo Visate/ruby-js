@@ -18,8 +18,7 @@ Object.keys(serverListing).forEach(category => {
 });
 
 function onCooldown(channel, server) {
-  let cooldown = cooldowns[channel.id][server.name];
-  if (cooldown) return moment().isBefore(cooldown);
+  if (cooldowns[channel.id][server.name]) return moment().isBefore(cooldowns[channel.id][server.name]);
   return false;
 }
 
