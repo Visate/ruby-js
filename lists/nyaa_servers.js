@@ -11,6 +11,7 @@ const cooldowns = {};
 Object.keys(serverListing).forEach(category => {
   serverListing[category].forEach(server => {
     servers.set(server.name.toLowerCase(), server);
+    cooldowns[server.name] = {};
     server.aliases.forEach(alias => {
       aliases.set(alias, server.name.toLowerCase());
     });
@@ -18,12 +19,12 @@ Object.keys(serverListing).forEach(category => {
 });
 
 function onCooldown(channel, server) {
-  if (cooldowns[channel.id] && cooldowns[channel.id][server.name]) return moment().isBefore(cooldowns[channel.id][server.name]);
+  if (cooldowns[server.name][channel.id]) return moment().isBefore(cooldowns[server.name][channel.id]);
   return false;
 }
 
 function setCooldown(channel, server) {
-  cooldowns[channel.id][server.name] = moment().add(10, "seconds");
+  cooldowns[server.name][channel.id] = moment().add(10, "seconds");
 }
 
 exports.linkServer = (msg, query) => {
@@ -33,4 +34,4 @@ exports.linkServer = (msg, query) => {
     setCooldown(msg.channel, server);
     msg.channel.sendMessage(`${server.name} Server: ${server.invite}`);
   }
-}
+};
