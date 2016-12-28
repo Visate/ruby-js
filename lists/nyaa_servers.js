@@ -11,7 +11,7 @@ const cooldowns = {};
 Object.keys(serverListing).forEach(category => {
   serverListing[category].forEach(server => {
     servers.set(server.name.toLowerCase(), server);
-    servers.aliases.forEach(alias => {
+    server.aliases.forEach(alias => {
       aliases.set(alias, server.name.toLowerCase());
     });
   });
