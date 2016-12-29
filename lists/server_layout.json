@@ -217,6 +217,8 @@
           "name": "@everyone",
           "type": "role",
           "options": {
+            "CREATE_INSTANT_INVITE": false,
+            "MANAGE_CHANNELS": false,
             "SEND_MESSAGES": false
           }
         },
