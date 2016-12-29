@@ -478,13 +478,6 @@
           }
         },
         {
-          "name": "Trial Moderator",
-          "type": "role",
-          "options": {
-            "READ_MESSAGES": true
-          }
-        },
-        {
           "name": "Moderator",
           "type": "role",
           "options": {
@@ -530,13 +523,6 @@
           }
         },
         {
-          "name": "Trial Moderator",
-          "type": "role",
-          "options": {
-            "READ_MESSAGES": true
-          }
-        },
-        {
           "name": "Moderator",
           "type": "role",
           "options": {
@@ -576,35 +562,35 @@
           "options": {
             "CREATE_INSTANT_INVITE": false,
             "MANAGE_CHANNELS": false,
-            "READ_MESSAGES": false
+            "SEND_MESSAGES": false
           }
         },
         {
           "name": "Moderator",
           "type": "role",
           "options": {
-            "READ_MESSAGES": true
+            "SEND_MESSAGES": true
           }
         },
         {
           "name": "Admin",
           "type": "role",
           "options": {
-            "READ_MESSAGES": true
+            "SEND_MESSAGES": true
           }
         },
         {
           "name": "Super Admin",
           "type": "role",
           "options": {
-            "READ_MESSAGES": true
+            "SEND_MESSAGES": true
           }
         },
         {
           "name": "Trusted Employee",
           "type": "role",
           "options": {
-            "READ_MESSAGES": true
+            "SEND_MESSAGES": true
           }
         }
       ]
