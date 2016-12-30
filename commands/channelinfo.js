@@ -34,7 +34,7 @@ exports.run = (bot, msg) => {
       },
       {
         name: "❯ Topic",
-        value: channel.topic
+        value: channel.topic ? channel.topic : "None"
       }
     ],
     footer: {
