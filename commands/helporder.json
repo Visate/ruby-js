@@ -1,5 +1,4 @@
 {
-  "help": 0,
   "warn": 1,
   "kick": 2,
   "ban": 3,
@@ -23,5 +22,6 @@
   "eval": 31,
   "shutdown": 32,
   "restart": 33,
-  "reload": 34
+  "reload": 34,
+  "help": 50
 }
