@@ -61,8 +61,8 @@ exports.run = (bot, msg, suffix) => {
     color: 3447003,
     author: {
       name: `${member.user.username}#${member.user.discriminator} (ID: ${member.id})`,
-      icon_url: member.user.avatarURL,
-      url: member.user.avatarURL
+      icon_url: member.user.displayAvatarURL,
+      url: member.user.displayAvatarURL
     },
     fields: [
       {
@@ -71,7 +71,7 @@ exports.run = (bot, msg, suffix) => {
       }
     ],
     thumbnail: {
-      url: member.user.avatarURL
+      url: member.user.displayAvatarURL
     },
     footer: {
       text: "User Info",
