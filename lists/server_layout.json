@@ -30,7 +30,7 @@
     },
     {
       "name": "Temp Help",
-      "color": "#42ffbc",
+      "color": "#32fcd0",
       "hoist": true,
       "permissions": ["ADMINISTRATOR"]
     },
