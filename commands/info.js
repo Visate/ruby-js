@@ -21,6 +21,10 @@ exports.run = (bot, msg) => {
   let seconds = ~~(bot.uptime / 1000) % 60;
   let embed = {
     color: 3447003,
+    author: {
+      name: `${bot.user.username}#${bot.user.discriminator} (ID: ${bot.user.id})`,
+      icon_url: `${bot.user.avatarURL}`
+    },
     description: stripIndents`
     Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^
     If you want to see what I can do, use \`${config.settings.prefix}help\`
