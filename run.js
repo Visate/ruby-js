@@ -15,7 +15,8 @@ child.on("exit:code", (code) => {
     log("Detected a shutdown code! Shutting down...");
     process.exit(0);
   }
-})
+});
+
 child.on("exit", () => {
   log("Ruby's process has stopped!");
 });
