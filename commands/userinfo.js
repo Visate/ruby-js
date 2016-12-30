@@ -13,7 +13,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["whois", "uinfo", "u-info", "user-info"],
+  aliases: ["whois", "uinfo", "u-info", "user-info", "avatar"],
   permLevel: 0
 };
 
