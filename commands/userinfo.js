@@ -13,7 +13,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: true,
-  aliases: ["whois"],
+  aliases: ["whois", "uinfo", "u-info", "user-info"],
   permLevel: 0
 };
 
@@ -61,7 +61,8 @@ exports.run = (bot, msg, suffix) => {
     color: 3447003,
     author: {
       name: `${member.user.username}#${member.user.discriminator} (ID: ${member.id})`,
-      icon_url: member.user.avatarURL
+      icon_url: member.user.avatarURL,
+      url: member.user.avatarURL
     },
     fields: [
       {
