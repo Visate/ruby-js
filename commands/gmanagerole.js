@@ -11,7 +11,7 @@ exports.config = {
   enabled: true,
   guildOnly: true,
   alternateInvoke: true,
-  aliases: [],
+  aliases: ["gmrole"],
   permLevel: 6
 };
 

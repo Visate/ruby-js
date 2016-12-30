@@ -9,7 +9,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: false,
-  aliases: ["r"],
+  aliases: [],
   permLevel: 8
 };
 

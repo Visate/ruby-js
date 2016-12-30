@@ -12,7 +12,7 @@ exports.help = {
 exports.config = {
   enabled: true,
   guildOnly: false,
-  aliases: ["h", "?"],
+  aliases: ["dice", "random"],
   permLevel: 0
 };
 
