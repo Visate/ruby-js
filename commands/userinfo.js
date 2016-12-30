@@ -54,13 +54,13 @@ exports.run = (bot, msg, suffix) => {
   ⭑ Roles:                \u2009${member.roles.map(r => `\`${bot.cleanText(r.name)}\``).join(" ")}
   ⭑ Date Joined:    \u2006${moment(member.joinedAt).format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}
   ⭑ Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
-  ${member.presence.game ? `${member.presence.game.streaming ? `• Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `• Playing:             ${member.presence.game.name}`}\n\u200b` : "\u200b"}
+  ${member.presence.game ? `${member.presence.game.streaming ? `⭑ Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `⭑ Playing:             ${member.presence.game.name}`}\n\u200b` : "\u200b"}
   `;
 
   let embed = {
     color: 3447003,
     author: {
-      name: `${member.user.username}#${member.user.discriminator} (${member.id})`,
+      name: `${member.user.username}#${member.user.discriminator} (ID: ${member.id})`,
       icon_url: member.user.avatarURL
     },
     fields: [
