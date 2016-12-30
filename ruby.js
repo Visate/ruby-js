@@ -61,6 +61,18 @@ bot.on("message", msg => {
     nyaaServers.linkServer(msg, query);
     return;
   }
+  // tableunflipper
+  else if (msg.content.search(/((?:ʕノ•ᴥ•ʔノ|\(\/¯◡ ‿ ◡\)\/¯ ~|\(._.\) ~|\(╯'□'\)╯|\(╯°□°）╯|\(ノ ゜Д゜\)ノ|\‎?\(ﾉಥ益ಥ）ﾉ\﻿?)\s?︵? ┻━*┻)/) !== -1) {  //eslint-disable-line no-irregular-whitespace
+    let chance = Math.round(Math.random() * 100);
+    if (chance < 10) {
+      let gifUnflips = ["http://i.imgur.com/DJqWmOv.gifv", "http://i.imgur.com/MFDlqLX.gif", "http://i.imgur.com/OHTVdwg.gif", "http://i.imgur.com/xBQOzc4.gif", "http://i.imgur.com/ayAyZ6v.gif"];
+      return msg.reply(gifUnflips[Math.floor(Math.random() * gifUnflips.length)]);
+    }
+    else {
+      let unflips = ["┬─┬ ノ( ゜-゜ノ)", "┬─┬ ノ( '□'ノ)", "┬─┬ ノ( º _ ºノ)"];
+      return msg.reply(unflips[Math.floor(Math.random() * unflips.length)]);
+    }
+  }
   else return;
 
   // return conditions
