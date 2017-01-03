@@ -269,6 +269,11 @@
       ]
     },
     {
+      "name": "casual-lobby",
+      "type": "default",
+      "overwrites": []
+    },
+    {
       "name": "voice-chat",
       "type": "text",
       "overwrites": [
