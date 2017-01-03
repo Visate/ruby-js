@@ -16,7 +16,9 @@
       "name": "Ultimate Power",
       "color": "#f433ff",
       "hoist": true,
-      "permissions": ["ADMINISTRATOR"],
+      "permissions": ["MANAGE_GUILD", "MANAGE_ROLES_OR_PERMISSIONS", "MANAGE_CHANNELS", "MANAGE_EMOJIS", "MANAGE_WEBHOOKS", "KICK_MEMBERS", "BAN_MEMBERS", "CREATE_INSTANT_INVITE",
+        "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+        "CONNECT", "SPEAK", "MOVE_MEMBERS", "USE_VAD"],
       "mentionable": true
     },
     {
@@ -25,12 +27,12 @@
       "hoist": true,
       "permissions": ["MANAGE_ROLES_OR_PERMISSIONS", "MANAGE_CHANNELS", "KICK_MEMBERS", "BAN_MEMBERS", "CREATE_INSTANT_INVITE",
         "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-        "CONNECT", "SPEAK", "MUTE_MEMBERS", "DEAFEN_MEMBERS", "MOVE_MEMBERS", "USE_VAD"],
+        "CONNECT", "SPEAK", "MOVE_MEMBERS", "USE_VAD"],
       "mentionable": true
     },
     {
       "name": "Temp Help",
-      "color": "#32fcd0",
+      "color": "#42ffbc",
       "hoist": true,
       "permissions": ["ADMINISTRATOR"]
     },
@@ -40,7 +42,7 @@
       "hoist": true,
       "permissions": ["MANAGE_ROLES_OR_PERMISSIONS", "KICK_MEMBERS",
         "READ_MESSAGES", "SEND_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-        "CONNECT", "SPEAK", "MOVE_MEMBERS", "USE_VAD"],
+        "CONNECT", "SPEAK", "USE_VAD"],
       "mentionable": true
     },
     {
@@ -158,6 +160,13 @@
           "options": {
             "READ_MESSAGES": true
           }
+        },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
         }
       ]
     },
@@ -250,6 +259,13 @@
             "SEND_MESSAGES": true
           }
         },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        }
       ]
     },
     {
@@ -398,6 +414,22 @@
             "SEND_MESSAGES": false,
             "MANAGE_MESSAGES": false
           }
+        },
+        {
+          "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true,
+            "MANAGE_MESSAGES": true
+          }
+        },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true,
+            "MANAGE_MESSAGES": true
+          }
         }
       ]
     },
@@ -463,6 +495,13 @@
           "options": {
             "READ_MESSAGES": true
           }
+        },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
         }
       ]
     },
@@ -502,6 +541,13 @@
         },
         {
           "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
+        },
+        {
+          "name": "Ultimate Power",
           "type": "role",
           "options": {
             "READ_MESSAGES": true
@@ -551,6 +597,13 @@
           "options": {
             "READ_MESSAGES": true
           }
+        },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "READ_MESSAGES": true
+          }
         }
       ]
     },
@@ -590,6 +643,13 @@
         },
         {
           "name": "Trusted Employee",
+          "type": "role",
+          "options": {
+            "SEND_MESSAGES": true
+          }
+        },
+        {
+          "name": "Ultimate Power",
           "type": "role",
           "options": {
             "SEND_MESSAGES": true
@@ -677,6 +737,13 @@
           "options": {
             "CONNECT": true
           }
+        },
+        {
+          "name": "Ultimate Power",
+          "type": "role",
+          "options": {
+            "CONNECT": true
+          }
         }
       ]
     },
@@ -760,7 +827,8 @@
     },
     {
       "name": "┌﴾ →♥ AFK ♥← ﴿┐",
-      "type": "voice",
+      "type": "afk",
+      "time": "15",
       "overwrites": [
         {
           "name": "@everyone",
