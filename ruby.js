@@ -52,6 +52,7 @@ bot.on("message", msg => {
   let uPrefix;
   if (msg.content.startsWith(config.settings.prefix)) uPrefix = config.settings.prefix;
   else if (msg.content.startsWith("!")) uPrefix = "!";
+  else if (msg.content.startsWith(`${bot.user} `)) uPrefix = `${bot.user} `;
   // checking for server mention
   else if (msg.content.includes("~") && msg.content.toLowerCase().includes("server")) {
     if (msg.channel.name === "nyaa-log" || msg.channel.name === "nyaa" || msg.channel.name === "ruby-log") return;
@@ -164,13 +165,13 @@ bot.on("userUpdate", (oldUser, newUser) => {
 
 bot.on("messageDelete", message => {
   if (!message.guild) return;
-  if (message.content === "") return;
+  if (!message.content && message.attachments.size === 0) return;
   if (message.system) return;
   let nyaaLogCh = message.guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msg = stripIndents`
   \`[Message Delete] ${message.author.username} (${message.author.id}) in #${message.channel.name}\`
-  ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}
+  ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}${message.content ? "\n" : ""}${message.attachments.map(attachment => attachment.url).join("\n")}
   `;
 
   if (nyaaLogCh) nyaaLogCh.sendMessage(msg, {split: {prepend: "...", append: "..."}});
@@ -185,7 +186,7 @@ bot.on("messageDeleteBulk", messages => {
   messages.forEach(message => {
     if (message.content === "") return;
     if (message.system) return;
-    msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}`);
+    msgArray.push(`**${message.author.username}** (${message.author.id}) in #${message.channel.name}: ${message.content.replace(/@everyone/g, "__**@\u200beveryone**__").replace(/@here/g, "__**@\u200bhere**__")}${message.attachments.size !== 0 ? `\n${message.attachments.map(attachment => attachment.url).join("\n")}` : ""}`);
   });
   if (nyaaLogCh) nyaaLogCh.sendMessage(msgArray, {split: {prepend: "...", append: "..."}});
 });
