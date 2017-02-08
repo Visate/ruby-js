@@ -3,8 +3,15 @@ require("events").EventEmitter.prototype._maxListeners = 0;
 // Libraries and constants
 const Discord = require("discord.js");
 const bot = new Discord.Client({
+  autoReconnect: true,
   disableEveryone: true,
   fetchAllMembers: true,
+  disabledEvents: [
+    "TYPING_START",
+    "TYPING_STOP",
+    "FRIEND_ADD",
+    "FRIEND_REMOVE"
+  ]
 });
 var config = require("./config.json");
 const fs = require("fs");
@@ -107,7 +114,7 @@ bot.on("guildMemberAdd", member => {
 
   if (nyaaCh) nyaaCh.sendMessage(`**Join:** \`${bot.cleanText(member.user.username)}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`);
   let guestRole = guild.roles.find(role => role.name === "Guest");
-  member.addRole(guestRole);
+  if (guestRole) member.addRole(guestRole);
 
   if (guild.id === "130616817625333761") guild.defaultChannel.sendMessage(`Welcome to the server, ${member}!~ :heart:`);
 
@@ -243,16 +250,21 @@ bot.on("voiceStateUpdate", (oldMember, newMember) => {
   }
 });
 
-// Forces an exit on disconnect
+// Attempts reconnection to Discord
 bot.on("disconnect", () => {
   log("Disconnected from Discord!");
-  process.exit(1);
+});
+
+bot.on("reconnect", () => {
+  log("Reconnecting...");
 });
 
 bot.on("error", console.error);
 bot.on("warn", console.warn);
 
 bot.login(config.bot.token);
+
+process.on("unhandledRejection", (reason) => log(reason));
 
 // function to reload any commands
 bot.reload = (command) => {
