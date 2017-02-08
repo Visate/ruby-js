@@ -1,6 +1,7 @@
 const moment = require("moment");
+const chalk = require("chalk");
 
-module.exports = (msg) => {
+module.exports = (...args) => {
   let now = moment().format("YYYY-MM-DD HH:mm:ss");
-  console.log(`[${now}] ${msg.replace(/\n/g, `\n[${now}]*`)}`);
+  console.log(chalk.blue.bold(`[${now}]`), chalk.bold(...args));
 };
