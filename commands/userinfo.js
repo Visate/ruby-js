@@ -34,7 +34,7 @@ exports.run = (bot, msg, suffix) => {
 
     else {
       let query = suffix.toLowerCase();
-      let members = msg.guild.members.filter(m => m.user.username.toLowerCase().includes(query) || (m.nickname && m.nickname.toLowerCase().includes(query)));
+      let members = msg.guild.members.filter(m => m.id === query || m.user.username.toLowerCase().includes(query) || (m.nickname && m.nickname.toLowerCase().includes(query)));
 
       if (members.size > 1) {
         return msg.channel.sendMessage(stripIndents`
