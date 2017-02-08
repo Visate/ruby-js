@@ -4,9 +4,10 @@
   "description": "A Discord bot created using discord.js",
   "main": "ruby.js",
   "repository": "bitbucket:Visate/ruby",
-  "author": "Richard Gan <richardg887@me.com>",
+  "author": "Richard Gan <richard@designedbymajor.ca>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.3",
     "common-tags": "^1.4.0",
     "discord.js": "github:hydrabolt/discord.js#stable",
     "erlpack": "github:hammerandchisel/erlpack#master",

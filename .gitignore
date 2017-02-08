@@ -4,6 +4,9 @@
 # Bot Specific
 config.json
 
+# FFMPEG
+ffmpeg.exe
+
 # Logs
 logs
 *.log
