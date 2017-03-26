@@ -17,7 +17,7 @@ module.exports = client => {
 function log(client, style, type, ...msg) {
   if (client.config.logLocation) {
     let loc = path.resolve(__dirname, "../", client.config.logLocation, `${moment().format("YYYY-MM-DD")}.log`);
-    fs.appendFileSync(loc, `[${type}] [${moment().format("HH:mm:ss")}] ${msg.join(" ")}`);
+    fs.appendFileSync(loc, `[${type}] [${moment().format("HH:mm:ss")}] ${msg.join(" ")}\n`);
   }
 
   console.log(style(`[${type}] [${moment().format("MMM DD HH:mm:ss")}]`), ...msg);
