@@ -1,5 +1,4 @@
 // Unban command
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "unban",
@@ -16,15 +15,12 @@ exports.config = {
   permLevel: 5
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let guild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
   let reason = suffix.substring(userQuery.length + 1);
-  let userid = userQuery;
-
-  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
+  let userid = userQuery.startsWith("<@!") ? userQuery.slice(3, -1) : userQuery.startsWith("<@") ? userQuery.slice(2, -1) : "";
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -49,10 +45,10 @@ exports.run = (bot, msg, suffix) => {
       }
       if (isNaN(caseNum)) caseNum = 1;
 
-      let logDetails = stripIndents`
+      let logDetails = client.util.commonTags.stripIndents`
       **Action:**          Unban
       **Channel:**       ${msg.channel.name}
-      **User:**             ${user.username}#${user.discriminator} (${user.id})
+      **User:**             ${user} || ${user.username}#${user.discriminator} (${user.id})
       **Reason:**        ${reason}
       \u200b
       `;
@@ -65,7 +61,7 @@ exports.run = (bot, msg, suffix) => {
         },
         description: logDetails,
         footer: {
-          icon_url: bot.user.avatarURL,
+          icon_url: client.user.avatarURL,
           text: `Case ${caseNum}`
         }
       };

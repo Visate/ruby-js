@@ -1,5 +1,4 @@
 // serverinfo command
-const stripIndents = require("common-tags").stripIndents;
 const moment = require("moment");
 
 exports.help = {
@@ -15,7 +14,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   let guild = msg.guild;
   let embed = {
     color: 3447003,
@@ -26,21 +25,21 @@ exports.run = (bot, msg) => {
     fields: [
       {
         name: "❯ Channels",
-        value: stripIndents`
+        value: client.util.commonTags.stripIndents`
         ⭑ ${guild.channels.filter(c => c.type === "text").size} Text, ${guild.channels.filter(c => c.type === "voice").size} Voice
         ⭑ Default: ${guild.defaultChannel}${guild.afkChannelID ? `\n⭑ AFK: ${guild.channels.get(guild.afkChannelID)}`: ""}`,
         inline: true
       },
       {
         name: "❯ Members",
-        value: stripIndents`
+        value: client.util.commonTags.stripIndents`
         ⭑ ${guild.memberCount} ${guild.memberCount === 1 ? "member" : "members"}
         ⭑ Owner: ${guild.owner.user.username}#${guild.owner.user.discriminator} (${guild.ownerID})`,
         inline: true
       },
       {
         name: "❯ Other",
-        value: stripIndents`
+        value: client.util.commonTags.stripIndents`
         ⭑ Roles: ${guild.roles.size}
         ⭑ Region: ${guild.region}
         ⭑ Created at: ${moment(guild.createdAt).format("dddd, MMMM Do YYYY [at] h:mm:ss a")}
@@ -54,7 +53,7 @@ exports.run = (bot, msg) => {
     },
     footer: {
       text: "Server Info",
-      icon_url: bot.user.avatarURL
+      icon_url: client.user.avatarURL
     }
   };
 

@@ -1,5 +1,4 @@
 // Warn command
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "warn",
@@ -16,15 +15,12 @@ exports.config = {
   permLevel: 1
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let guild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
   let reason = suffix.substring(userQuery.length + 1);
-  let userid;
-
-  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
+  let userid = userQuery.startsWith("<@!") ? userQuery.slice(3, -1) : userQuery.startsWith("<@") ? userQuery.slice(2, -1) : "";
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -49,7 +45,7 @@ exports.run = (bot, msg, suffix) => {
     }
     if (isNaN(caseNum)) caseNum = 1;
 
-    let logDetails = stripIndents`
+    let logDetails = client.util.commonTags.stripIndents`
     **Action:**          Warn
     **Channel:**       ${msg.channel.name}
     **User:**             ${member.user.username}#${member.user.discriminator} (${member.id})
@@ -65,7 +61,7 @@ exports.run = (bot, msg, suffix) => {
       },
       description: logDetails,
       footer: {
-        icon_url: bot.user.avatarURL,
+        icon_url: client.user.avatarURL,
         text: `Case ${caseNum}`
       }
     };

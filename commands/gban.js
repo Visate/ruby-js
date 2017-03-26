@@ -1,6 +1,4 @@
 // Gban command
-const stripIndents = require("common-tags").stripIndents;
-const config = require("../config.json");
 
 exports.help = {
   name: "gban",
@@ -17,7 +15,7 @@ exports.config = {
   permLevel: 6
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let originGuild = msg.guild;
   let originChannel = msg.channel;
 
@@ -38,7 +36,7 @@ exports.run = (bot, msg, suffix) => {
     user = bans.get(userQuery);
     if (!user) user = originGuild.members.has(userQuery) ? originGuild.members.get(userQuery).user : {username: "?", discriminator: "?", id: userQuery, placeholder: true};
     if (!user.placeholder) pmStatus = messageUser(user, msg, reason);
-    processGban(bot, msg, originGuild, originChannel, user, reason, pmStatus).then((bannedUser, count) => {
+    processGban(client, msg, originGuild, originChannel, user, reason, pmStatus).then((bannedUser, count) => {
       msg.channel.sendMessage(`${msg.author}, ${bannedUser.username} (${bannedUser.id}) was banned across ${count} servers ^-^`);
     }).catch((bannedUser, count, countNoBan) => {
       msg.channel.sendMessage(`${msg.author}, ${bannedUser.username} (${bannedUser.id}) was banned across ${count - countNoBan} servers ^-^ (failed on ${countNoBan} servers)`);
@@ -47,12 +45,12 @@ exports.run = (bot, msg, suffix) => {
 };
 
 function messageUser(user, msg, reason) {
-  let msgPM = stripIndents`
+  let msgPM = msg.client.util.commonTags.stripIndents`
   Oh no! It appears that you have been global banned by ${msg.author.username}#${msg.author.discriminator}.
   **Reason:** ${reason}
 
   If you feel that this was unjust, feel free to appeal your ban using the form linked below~ :heart:
-  ${config.resources.banForm}
+  ${msg.client.config.resources.banForm}
   `;
 
   user.sendMessage(msgPM).then(() => {
@@ -62,7 +60,7 @@ function messageUser(user, msg, reason) {
   });
 }
 
-function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatusInit) {
+function processGban(client, msg, originGuild, originChannel, user, reason, pmStatusInit) {
   let count = 0;
   let countNoBan = 0;
   let pmStatus = pmStatusInit;
@@ -70,11 +68,11 @@ function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatu
   return new Promise((resolve, reject) => {
 
     function checkPromise() {
-      if (count === bot.guilds.size - 1 && countNoBan === 0) resolve(user, count);
-      else if (count === bot.guilds.size - 1 && countNoBan > 0) reject(user, count, countNoBan);
+      if (count === client.guilds.size - 1 && countNoBan === 0) resolve(user, count);
+      else if (count === client.guilds.size - 1 && countNoBan > 0) reject(user, count, countNoBan);
     }
 
-    bot.guilds.forEach(guild => {
+    client.guilds.forEach(guild => {
       if (guild.id === "235144885101920256") return; // exempt testing server
       count++;
 
@@ -100,11 +98,11 @@ function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatu
             if (!pmStatus) pmStatus = messageUser(user, msg, reason);
           }
 
-          let logDetails = stripIndents`
+          let logDetails = client.util.commonTags.stripIndents`
           **Action:**          Global Ban
           **Origin:**          ${originGuild.name}
           **Channel:**       ${originChannel.name}
-          **User:**             ${user.username}#${user.discriminator} (${user.id})
+          **User:**             ${user} || ${user.username}#${user.discriminator} (${user.id})
           **Reason:**        ${reason}
           \u200b
           `;
@@ -117,7 +115,7 @@ function processGban(bot, msg, originGuild, originChannel, user, reason, pmStatu
             },
             description: logDetails,
             footer: {
-              icon_url: bot.user.avatarURL,
+              icon_url: client.user.avatarURL,
               text: `Case ${caseNum}`
             }
           };

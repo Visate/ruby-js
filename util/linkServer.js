@@ -2,7 +2,8 @@
 const moment = require("moment");
 const Collection = require("discord.js").Collection;
 
-var serverListing = require("./server_listings.json");
+// Pre-database solution
+const serverListing = require("../lists/server_listings.json");
 const servers = new Collection();
 const aliases = new Collection();
 const cooldowns = {};
@@ -24,12 +25,12 @@ function onCooldown(channel, server) {
 }
 
 function setCooldown(channel, server) {
-  cooldowns[server.name][channel.id] = moment().add(10, "seconds");
+  cooldowns[server.name][channel.id] = moment().add(5, "seconds");
 }
 
-exports.linkServer = (msg, query) => {
-  let server = servers.get(query);
-  if (!server) server = servers.get(aliases.get(query));
+module.exports = (msg, query) => {
+  let server = servers.get(aliases.get(query) || query);
+  //if (!server) server = servers.get(aliases.get(query));
   if (server && !onCooldown(msg.channel, server)) {
     setCooldown(msg.channel, server);
     msg.channel.sendMessage(`${server.name} Server: ${server.invite}`);

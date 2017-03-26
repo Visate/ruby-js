@@ -1,7 +1,4 @@
 // Vkick command
-const stripIndents = require("common-tags").stripIndents;
-const config = require("../config.json");
-const createID = require("../scripts/createid.js");
 
 exports.help = {
   name: "vkick",
@@ -18,7 +15,7 @@ exports.config = {
   permLevel: 4
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let guild = msg.guild;
   let userQuery = suffix.toLowerCase();
   let member;
@@ -51,7 +48,7 @@ exports.run = (bot, msg, suffix) => {
     if (members.length === 0) return msg.channel.sendMessage(`${msg.author}, no voice users were found with that user query, try something else~`).then(m => m.delete(5000));
     else if (members.length === 1) processVkick(msg, members[0]);
     else if (members.length > 1) {
-      let idsInfo = stripIndents`
+      let idsInfo = client.util.commonTags.stripIndents`
       Multiple users with that search were found, run the command again with \`${config.settings.prefix}vkick <id>\`
       ${members.map(m => `**${m.user.username}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
       `;
@@ -62,7 +59,7 @@ exports.run = (bot, msg, suffix) => {
 };
 
 function processVkick(msg, member) {
-  msg.guild.createChannel(createID(), "voice").then(channel => {
+  msg.guild.createChannel(msg.client.util.createID(), "voice").then(channel => {
     member.setVoiceChannel(channel).then(() => {
       channel.delete();
       msg.channel.sendMessage("^-^").then(m => m.delete(5000));

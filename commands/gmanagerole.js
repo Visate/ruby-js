@@ -15,7 +15,7 @@ exports.config = {
   permLevel: 6
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   if (!suffix) return msg.channel.sendMessage("Please specify an action, user, and role~");
   let [ action, userQuery, ...role ] = suffix.toLowerCase().split(" ");
   if (!action || !userQuery || !role) return msg.channel.sendMessage("Please specify an action, user, and role~");

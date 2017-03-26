@@ -1,6 +1,4 @@
 // Ban command
-const stripIndents = require("common-tags").stripIndents;
-const config = require("../config.json");
 
 exports.help = {
   name: "ban",
@@ -17,15 +15,12 @@ exports.config = {
   permLevel: 5
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let guild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
   let reason = suffix.substring(userQuery.length + 1);
-  let userid;
-
-  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
+  let userid = userQuery.startsWith("<@!") ? userQuery.slice(3, -1) : userQuery.startsWith("<@") ? userQuery.slice(2, -1) : "";
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -35,7 +30,7 @@ exports.run = (bot, msg, suffix) => {
 
   let member = guild.members.get(userid);
 
-  if (!member) return msg.channel.sendMessage(`${msg.author}, I cannot find that user!`).then(m => m.delete(5000));
+  if (!member) return msg.channel.sendMessage(`${msg.author}, that user cannot be found!`).then(m => m.delete(5000));
   if (!member.bannable) return msg.channel.sendMessage(`${msg.author}, I cannot ban that user!`).then(m => m.delete(5000));
 
   let caseNum;
@@ -52,10 +47,10 @@ exports.run = (bot, msg, suffix) => {
     }
     if (isNaN(caseNum)) caseNum = 1;
 
-    let logDetails = stripIndents`
+    let logDetails = client.util.commonTags.stripIndents`
     **Action:**          Ban
     **Channel:**       ${msg.channel.name}
-    **User:**             ${member.user.username}#${member.user.discriminator} (${member.id})
+    **User:**             ${member} || ${member.user.username}#${member.user.discriminator} (${member.id})
     **Reason:**        ${reason}
     \u200b
     `;
@@ -68,12 +63,12 @@ exports.run = (bot, msg, suffix) => {
       },
       description: logDetails,
       footer: {
-        icon_url: bot.user.avatarURL,
+        icon_url: client.user.avatarURL,
         text: `Case ${caseNum}`
       }
     };
 
-    let msgPM = stripIndents`
+    let msgPM = client.util.commonTags.stripIndents`
     Oh no! It appears that you have been banned by ${msg.author.username}#${msg.author.discriminator}.
     **Reason:** ${reason}
 

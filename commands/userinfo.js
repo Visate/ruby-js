@@ -1,7 +1,5 @@
 // Whois command
-const stripIndents = require("common-tags").stripIndents;
 const moment = require("moment");
-const config = require("../config.json");
 
 exports.help = {
   name: "userinfo",
@@ -17,7 +15,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let member;
 
   if (!suffix) member = msg.member;
@@ -36,22 +34,23 @@ exports.run = (bot, msg, suffix) => {
       let query = suffix.toLowerCase();
       let members = msg.guild.members.filter(m => m.id === query || m.user.username.toLowerCase().includes(query) || (m.nickname && m.nickname.toLowerCase().includes(query)));
 
-      if (members.size > 1) {
-        return msg.channel.sendMessage(stripIndents`
-          Multiple users were found with that search, run the command with \`${config.settings.prefix}whois <id>\`
+      if (members.size > 1 && members.size <= 10) {
+        return msg.channel.sendMessage(client.util.commonTags.stripIndents`
+          Multiple users were found with that search, run the command with \`${config.settings.prefix}userinfo <id>\`
           ${members.map(m => `**${m.user.username}#${m.user.discriminator}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
         `);
       }
+      else if (members.size > 10) return msg.channel.sendMessage("Too many users were found with that search, please narrow your search!~");
       else if (members.size === 1) member = members.first();
     }
   }
 
   if (!member) return msg.channel.sendMessage("No users were found with that search!");
 
-  let details = stripIndents`
-  ⭑ User:                  \`${bot.cleanText(`${member.user.username}#${member.user.discriminator} ${member.nickname ? `(${member.nickname})` : ""}`)}\`
+  let details = client.util.commonTags.stripIndents`
+  ⭑ User:                  \`${client.util.cleanText(`${member.user.username}#${member.user.discriminator}${member.nickname ? ` (${member.nickname})` : ""}`)}\`
   ⭑ ID:                      \u200A${member.id}
-  ⭑ Roles:                \u2009${member.roles.map(r => `\`${bot.cleanText(r.name)}\``).join(" ")}
+  ⭑ Roles:                \u2009${member.roles.map(r => `\`${client.util.cleanText(r.name)}\``).join(" ")}
   ⭑ Date Joined:    \u2006${moment(member.joinedAt).format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}
   ⭑ Status:              \u2006${member.presence.status === "dnd" ? "Do Not Disturb" : member.presence.status.charAt(0).toUpperCase() + member.presence.status.slice(1)}
   ${member.presence.game ? `${member.presence.game.streaming ? `⭑ Streaming:       \u200A[${member.presence.game.name}](${member.presence.game.url})` : `⭑ Playing:             ${member.presence.game.name}`}\n\u200b` : "\u200b"}
@@ -75,7 +74,7 @@ exports.run = (bot, msg, suffix) => {
     },
     footer: {
       text: "User Info",
-      icon_url: bot.user.avatarURL
+      icon_url: client.user.avatarURL
     }
   };
 

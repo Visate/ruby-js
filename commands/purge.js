@@ -1,12 +1,11 @@
 // Purge command
-const config = require("../config.json");
 const msgsCount = {};
 
 exports.help = {
   name: "purge",
   usage: "<number of messages>",
   description: "Deletes a certain amount of messages.",
-  extendedhelp: `Deletes a number of messages from the chat. Maximum is ${config.settings.maxPurge} messages. Use with caution.`
+  extendedhelp: `Deletes a number of messages from the chat. Maximum is 200 messages. Use with caution.`
 };
 
 exports.config = {
@@ -17,13 +16,13 @@ exports.config = {
   permLevel: 6
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let channel = msg.channel;
   if (!suffix || isNaN(suffix)) return channel.sendMessage("Please define an amount of messages for me to delete~").then(m => m.delete(5000));
   msgsCount[channel.id] = parseInt(suffix, 10);
   if (msgsCount[channel.id] < 0) return channel.sendMessage("I cannot delete a negative number of messages!").then(m => m.delete(5000));
 
-  if (msgsCount[channel.id] > config.settings.maxPurge) return channel.sendMessage(`Sorry, I cannot delete more than ${config.settings.maxPurge} messages >///<`).then(m => m.delete(5000));
+  if (msgsCount[channel.id] > 200) return channel.sendMessage(`Sorry, I cannot delete more than 200 messages >///<`).then(m => m.delete(5000));
   else if (msgsCount[channel.id] > 100) {
     let collector = channel.createCollector(m => m.author === msg.author, {time: 30000});
     channel.sendMessage(`You are about to delete ${msgsCount[channel.id]} messages. Once this starts, it cannot be stopped. Are you sure you want to continue? (yes/no)`);
@@ -34,8 +33,8 @@ exports.run = (bot, msg, suffix) => {
     });
 
     collector.on("end", (collection, reason) => {
-      if (reason === "abort") return channel.sendMessage("Cancelled~");
-      else if (reason === "time") return channel.sendMessage("Time's up! Purge cancelled~");
+      if (reason === "abort") return channel.sendMessage("Cancelled~").then(m => m.delete(5000));
+      else if (reason === "time") return channel.sendMessage("Time's up! Purge cancelled~").then(m => m.delete(5000));
       else if (reason === "delete") {
         msgsCount[channel.id] += 2;
         delMsgs(collection.last().id, channel);
@@ -65,7 +64,10 @@ function delMsgs(id, channel) {
   // Deleting the messages and then recursively running again
   if (delCount > 0) {
     channel.fetchMessages({limit: delCount, before: id}).then(msgs => {
-      channel.bulkDelete(msgs).then(() => delMsgs(msgs.last().id, channel));
+      msgs.forEach(m => {
+        m.delete();
+      });
+      delMsgs(msgs.last().id, channel));
     });
   }
 }

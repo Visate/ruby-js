@@ -13,12 +13,12 @@ exports.config = {
   permLevel: 8
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   try {
     let evaled = eval(suffix);
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
-    msg.channel.sendMessage(`\`\`\`x1\n${bot.cleanText(evaled)}\n\`\`\``, {split : {prepend: "```x1\n", append: "\n```"}});
+    msg.channel.sendMessage(`\`\`\`x1\n${client.util.cleanText(evaled)}\n\`\`\``, {split : {prepend: "```x1\n", append: "\n```"}});
   } catch (err) {
-    msg.channel.sendCode("x1", `Error: ${bot.cleanText(err)}`);
+    msg.channel.sendCode("x1", `Error: ${client.util.cleanText(err)}`);
   }
 };

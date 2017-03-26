@@ -15,7 +15,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   if (!suffix) return msg.channel.sendMessage("Please provide a math statement to calculate~");
 
   try {

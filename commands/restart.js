@@ -12,6 +12,6 @@ exports.config = {
   permLevel: 8
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   msg.channel.sendMessage("Be right back~ :heart:").then(() => process.exit(0));
 };

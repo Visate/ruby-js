@@ -14,7 +14,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   let channel = msg.channel;
   let embed = {
     color: 3447003,

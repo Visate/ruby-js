@@ -1,6 +1,4 @@
 // Introduce command
-const config = require("../config.json");
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "info",
@@ -15,22 +13,22 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
-  let hours = ~~(bot.uptime / 3600000) % 24;
-  let minutes = ~~(bot.uptime / 60000) % 60;
-  let seconds = ~~(bot.uptime / 1000) % 60;
+exports.run = (client, msg) => {
+  let hours = ~~(client.uptime / 3600000) % 24;
+  let minutes = ~~(client.uptime / 60000) % 60;
+  let seconds = ~~(client.uptime / 1000) % 60;
   let embed = {
     color: 3447003,
     author: {
-      name: `${bot.user.username}#${bot.user.discriminator} (ID: ${bot.user.id})`,
-      icon_url: `${bot.user.avatarURL}`
+      name: `${client.user.username}#${client.user.discriminator} (ID: ${client.user.id})`,
+      icon_url: `${client.user.avatarURL}`
     },
-    description: stripIndents`
-    Hello, I'm ${bot.user.username}! It's a pleasure to meet you ^-^
-    If you want to see what I can do, use \`${config.settings.prefix}help\`
+    description: client.util.commonTags.stripIndents`
+    Hello, I'm ${client.user.username}! It's a pleasure to meet you ^-^
+    If you want to see what I can do, use \`${client.config.prefix}help\`
     If you have any questions, feel free to ask my creator <@97198953430257664> :blush:
 
-    **${bot.user.username} Statistics**
+    **${client.user.username} Statistics**
     `,
     fields: [
       {
@@ -45,10 +43,10 @@ exports.run = (bot, msg) => {
       },
       {
         name: "❯ General Info",
-        value: stripIndents`
-        ⭑ Guilds: ${bot.guilds.size}
-        ⭑ Channels: ${bot.channels.size}
-        ⭑ Users: ${bot.users.size}
+        value: client.util.commonTags.stripIndents`
+        ⭑ Guilds: ${client.guilds.size}
+        ⭑ Channels: ${client.channels.size}
+        ⭑ Users: ${client.users.size}
         `,
         inline: true
       },
@@ -59,11 +57,11 @@ exports.run = (bot, msg) => {
       }
     ],
     thumbnail: {
-      url: bot.user.avatarURL
+      url: client.user.avatarURL
     },
     footer: {
       text: "Info",
-      icon_url: bot.user.avatarURL
+      icon_url: client.user.avatarURL
     }
   };
 

@@ -1,5 +1,4 @@
 // Gban command
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "gunban",
@@ -16,7 +15,7 @@ exports.config = {
   permLevel: 6
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let originGuild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
@@ -33,7 +32,7 @@ exports.run = (bot, msg, suffix) => {
   originGuild.fetchBans().then(bans => {
     user = bans.get(userQuery);
     if (!user) user = originGuild.members.has(userQuery) ? originGuild.members.get(userQuery).user : {username: "?", discriminator: "?", id: userQuery, placeholder: true};
-    processGunban(bot, msg, originGuild, user, reason).then((unbanUser, count) => {
+    processGunban(client, msg, originGuild, user, reason).then((unbanUser, count) => {
       msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count} servers ^-^`);
     }).catch((unbanUser, count, countNoUnban) => {
       msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count - countNoUnban} servers ^-^ (failed on ${countNoUnban} servers)`);
@@ -41,18 +40,18 @@ exports.run = (bot, msg, suffix) => {
   });
 };
 
-function processGunban(bot, msg, originGuild, user, reason) {
+function processGunban(client, msg, originGuild, user, reason) {
   let count = 0;
   let countNoUnban = 0;
 
   return new Promise((resolve, reject) => {
 
     function checkPromise() {
-      if (count === bot.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
-      else if (count === bot.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
+      if (count === client.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
+      else if (count === client.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
     }
 
-    bot.guilds.forEach(guild => {
+    client.guilds.forEach(guild => {
       if (guild.id === "235144885101920256") return; // exempt testing server
       count++;
 
@@ -75,7 +74,7 @@ function processGunban(bot, msg, originGuild, user, reason) {
         guild.unban(user.id).then(unbanUser => {
           if (user.placeholder && typeof unbanUser !== "string") user = unbanUser;
 
-          let logDetails = stripIndents`
+          let logDetails = client.util.commonTags.stripIndents`
           **Action:**          Global Unban
           **Origin:**          ${originGuild.name}
           **User:**             ${user.username}#${user.discriminator} (${user.id})
@@ -91,7 +90,7 @@ function processGunban(bot, msg, originGuild, user, reason) {
             },
             description: logDetails,
             footer: {
-              icon_url: bot.user.avatarURL,
+              icon_url: client.user.avatarURL,
               text: `Case ${caseNum}`
             }
           };

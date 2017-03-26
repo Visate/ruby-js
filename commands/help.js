@@ -1,7 +1,4 @@
 // Help command
-const stripIndents = require("common-tags").stripIndents;
-const config = require("../config.json");
-const helpOrder = require("./helporder.json");
 
 exports.help = {
   name: "help",
@@ -17,41 +14,35 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
-  let perms = bot.checkPerms(msg);
+exports.run = (client, msg, suffix) => {
+  let perms = client.util.checkPerms(msg);
   let msgArray = [];
 
   if (!suffix) {
-    msgArray.push("= Your Guide to Using Ruby =\n");
-    msgArray.push(`[Use ${config.settings.prefix}help <command> for details]\n`);
-    let cmdArray = [];
-    bot.commands.forEach(cmd => {
+    msgArray.push("= Your Guide to Using ${client.user.username}=\n");
+    msgArray.push(`[Use ${client.config.prefix}help <command> for details]\n`);
+    client.commands.forEach(cmd => {
       if (perms < cmd.config.permLevel) return;
       if (!cmd.config.enabled) return;
       if (cmd.config.guildOnly && !msg.guild) return;
-      let message = `${cmd.help.name}${cmd.help.usage ? ` ${cmd.help.usage}` : ""}:: ${cmd.help.description}`;
-      if (helpOrder[cmd.help.name]) cmdArray[helpOrder[cmd.help.name]] = message;
-      else cmdArray.push(message);
+      let message = `${cmd.help.name}${cmd.help.usage ? ` ${cmd.help.usage}` : ""}:: ${cmd.help.description.replace(/#prefix/g, client.config.prefix)}`;
+      msgArray.push(message);
     });
-    for (let i = 0; i < cmdArray.length; ) {
-      if (cmdArray[i] === undefined) cmdArray.splice(i, 1);
-      else i++;
-    }
-    msgArray.push(cmdArray.join("\n"));
-    if (msg.guild) msg.channel.sendMessage(`:mailbox_with_mail: ${msg.author}, the commands have been direct messaged to you! :heart:`);
+
+    if (msg.guild) msg.react(":mailbox_with_mail:").then(() => setTimeout(() => msg.clearReactions(), 5000));
     msg.author.sendCode("asciidoc", msgArray);
   }
 
-  else if (suffix && bot.commands.has(suffix)) {
-    let cmd = bot.commands.get(suffix);
+  else if (suffix && (client.commands.has(suffix) || client.commands.has(client.aliases.get(suffix)))) {
+    let cmd = client.commands.get(suffix) || client.commands.get(client.aliases.get(suffix));
     if (perms < cmd.config.permLevel) return;
     if (!cmd.config.enabled) return;
     if (cmd.config.guildOnly && !msg.guild) return;
-    let helpDetails = stripIndents`
+    let helpDetails = client.util.commonTags.stripIndents`
     = ${cmd.help.name} =
     Usage:: ${cmd.help.name} ${cmd.help.usage ? cmd.help.usage : ""}
 
-    ${cmd.help.extendedhelp}
+    ${cmd.help.extendedhelp.replace(/#prefix/g, client.config.prefix)}
     `;
     msg.channel.sendCode("asciidoc", helpDetails);
   }

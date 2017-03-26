@@ -1,5 +1,4 @@
 // Kick command
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "kick",
@@ -16,16 +15,13 @@ exports.config = {
   permLevel: 3
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
 
   let guild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
   let reason = suffix.substring(userQuery.length + 1);
-  let userid;
-
-  if (userQuery.startsWith("<@!")) userid = userQuery.slice(3, -1);
-  else if (userQuery.startsWith("<@")) userid = userQuery.slice(2, -1);
+  let userid = userQuery.startsWith("<@!") ? userQuery.slice(3, -1) : userQuery.startsWith("<@") ? userQuery.slice(2, -1) : "";
 
   let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
@@ -35,7 +31,7 @@ exports.run = (bot, msg, suffix) => {
 
   let member = guild.members.get(userid);
 
-  if (!member) return msg.channel.sendMessage(`${msg.author}, I cannot find that user!`).then(m => m.delete(5000));
+  if (!member) return msg.channel.sendMessage(`${msg.author}, that user cannot be found!`).then(m => m.delete(5000));
   if (!member.bannable) return msg.channel.sendMessage(`${msg.author}, I cannot kick that user!`).then(m => m.delete(5000));
 
   let caseNum;
@@ -52,7 +48,7 @@ exports.run = (bot, msg, suffix) => {
     }
     if (isNaN(caseNum)) caseNum = 1;
 
-    let logDetails = stripIndents`
+    let logDetails = client.util.commonTags.stripIndents`
     **Action:**          Kick
     **Channel:**       ${msg.channel.name}
     **User:**             ${member.user.username}#${member.user.discriminator} (${member.id})
@@ -68,12 +64,12 @@ exports.run = (bot, msg, suffix) => {
       },
       description: logDetails,
       footer: {
-        icon_url: bot.user.avatarURL,
+        icon_url: client.user.avatarURL,
         text: `Case ${caseNum}`
       }
     };
 
-    let msgPM = stripIndents`
+    let msgPM = client.util.commonTags.stripIndents`
     Oh no! It appears that you have been kicked by ${msg.author.username}#${msg.author.discriminator}.
     **Reason:** ${reason}
 
@@ -82,7 +78,7 @@ exports.run = (bot, msg, suffix) => {
     guild.fetchInvites().then(function(invites) {
       let invite = invites.find(invite => invite.maxAge === 0 && invite.temporary === false && invite.channel.id === guild.defaultChannel.id);
       if (!invite) {
-        guild.defaultChannel.createInvite({maxAge: 0}).then(inviteLobby => {
+        guild.defaultChannel.createInvite({maxAge: 1800, maxUses: 1}).then(inviteLobby => {
           let url = inviteLobby.url;
           msgPM += `\n${url}`;
           processKick(msg, rubyLogCh, logMsg, member, msgPM);

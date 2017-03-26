@@ -16,7 +16,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let rollQuery = suffix.toLowerCase();
   if (rollQuery) {
     if (rollQuery.includes("d")) diceRoll(msg, rollQuery);

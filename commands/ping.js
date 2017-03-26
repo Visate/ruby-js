@@ -12,7 +12,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   msg.channel.sendMessage("Ping?").then(message => {
     message.edit(`Pong! (took: ${message.createdTimestamp - msg.createdTimestamp}ms)`);
   });

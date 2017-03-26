@@ -101,10 +101,100 @@
       "aliases": ["halloween"],
       "invite": "https://discord.gg/011fzQpr338xsw7l2",
       "description": ":jack_o_lantern: **| Spooky |** :jack_o_lantern:\n*A place filled with Nightmares and Ghouls.*\n\n**Halloweenies**"
+    },
+    {
+      "name": "Anime",
+      "aliases": [],
+      "invite": "https://discord.gg/CvKEUR4",
+      "description": ""
+    },
+    {
+      "name": "Asia Pop",
+      "aliases": ["jpop", "kpop"],
+      "invite": "https://discord.gg/ySpsBjV",
+      "description": ""
+    },
+    {
+      "name": "Beauty",
+      "aliases": ["fashion"],
+      "invite": "https://discord.gg/BjFyRU7",
+      "description": ""
+    },
+    {
+      "name": "The Collectors",
+      "aliases": ["collectors"],
+      "invite": "https://discord.gg/4XDGnJe",
+      "description": ""
+    },
+    {
+      "name": "Cosplay",
+      "aliases": [],
+      "invite": "https://discord.gg/rThJAFF",
+      "description": ""
+    },
+    {
+      "name": "Cuisine",
+      "aliases": ["cooking", "food"],
+      "invite": "https://discord.gg/seMcwSN",
+      "description": ""
+    },
+    {
+      "name": "Galaxy",
+      "aliases": ["space"],
+      "invite": "https://discord.gg/eyxG5SC",
+      "description": ""
+    },
+    {
+      "name": "History",
+      "aliases": [],
+      "invite": "https://discord.gg/W75YEJ9",
+      "description": ""
+    },
+    {
+      "name": "Internet Cafe",
+      "aliases": ["programming", "coding"],
+      "invite": "https://discord.gg/RCy2dAm",
+      "description": ""
+    },
+    {
+      "name": "Kawaii",
+      "aliases": ["cute"],
+      "invite": "https://discord.gg/HnSSKq4",
+      "description": ""
+    },
+    {
+      "name": "Math",
+      "aliases": [],
+      "invite": "https://discord.gg/7vWUHFS",
+      "description": ""
+    },
+    {
+      "name": "Musicals and Theatre",
+      "aliases": ["musicals", "theatre", "acting"],
+      "invite": "https://discord.gg/zZpVrkR",
+      "description": ""
+    },
+    {
+      "name": "Sports",
+      "aliases": [],
+      "invite": "https://discord.gg/w2urxVJ",
+      "description": ""
+    },
+    {
+      "name": "Story Time",
+      "aliases": ["storytime"],
+      "invite": "https://discord.gg/VH7uqDa",
+      "description": ""
     }
   ],
 
   "australia": [
+    {
+      "name": "Australia",
+      "aliases": ["au", "aus"],
+      "invite": "https://discord.gg/5GnnS64",
+      "description": ""
+    }
     {
       "name": "Adelaide",
       "aliases": [],
@@ -181,10 +271,58 @@
 
   "country": [
     {
+      "name": "Afghanistan",
+      "aliases": ["af", "afg"],
+      "invite": "https://discord.gg/q4Duhac",
+      "description": ""
+    },
+    {
+      "name": "Albania",
+      "aliases": ["al", "alb"],
+      "invite": "https://discord.gg/RnfNTdq",
+      "description": ""
+    },
+    {
+      "name": "Algeria",
+      "aliases": ["dz", "dza"],
+      "invite": "https://discord.gg/9p7ka7S",
+      "description": ""
+    },
+    {
+      "name": "Andorra",
+      "aliases": ["ad", "and"],
+      "invite": "https://discord.gg/sGmaUcH",
+      "description": ""
+    },
+    {
+      "name": "Angola",
+      "aliases": ["ao", "ago"],
+      "invite": "https://discord.gg/w6JqDn5",
+      "description": ""
+    },
+    {
+      "name": "Antigua & Barbuda",
+      "aliases": ["ag", "atg"],
+      "invite": "https://discord.gg/33DcZ5d",
+      "description": ""
+    },
+    {
       "name": "Argentina",
-      "aliases": ["ar"],
+      "aliases": ["ar", "arg"],
       "invite": "https://discord.gg/0ZfreIeaue4ZWllZ",
       "description": ":flag_ar: **| #ARGENTINA |** :flag_ar:"
+    },
+    {
+      "name": "Armenia",
+      "aliases": ["am", "arm"],
+      "invite": "https://discord.gg/ZAjuhsP",
+      "description": ""
+    },
+    {
+      "name": "Aruba",
+      "aliases": [""],
+      "invite": "https://discord.gg/sgBbw33",
+      "description": ""
     },
     {
       "name": "Austria",
@@ -199,6 +337,30 @@
       "description": ":flag_az: **| #AZERBAIJAN |** :flag_az:"
     },
     {
+      "name": "Bahamas",
+      "aliases": [""],
+      "invite": "https://discord.gg/BeVmsY8",
+      "description": ""
+    },
+    {
+      "name": "Bahrain",
+      "aliases": [""],
+      "invite": "https://discord.gg/dzCPKTS",
+      "description": ""
+    },
+    {
+      "name": "Bangladesh",
+      "aliases": [""],
+      "invite": "https://discord.gg/g8EvZ9Y",
+      "description": ""
+    },
+    {
+      "name": "Barbados",
+      "aliases": [""],
+      "invite": "https://discord.gg/Kmp2MD4",
+      "description": ""
+    },
+    {
       "name": "Belarus",
       "aliases": ["by"],
       "invite": "https://discord.gg/0eDkryprgZRSodAN",
@@ -211,10 +373,40 @@
       "description": ":flag_be: **| #BELGIUM |** :flag_be:"
     },
     {
+      "name": "Belize",
+      "aliases": [""],
+      "invite": "https://discord.gg/RGNHcex",
+      "description": ""
+    },
+    {
+      "name": "Benin",
+      "aliases": [""],
+      "invite": "https://discord.gg/wufKT7w",
+      "description": ""
+    },
+    {
+      "name": "Bhutan",
+      "aliases": [""],
+      "invite": "https://discord.gg/edFuabk",
+      "description": ""
+    },
+    {
       "name": "Bolivia",
       "aliases": ["bo"],
       "invite": "https://discord.gg/0rAx4zNHesc6cG3i",
       "description": ":flag_bo: **| #BOLIVIA |** :flag_bo:"
+    },
+    {
+      "name": "Bosnia & Herzegovina",
+      "aliases": [""],
+      "invite": "https://discord.gg/AnXUGu9",
+      "description": ""
+    },
+    {
+      "name": "Botswana",
+      "aliases": [""],
+      "invite": "https://discord.gg/nCycZa5",
+      "description": ""
     },
     {
       "name": "Brazil",
@@ -235,16 +427,52 @@
       "description": ":flag_bg: **| #BULGARIA |** :flag_bg:"
     },
     {
+      "name": "Burkina Faso",
+      "aliases": [""],
+      "invite": "https://discord.gg/RMv5xPB",
+      "description": ""
+    },
+    {
+      "name": "Burundi",
+      "aliases": [""],
+      "invite": "https://discord.gg/ZYNx7z2",
+      "description": ""
+    },
+    {
       "name": "Cambodia",
       "aliases": ["kh"],
       "invite": "https://discord.gg/GVDgJhC",
       "description": ":flag_kh: **| #CAMBODIA |** :flag_kh:"
     },
     {
+      "name": "Cameroon",
+      "aliases": [""],
+      "invite": "https://discord.gg/c6pKHM5",
+      "description": ""
+    },
+    {
       "name": "Canada",
       "aliases": ["ca"],
       "invite": "https://discord.gg/0ZH4lwpdXig65iRs",
       "description": ":flag_ca: **| #CANADA |** :flag_ca:"
+    },
+    {
+      "name": "Cape Verde",
+      "aliases": [""],
+      "invite": "https://discord.gg/NEmjBPv",
+      "description": ""
+    },
+    {
+      "name": "Central African Republic",
+      "aliases": [""],
+      "invite": "https://discord.gg/f2qXtmD",
+      "description": ""
+    },
+    {
+      "name": "Chad",
+      "aliases": [""],
+      "invite": "https://discord.gg/5DTTG6K",
+      "description": ""
     },
     {
       "name": "Chile",
@@ -259,10 +487,28 @@
       "description": ":flag_cn: **| #CHINA |** :flag_cn:"
     },
     {
+      "name": "Comoros",
+      "aliases": [""],
+      "invite": "https://discord.gg/qESqnJG",
+      "description": ""
+    },
+    {
       "name": "Colombia",
       "aliases": ["co"],
       "invite": "https://discord.gg/0isAFUvc69ZDi5zv",
       "description": ":flag_co: **| #COLOMBIA |** :flag_co:"
+    },
+    {
+      "name": "Costa Rica",
+      "aliases": [""],
+      "invite": "https://discord.gg/QVdRwcG",
+      "description": ""
+    },
+    {
+      "name": "Côte d'Ivoire",
+      "aliases": ["cote d'ivoire"],
+      "invite": "https://discord.gg/HaAdusY",
+      "description": ""
     },
     {
       "name": "Croatia",
@@ -277,10 +523,22 @@
       "description": ":flag_cu: **| #CUBA |** :flag_cu:"
     },
     {
+      "name": "Cyprus",
+      "aliases": [""],
+      "invite": "https://discord.gg/uPARnA6",
+      "description": ""
+    },
+    {
       "name": "Czech Republic",
       "aliases": ["cz"],
       "invite": "https://discord.gg/0eDr4N0H87qO52wO",
       "description": ":flag_cz: **| #CZECH REPUBLIC |** :flag_cz:"
+    },
+    {
+      "name": "Democratic Republic of the Congo",
+      "aliases": ["congo"],
+      "invite": "https://discord.gg/C3wykaU",
+      "description": ""
     },
     {
       "name": "Denmark",
@@ -289,16 +547,64 @@
       "description": ":flag_dk: **| #DENMARK |** :flag_dk:"
     },
     {
+      "name": "Djibouti",
+      "aliases": [""],
+      "invite": "https://discord.gg/8C679fG",
+      "description": ""
+    },
+    {
+      "name": "Dominica",
+      "aliases": [""],
+      "invite": "https://discord.gg/e3pwBxY",
+      "description": ""
+    },
+    {
+      "name": "Dominican Republic",
+      "aliases": [""],
+      "invite": "https://discord.gg/gpZC4mE",
+      "description": ""
+    },
+    {
+      "name": "Ecuador",
+      "aliases": [""],
+      "invite": "https://discord.gg/kVMt84g",
+      "description": ""
+    },
+    {
       "name": "Egypt",
       "aliases": ["eg"],
       "invite": "https://discord.gg/0eDrJgBoZcnhpuBO",
       "description": ":flag_eg: **| #EGYPT |** :flag_eg:"
     },
     {
+      "name": "El Salvador",
+      "aliases": [""],
+      "invite": "https://discord.gg/XbMFCkG",
+      "description": ""
+    },
+    {
+      "name": "Equatorial Guinea",
+      "aliases": [""],
+      "invite": "https://discord.gg/AaKJNGF",
+      "description": ""
+    },
+    {
+      "name": "Eritrea",
+      "aliases": [""],
+      "invite": "https://discord.gg/U8HJB8u",
+      "description": ""
+    },
+    {
       "name": "Estonia",
       "aliases": ["ee"],
       "invite": "https://discord.gg/0isANMe727dt6Slb",
       "description": ":flag_ee: **| #ESTONIA |** :flag_ee:"
+    },
+    {
+      "name": "Ethiopia",
+      "aliases": [""],
+      "invite": "https://discord.gg/h7cs7Gz",
+      "description": ""
     },
     {
       "name": "Finland",
@@ -313,10 +619,46 @@
       "description": ":flag_fr: **| #FRANCE |** :flag_fr:"
     },
     {
+      "name": "French Polynesia",
+      "aliases": [""],
+      "invite": "https://discord.gg/rxjqTJH",
+      "description": ""
+    },
+    {
+      "name": "Fiji",
+      "aliases": [""],
+      "invite": "https://discord.gg/KNkKsXk",
+      "description": ""
+    },
+    {
+      "name": "Gabon",
+      "aliases": [""],
+      "invite": "https://discord.gg/kePGK72",
+      "description": ""
+    },
+    {
+      "name": "Gambia",
+      "aliases": ["the gambia"],
+      "invite": "https://discord.gg/a3P4rJN",
+      "description": ""
+    },
+    {
+      "name": "Georgia",
+      "aliases": [""],
+      "invite": "https://discord.gg/NsTrJ6U",
+      "description": ""
+    },
+    {
       "name": "Germany",
       "aliases": ["de"],
       "invite": "https://discord.gg/0ZftW6tl70oFnyfN",
       "description": ":flag_de: **| #GERMANY |** :flag_de:"
+    },
+    {
+      "name": "Ghana",
+      "aliases": [""],
+      "invite": "https://discord.gg/yzXjxa3",
+      "description": ""
     },
     {
       "name": "Greece",
@@ -325,10 +667,64 @@
       "description": ":flag_gr: **| #GREECE |** :flag_gr:"
     },
     {
+      "name": "Grenada",
+      "aliases": [""],
+      "invite": "https://discord.gg/84be5X7",
+      "description": ""
+    },
+    {
+      "name": "Greenland",
+      "aliases": [""],
+      "invite": "https://discord.gg/hs97jPy",
+      "description": ""
+    },
+    {
+      "name": "Guadeloupe",
+      "aliases": [""],
+      "invite": "https://discord.gg/8wNSWyW",
+      "description": ""
+    },
+    {
       "name": "Guam",
       "aliases": ["gu"],
       "invite": "https://discord.gg/0eDrgRlX8JMsSMJe",
       "description": ":flag_gu: **| #GUAM |** :flag_gu:"
+    },
+    {
+      "name": "Guatemala",
+      "aliases": [""],
+      "invite": "https://discord.gg/j2dQQFf",
+      "description": ""
+    },
+    {
+      "name": "Guinea",
+      "aliases": [""],
+      "invite": "https://discord.gg/zmVJRNN",
+      "description": ""
+    },
+    {
+      "name": "Guinea-Bissau",
+      "aliases": [""],
+      "invite": "https://discord.gg/nQj6EeK",
+      "description": ""
+    },
+    {
+      "name": "Guyana",
+      "aliases": [""],
+      "invite": "https://discord.gg/Wjsantj",
+      "description": ""
+    },
+    {
+      "name": "Haiti",
+      "aliases": [""],
+      "invite": "https://discord.gg/HgrpfNN",
+      "description": ""
+    },
+    {
+      "name": "Honduras",
+      "aliases": [""],
+      "invite": "https://discord.gg/28B2N8e",
+      "description": ""
     },
     {
       "name": "Hong Kong",
@@ -343,6 +739,12 @@
       "description": ":flag_hu: **| #HUNGARY |** :flag_hu:"
     },
     {
+      "name": "Iceland",
+      "aliases": [""],
+      "invite": "https://discord.gg/vkzPXrQ",
+      "description": ""
+    },
+    {
       "name": "India",
       "aliases": ["in"],
       "invite": "https://discord.gg/0eDRr62KdHi5Ucjb",
@@ -353,6 +755,18 @@
       "aliases": ["id"],
       "invite": "https://discord.gg/0eDRVSi64xalGkJk",
       "description": ":flag_id:**| #INDONESIA |** :flag_id:"
+    },
+    {
+      "name": "Iran",
+      "aliases": [""],
+      "invite": "https://discord.gg/rgJ7Hkh",
+      "description": ""
+    },
+    {
+      "name": "Iraq",
+      "aliases": [""],
+      "invite": "https://discord.gg/5J4E65h",
+      "description": ""
     },
     {
       "name": "Ireland",
@@ -373,10 +787,22 @@
       "description": ":flag_it: **| #ITALY |** :flag_it:"
     },
     {
+      "name": "Jamaica",
+      "aliases": [""],
+      "invite": "https://discord.gg/TxjvgVj",
+      "description": ""
+    },
+    {
       "name": "Japan",
       "aliases": ["jp"],
       "invite": "https://discord.gg/0dHiutjeu3hAK9Lu",
       "description": ":flag_jp: **| #JAPAN |** :flag_jp:"
+    },
+    {
+      "name": "Jordan",
+      "aliases": [""],
+      "invite": "https://discord.gg/Bk8JZNR",
+      "description": ""
     },
     {
       "name": "Kazakhstan",
@@ -385,10 +811,106 @@
       "description": ":flag_kz: **| #KAZAKHSTAN |** :flag_kz:"
     },
     {
+      "name": "Kenya",
+      "aliases": [""],
+      "invite": "https://discord.gg/WhwxxJk",
+      "description": ""
+    },
+    {
+      "name": "Kiribati",
+      "aliases": [""],
+      "invite": "https://discord.gg/pWcVSWB",
+      "description": ""
+    },
+    {
+      "name": "Kuwait",
+      "aliases": [""],
+      "invite": "https://discord.gg/avsEd7M",
+      "description": ""
+    },
+    {
+      "name": "Kosovo",
+      "aliases": [""],
+      "invite": "https://discord.gg/WRpksgH",
+      "description": ""
+    },
+    {
+      "name": "Kyrgyzstan",
+      "aliases": [""],
+      "invite": "https://discord.gg/Xs8K3M7",
+      "description": ""
+    },
+    {
+      "name": "Laos",
+      "aliases": [""],
+      "invite": "https://discord.gg/HBEzJXU",
+      "description": ""
+    },
+    {
+      "name": "Latvia",
+      "aliases": [""],
+      "invite": "https://discord.gg/XtRmV3C",
+      "description": ""
+    },
+    {
+      "name": "Lebanon",
+      "aliases": [""],
+      "invite": "https://discord.gg/9bqquXY",
+      "description": ""
+    },
+    {
+      "name": "Lesotho",
+      "aliases": [""],
+      "invite": "https://discord.gg/s6ycKHj",
+      "description": ""
+    },
+    {
+      "name": "Liberia",
+      "aliases": [""],
+      "invite": "https://discord.gg/26h2u2a",
+      "description": ""
+    },
+    {
+      "name": "Libya",
+      "aliases": [""],
+      "invite": "https://discord.gg/rHTvF8t",
+      "description": ""
+    },
+    {
+      "name": "Liechtenstein",
+      "aliases": [""],
+      "invite": "https://discord.gg/X2zMvq3",
+      "description": ""
+    },
+    {
       "name": "Lithuania",
       "aliases": ["lt"],
       "invite": "https://discord.gg/0isA3w9Pg1PCBJzu",
       "description": ":flag_lt: **| #LITHUANIA |** :flag_lt: "
+    },
+    {
+      "name": "Luxembourg",
+      "aliases": [""],
+      "invite": "https://discord.gg/rBhfFJ7",
+      "description": ""
+    },
+    {
+      "name": "Macau",
+      "aliases": [""],
+      "invite": "https://discord.gg/SaqX3DC",
+      "description": ""
+    },
+    {
+      "name": "Macedonia",
+      "aliases": [""],
+      "invite": "https://discord.gg/kGWTZbU",
+      "description": ""
+    },
+    {
+      "name": "Madagascar",
+      "aliases": [""],
+      "invite": "https://discord.gg/CZxGeBf",
+      "description": ""
     },
     {
       "name": "Malaysia",
@@ -397,10 +919,124 @@
       "description": ":flag_my: **| #MALAYSIA |** :flag_my:"
     },
     {
+      "name": "Malawi",
+      "aliases": [""],
+      "invite": "https://discord.gg/5jgfSC2",
+      "description": ""
+    },
+    {
+      "name": "Maldives",
+      "aliases": [""],
+      "invite": "https://discord.gg/nzARnf3",
+      "description": ""
+    },
+    {
+      "name": "Mali",
+      "aliases": [""],
+      "invite": "https://discord.gg/UmhrZyq",
+      "description": ""
+    },
+    {
+      "name": "Malta",
+      "aliases": [""],
+      "invite": "https://discord.gg/96bG5wE",
+      "description": ""
+    },
+    {
+      "name": "Marshall Islands",
+      "aliases": [""],
+      "invite": "https://discord.gg/R4jT59R",
+      "description": ""
+    },
+    {
+      "name": "Martinique",
+      "aliases": [""],
+      "invite": "https://discord.gg/yxe5zVM",
+      "description": ""
+    },
+    {
+      "name": "Mauritania",
+      "aliases": [""],
+      "invite": "https://discord.gg/ZpX84X7",
+      "description": ""
+    },
+    {
+      "name": "Mauritius",
+      "aliases": [""],
+      "invite": "https://discord.gg/FqN4cqD",
+      "description": ""
+    },
+    {
       "name": "Mexico",
       "aliases": ["mx"],
       "invite": "https://discord.gg/0rAvVeMaiL45bNax",
       "description": ":flag_mx: **| #MEXICO |** :flag_mx:"
+    },
+    {
+      "name": "Micronesia",
+      "aliases": [""],
+      "invite": "https://discord.gg/sGEv3zU",
+      "description": ""
+    },
+    {
+      "name": "Moldova",
+      "aliases": [""],
+      "invite": "https://discord.gg/HsxngVv",
+      "description": ""
+    },
+    {
+      "name": "Monaco",
+      "aliases": [""],
+      "invite": "https://discord.gg/ZvfdZq4",
+      "description": ""
+    },
+    {
+      "name": "Mongolia",
+      "aliases": [""],
+      "invite": "https://discord.gg/Na4dBBm",
+      "description": ""
+    },
+    {
+      "name": "Montenegro",
+      "aliases": [""],
+      "invite": "https://discord.gg/uZUwBgH",
+      "description": ""
+    },
+    {
+      "name": "Morocco",
+      "aliases": [""],
+      "invite": "https://discord.gg/bwBZ9JF",
+      "description": ""
+    },
+    {
+      "name": "Mozambique",
+      "aliases": [""],
+      "invite": "https://discord.gg/sVAD9uQ",
+      "description": ""
+    },
+    {
+      "name": "Myanmar",
+      "aliases": [""],
+      "invite": "https://discord.gg/qpH53sU",
+      "description": ""
+    },
+    {
+      "name": "Namibia",
+      "aliases": [""],
+      "invite": "https://discord.gg/5HeVgrT",
+      "description": ""
+    },
+    {
+      "name": "Nauru",
+      "aliases": [""],
+      "invite": "https://discord.gg/g4fbSsK",
+      "description": ""
+    },
+    {
+      "name": "Nepal",
+      "aliases": [""],
+      "invite": "https://discord.gg/Q5dFYr4",
+      "description": ""
     },
     {
       "name": "Netherlands",
@@ -409,10 +1045,34 @@
       "description": ":flag_nl: **| #NETHERLANDS |** :flag_nl:"
     },
     {
+      "name": "New Caledonia",
+      "aliases": [""],
+      "invite": "https://discord.gg/4dmktNZ",
+      "description": ""
+    },
+    {
       "name": "New Zealand",
       "aliases": ["nz"],
       "invite": "https://discord.gg/0dIAGN8v3Qjm6VKB",
       "description": ":flag_nz: **| #NEW ZEALAND |** :flag_nz:"
+    },
+    {
+      "name": "Nicaragua",
+      "aliases": [""],
+      "invite": "https://discord.gg/4ckMPWM",
+      "description": ""
+    },
+    {
+      "name": "Niger",
+      "aliases": [""],
+      "invite": "https://discord.gg/eWn6FnT",
+      "description": ""
+    },
+    {
+      "name": "Nigeria",
+      "aliases": [""],
+      "invite": "https://discord.gg/BvBM6Tv",
+      "description": ""
     },
     {
       "name": "Norway",
@@ -421,10 +1081,52 @@
       "description": ":flag_no: **| #NORWAY |** :flag_no:"
     },
     {
+      "name": "Oman",
+      "aliases": [""],
+      "invite": "https://discord.gg/2hHs4wm",
+      "description": ""
+    },
+    {
+      "name": "Pakistan",
+      "aliases": [""],
+      "invite": "https://discord.gg/DyN4ACW",
+      "description": ""
+    },
+    {
+      "name": "Palau",
+      "aliases": [""],
+      "invite": "https://discord.gg/afqfevX",
+      "description": ""
+    },
+    {
+      "name": "Palestine",
+      "aliases": [""],
+      "invite": "https://discord.gg/tD53ntF",
+      "description": ""
+    },
+    {
+      "name": "Panema",
+      "aliases": [""],
+      "invite": "https://discord.gg/VNKeYWX",
+      "description": ""
+    },
+    {
+      "name": "Papua New Guinea",
+      "aliases": [""],
+      "invite": "https://discord.gg/xG3rnbF",
+      "description": ""
+    },
+    {
       "name": "Paraguay",
       "aliases": ["py"],
       "invite": "https://discord.gg/0rAwcX1PfGFk9zwh",
       "description": ":flag_py: **| #PARAGUAY |** :flag_py:"
+    },
+    {
+      "name": "Peru",
+      "aliases": [""],
+      "invite": "https://discord.gg/uQByDe6",
+      "description": ""
     },
     {
       "name": "Philippines",
@@ -451,6 +1153,18 @@
       "description": ":flag_pr: **| #PUERTO RICO |** :flag_pr:"
     },
     {
+      "name": "Qatar",
+      "aliases": [""],
+      "invite": "https://discord.gg/gcta2vC",
+      "description": ""
+    },
+    {
+      "name": "Reunion",
+      "aliases": [""],
+      "invite": "https://discord.gg/DfJpuxQ",
+      "description": ""
+    },
+    {
       "name": "Romania",
       "aliases": ["ro"],
       "invite": "https://discord.gg/0isAY5pA7nPL59JU",
@@ -463,10 +1177,76 @@
       "description": ":flag_ru: **| #RUSSIA |** :flag_ru:"
     },
     {
+      "name": "Rwanda",
+      "aliases": [""],
+      "invite": "https://discord.gg/Byf7qhe",
+      "description": ""
+    },
+    {
+      "name": "Saint Kitts & Nevis ",
+      "aliases": [""],
+      "invite": "https://discord.gg/jfpRFTQ",
+      "description": ""
+    },
+    {
+      "name": "Saint Lucia",
+      "aliases": [""],
+      "invite": "https://discord.gg/uDfERV8",
+      "description": ""
+    },
+    {
+      "name": "Saint Vincent and the Grenadines",
+      "aliases": [""],
+      "invite": "https://discord.gg/My4qXGN",
+      "description": ""
+    },
+    {
+      "name": "Samoa",
+      "aliases": [""],
+      "invite": "https://discord.gg/Vjz2JmUvv",
+      "description": ""
+    },
+    {
+      "name": "San Marino",
+      "aliases": [""],
+      "invite": "https://discord.gg/cxFY6Jr",
+      "description": ""
+    },
+    {
+      "name": "Sao Tome & Principe",
+      "aliases": [""],
+      "invite": "https://discord.gg/NFxBmBD",
+      "description": ""
+    },
+    {
+      "name": "Saudi Arabia",
+      "aliases": [""],
+      "invite": "https://discord.gg/rFZEgqr",
+      "description": ""
+    },
+    {
+      "name": "Senegal",
+      "aliases": [""],
+      "invite": "https://discord.gg/S7Z7M53",
+      "description": ""
+    },
+    {
       "name": "Serbia",
       "aliases": ["rs"],
       "invite": "https://discord.gg/0dI9syWXyoRJ12Jn",
       "description": ":flag_rs: **| #SERBIA |** :flag_rs:"
+    },
+    {
+      "name": "Seychelles",
+      "aliases": [""],
+      "invite": "https://discord.gg/hSQPCEV",
+      "description": ""
+    },
+    {
+      "name": "Sierra Leone",
+      "aliases": [""],
+      "invite": "https://discord.gg/MSG4MEp",
+      "description": ""
     },
     {
       "name": "Singapore",
@@ -481,6 +1261,24 @@
       "description": ":flag_sk: **| #SLOVAKIA |** :flag_sk:"
     },
     {
+      "name": "Slovenia",
+      "aliases": [""],
+      "invite": "https://discord.gg/mwYRQAb",
+      "description": ""
+    },
+    {
+      "name": "Solomon Islands",
+      "aliases": [""],
+      "invite": "https://discord.gg/Rf8WJJV",
+      "description": ""
+    },
+    {
+      "name": "Somalia",
+      "aliases": [""],
+      "invite": "https://discord.gg/Vjz2JmU",
+      "description": ""
+    },
+    {
       "name": "South Africa",
       "aliases": ["za"],
       "invite": "https://discord.gg/0rAw9ICnyIepqwSl",
@@ -493,10 +1291,40 @@
       "description": ":flag_kr: **| #SOUTH KOREA |** :flag_kr:"
     },
     {
+      "name": "South Sudan",
+      "aliases": [""],
+      "invite": "https://discord.gg/CVPHPvS",
+      "description": ""
+    },
+    {
       "name": "Spain",
       "aliases": ["es"],
       "invite": "https://discord.gg/0b1JzGvEl0klFn1j",
       "description": ":flag_es: **| #SPAIN |** :flag_es:"
+    },
+    {
+      "name": "Sri Lanka",
+      "aliases": [""],
+      "invite": "https://discord.gg/kaz4Ww6",
+      "description": ""
+    },
+    {
+      "name": "Sudan",
+      "aliases": [""],
+      "invite": "https://discord.gg/BYjNqWD",
+      "description": ""
+    },
+    {
+      "name": "Suriname",
+      "aliases": [""],
+      "invite": "https://discord.gg/DHE2tkK",
+      "description": ""
+    },
+    {
+      "name": "Swaziland",
+      "aliases": [""],
+      "invite": "https://discord.gg/hpYDfvB",
+      "description": ""
     },
     {
       "name": "Sweden",
@@ -511,10 +1339,28 @@
       "description": ":flag_ch: **| #SWITZERLAND |** :flag_ch: "
     },
     {
+      "name": "Syria",
+      "aliases": [""],
+      "invite": "https://discord.gg/HsjDke2",
+      "description": ""
+    },
+    {
       "name": "Taiwan",
       "aliases": ["tw"],
       "invite": "https://discord.gg/0b1JYAEdSI0hmwFf",
       "description": ":flag_tw: **| #TAIWAN |** :flag_tw:"
+    },
+    {
+      "name": "Tajikistan",
+      "aliases": [""],
+      "invite": "https://discord.gg/Nt5kPxY",
+      "description": ""
+    },
+    {
+      "name": "Tanzania",
+      "aliases": [""],
+      "invite": "https://discord.gg/m2Y99vM",
+      "description": ""
     },
     {
       "name": "Thailand",
@@ -523,16 +1369,64 @@
       "description": ":flag_th: **| #THAILAND |** :flag_th:"
     },
     {
+      "name": "Timor-Leste",
+      "aliases": [""],
+      "invite": "https://discord.gg/fK37s2m",
+      "description": ""
+    },
+    {
+      "name": "Togo",
+      "aliases": [""],
+      "invite": "https://discord.gg/XJqDUr6",
+      "description": ""
+    },
+    {
+      "name": "Tonga",
+      "aliases": [""],
+      "invite": "https://discord.gg/5cjc6YA",
+      "description": ""
+    },
+    {
+      "name": "Trinidad & Tobago",
+      "aliases": [""],
+      "invite": "https://discord.gg/GtpJn3B",
+      "description": ""
+    },
+    {
+      "name": "Tunisia",
+      "aliases": [""],
+      "invite": "https://discord.gg/vMwXstU",
+      "description": ""
+    },
+    {
       "name": "Turkey",
       "aliases": ["tr"],
       "invite": "https://discord.gg/0b1JJlYzeLWFJU4E",
       "description": ":flag_tr: **| #TURKEY |** :flag_tr:"
     },
     {
+      "name": "Turkmenistan",
+      "aliases": [""],
+      "invite": "https://discord.gg/euNJhXH",
+      "description": ""
+    },
+    {
+      "name": "Tuvalu",
+      "aliases": [""],
+      "invite": "https://discord.gg/v66FSbB",
+      "description": ""
+    },
+    {
       "name": "UAE",
       "aliases": ["ae", "united arab emirates"],
       "invite": "https://discord.gg/0b1JDsT2krXUctNY",
       "description": ":flag_ae: **| #UAE |** :flag_ae:"
+    },
+    {
+      "name": "Uganda",
+      "aliases": [""],
+      "invite": "https://discord.gg/qXEZaFB",
+      "description": ""
     },
     {
       "name": "UK",
@@ -559,6 +1453,24 @@
       "description": ":flag_us: **| #USA |** :flag_us:"
     },
     {
+      "name": "Uzbekistan",
+      "aliases": [""],
+      "invite": "https://discord.gg/RYW5KUN",
+      "description": ""
+    },
+    {
+      "name": "Vanuatu",
+      "aliases": [""],
+      "invite": "https://discord.gg/CQyFWWy",
+      "description": ""
+    },
+    {
+      "name": "Vatican City",
+      "aliases": [""],
+      "invite": "https://discord.gg/MuUeuMg",
+      "description": ""
+    },
+    {
       "name": "Venezuela",
       "aliases": ["ve"],
       "invite": "https://discord.gg/0b1GeMhOWFw0WOvh",
@@ -569,6 +1481,24 @@
       "aliases": ["vn"],
       "invite": "https://discord.gg/0Zyk8AMOT1Pzyy7E",
       "description": ":flag_vn: **| #VIETNAM |** :flag_vn:"
+    },
+    {
+      "name": "Yemen",
+      "aliases": [""],
+      "invite": "https://discord.gg/ZNecbJg",
+      "description": ""
+    },
+    {
+      "name": "Zambia",
+      "aliases": [""],
+      "invite": "https://discord.gg/AKQf78C",
+      "description": ""
+    },
+    {
+      "name": "Zimbabwe",
+      "aliases": [""],
+      "invite": "https://discord.gg/YpEwGxq",
+      "description": ""
     }
   ]
 }

@@ -1,5 +1,4 @@
 // id command
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "id",
@@ -15,7 +14,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let user;
 
   if (!msg.guild || !suffix) user = msg.author;
@@ -27,17 +26,18 @@ exports.run = (bot, msg, suffix) => {
       let query = suffix.toLowerCase();
       let members = msg.guild.members.filter(m => m.user.username.toLowerCase().includes(query) || (m.nickname && m.nickname.toLowerCase().includes(query)));
 
-      if (members.size > 1) {
-        return msg.channel.sendMessage(stripIndents`
+      if (members.size > 1 && members.size <= 10) {
+        return msg.channel.sendMessage(client.util.commonTags.stripIndents`
           Multiple users were found with that search.
-          ${members.map(m => `**${m.user.username}#${m.user.discriminator}:** ${m.id}`).join("\n")}
+          ${members.map(m => `**${m.user.username}#${m.user.discriminator}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
         `);
       }
+      else if (members.size > 10) return msg.channel.sendMessage("Too many users were found with that search, please narrow your search!~");
       else if (members.size === 1) user = members.first().user;
     }
   }
 
   if (!user) return msg.channel.sendMessage("No users were found with that search!");
-  
+
   msg.channel.sendMessage(`**${user.username}#${user.discriminator}**'s ID is ${user.id}`);
 };

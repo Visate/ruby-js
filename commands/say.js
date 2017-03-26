@@ -13,7 +13,7 @@ exports.config = {
   permLevel: 8
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let channel = msg.channel;
   msg.delete();
   channel.sendMessage(suffix);
