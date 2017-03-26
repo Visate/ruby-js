@@ -27,6 +27,7 @@ exports.run = (client, msg, suffix) => {
 
   if (count > 50) count = 50;
   if (!playlistQuery) return msg.channel.sendMessage("Please provide a link to a playlist!");
+  client.log(playlistQuery);
 
   YouTube.getPlaylist(playlistQuery).then(playlist => {
     playlist.getVideos(count).then(videos => {

@@ -20,7 +20,7 @@ exports.run = (client, msg, suffix) => {
   if (player.isPlaying()) return msg.channel.sendMessage("Stop music playback first before you request a stream!");
 
   if (suffix.toLowerCase() === "random" || !suffix) stream = client.util.streamManager.randomStream();
-  else if (streams.hasStream(suffix)) stream = client.util.streamManager.getStream(suffix);
+  else if (client.util.streamManager.hasStream(suffix)) stream = client.util.streamManager.getStream(suffix);
   else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:**\n${client.util.streamManager.getStreams().map(stream => stream.name).join(", ")}`);
   else return msg.channel.sendMessage(`Invalid stream name, use \`${client.config.prefix}music stream list\` to view available streams!~`);
 

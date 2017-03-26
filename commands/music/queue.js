@@ -14,7 +14,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let player = client.util.musicHandler.getPlayer(msg.guild);
   if (player) {
     let queueMsg;
@@ -22,7 +22,7 @@ exports.run = (bot, msg, suffix) => {
     let totalSec = ~~(milliSec / 1000);
 
     if (player.streaming) {
-      queueMsg = stripIndents`
+      queueMsg = client.util.commonTags.stripIndents`
       __**Now streaming:**__
       ${player.stream.np()} from [${player.stream.name}](${player.stream.queueUrl})
 

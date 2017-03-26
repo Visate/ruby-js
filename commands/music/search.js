@@ -29,6 +29,7 @@ exports.run = (client, msg, suffix) => {
   if (count > 50) count = 50;
 
   YouTube.searchVideos(search, count).then(videos => {
+    if (!videos[0]) return msg.channel.sendMessage("No videos were found with this search!");
     let collector = msg.channel.createCollector(m => m.author === msg.author, {time: 10000 * count});
     let currentVideo;
     let lastMsg;

@@ -31,7 +31,7 @@ exports.run = (client, msg, suffix) => {
       msgArray.push(message);
     });
 
-    if (msg.guild) msg.react(":mailbox_with_mail:").then(() => setTimeout(() => msg.clearReactions(), 5000));
+    if (msg.guild) msg.react("📬").then(() => setTimeout(() => msg.clearReactions(), 5000));
     msg.author.sendCode("asciidoc", msgArray);
   }
 

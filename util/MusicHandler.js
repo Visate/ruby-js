@@ -24,24 +24,25 @@ class MusicHandler {
         name: `${song.requestedBy.username}#${song.requestedBy.discriminator} (${song.requestedBy.id})`,
         icon_url: song.requestedBy.avatarURL
       },
-      description: `${song.queueURL ? `[${song.title}](${song.queueURL})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : client.util.toHHMMSS(song.length)})`,
+      description: `${song.queueURL ? `[${song.title}](${song.queueURL})` : `**${song.title}**`} (${song.length === "unknown" ? "?:??" : this.client.util.toHHMMSS(song.length)})`,
       image: {
         url: song.thumbnail
       },
       footer: {
         text: "Now Playing",
-        icon_url: client.user.avatarURL
+        icon_url: this.client.user.avatarURL
       }
     };
 
     player.notifyEmbed(embed);
 
-    let stream = song.source === "youtube" ? stream = ytdl(song.songURL, {filter: "audioonly"}) : request(song.songURL);
+    let stream = song.source === "youtube" ? ytdl(song.songURL, {filter: "audioonly"}) : request(song.songURL);
 
-    player.setDispatcher(player.voice.connection.playStream(stream, {volume: player.volume / 50, passes: 2}));
+    player.dispatcher = player.voice.connection.playStream(stream, {volume: player.volume / 50, passes: 2});
     player.setPlaying(true);
 
-    player.dispatcher.on("end", () => {
+    player.dispatcher.on("end", reason => {
+      this.client.warn(reason);
       let oldSong = player.queue.shift();
       if (player.looping) player.queue.push(oldSong);
       this.play(player.guild, player.queue[0]);
@@ -50,12 +51,12 @@ class MusicHandler {
     player.dispatcher.on("error", err => {
       player.notify(`Error occured during playback: ${err}`);
       player.queue.shift();
-      play(player.guild, player.queue[0]);
+      this.play(player.guild, player.queue[0]);
     });
   }
 
   createPlayer(msg) {
-    this.connections[msg.guild.id] = new MusicPlayer(client, msg);
+    this.connections[msg.guild.id] = new MusicPlayer(this.client, msg);
 
     msg.channel.sendMessage(`Connected to voice channel ${msg.member.voiceChannel.name} and binding notifications to ${msg.channel}.`);
   }
@@ -69,13 +70,13 @@ class MusicHandler {
   }
 
   isDJ(msg) {
-    return client.util.checkPerms(msg) > 1;
+    return this.client.util.checkPerms(msg) > 1;
   }
 
   startStreaming(msg, stream) {
     let player = this.connections[msg.guild.id];
     if (player && stream) {
-      player.setDispatcher(player.voice.connection.playStream(request(stream.url), {volume: player.volume / 50, passes: 2}));
+      player.dispatcher = player.voice.connection.playStream(request(stream.streamURL), {volume: player.volume / 50, passes: 2});
       player.setStreaming(true);
       player.setStream(stream);
       player.setPlaying(false);
@@ -101,8 +102,8 @@ class MusicHandler {
           name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
           icon_url: msg.author.avatarURL
         },
-        description: client.util.commonTags.stripIndents`
-        :thumbsup: ${queueURL ? `[${title}](${queueURL})` : `**${title}**`} (${length === "unknown" ? "?:??" : client.util.toHHMMSS(length)})
+        description: this.client.util.commonTags.stripIndents`
+        :thumbsup: ${queueURL ? `[${title}](${queueURL})` : `**${title}**`} (${length === "unknown" ? "?:??" : this.client.util.toHHMMSS(length)})
         **Position:** ${position}`
       };
 
@@ -125,10 +126,10 @@ class MusicHandler {
       let progress = 0;
       let failed = 0;
 
-      function checkPromise() {
+      function checkPromise(handler) {
         if (progress === total) {
           if (player.isStreaming()) player.stopStreaming();
-          if (!player.isPlaying()) this.play(msg.guild, player.queue[0]);
+          if (!player.isPlaying()) handler.play(msg.guild, player.queue[0]);
           resolve(total - failed);
         }
       }
@@ -138,11 +139,11 @@ class MusicHandler {
           progress++;
           let song = new Song(v.title, msg.author, v.durationSeconds, `https://img.youtube.com/vi/${v.id}/mqdefault.jpg`, v.url, v.url, "youtube");
           player.addSong(song);
-          checkPromise();
-        }).catch(() => {
+          checkPromise(this);
+        }).catch(err => {
           progress++;
           failed++;
-          checkPromise();
+          checkPromise(this);
         });
       });
     });
@@ -160,7 +161,7 @@ class MusicHandler {
     let player = this.connections[msg.guild.id];
 
     if (player) {
-      let unmutedCount = player.voice.members.filter(m => !m.selfDeaf && !m.serverDeaf && m.id !== bot.user.id).size;
+      let unmutedCount = player.voice.members.filter(m => !m.selfDeaf && !m.serverDeaf && m.id !== this.client.user.id).size;
       player.skipRequired = ~~(unmutedCount * 0.33);
       player.skipVote += 1;
       if (player.skipVote >= player.skipRequired) {
@@ -173,7 +174,7 @@ class MusicHandler {
 
   forceSkip(msg) {
     let player = this.connections[msg.guild.id];
-    if (player && msg.client.util.checkPerms(msg) > 1) {
+    if (player && this.client.util.checkPerms(msg) > 1) {
       player.skipVote = 0;
       msg.channel.sendMessage(`Skipped ${player.queue[0].title}!`).then(() => player.skipSong());
     }
@@ -227,10 +228,6 @@ class MusicPlayer {
     this.stream = stream;
   }
 
-  setDispatcher(dispatcher) {
-    this.dispatcher = dispatcher;
-  }
-
   isLooping() {
     return this.looping;
   }
@@ -249,6 +246,10 @@ class MusicPlayer {
 
   shuffleQueue() {
     this.queue = [this.queue[0]].concat(this.client.util.shuffle(this.queue.slice(1)));
+  }
+
+  clearQueue() {
+    this.queue = [];
   }
 
   stopStreaming() {
@@ -272,6 +273,10 @@ class MusicPlayer {
     if (!this.streaming && this.dispatcher.paused) msg.channel.sendMessage("Resuming playback!").then(() => this.dispatcher.resume());
   }
 
+  addSong(song) {
+    this.queue.push(song);
+  }
+
   skipSong() {
     this.dispatcher.end();
   }
@@ -293,7 +298,7 @@ class MusicPlayer {
       let currentSong = this.queue[0];
       if (!currentSong) return null;
       if (currentSong.length === "unknown") return currentSong.length;
-      return client.util.toHHMMSS(currentSong.length - ~~(this.dispatcher.time / 1000));
+      return this.client.util.toHHMMSS(currentSong.length - ~~(this.dispatcher.time / 1000));
     }
   }
 

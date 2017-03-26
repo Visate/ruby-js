@@ -11,6 +11,6 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   client.util.musicHandler.skipSong(msg);
 };

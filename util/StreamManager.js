@@ -9,10 +9,10 @@ class StreamManager {
     this.streams = new Collection();
 
     // r-a-d.io
-    streams.set("r-a-d.io", new RADio(client));
+    this.streams.set("r-a-d.io", new RADio(client));
 
     // listen.moe
-    streams.set("listen.moe", new ListenMoe(client));
+    this.streams.set("listen.moe", new ListenMoe(client));
   }
 
   getStreams() {
@@ -71,7 +71,7 @@ class RADio extends Stream {
         this.jsonInfo = JSON.parse(body);
         let timeRemaining = this.jsonInfo.end_time - this.jsonInfo.current;
         if (this.timeout) clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => updateRadio(), timeRemaining * 1000);
+        this.timeout = setTimeout(() => this.update(), timeRemaining * 1000);
       }
     });
   }
@@ -117,7 +117,7 @@ class ListenMoe extends Stream {
       }, 3000);
     });
 
-    this.ws.on("error", client.error);
+    this.ws.on("error", this.client.error);
   }
 }
 

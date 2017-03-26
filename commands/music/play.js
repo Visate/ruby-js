@@ -31,23 +31,23 @@ exports.run = (client, msg, suffix) => {
         let milliSec = parseInt(info["duration"], 10);
         let totalSec = ~~(milliSec / 1000);
 
-        client.util.musicHandler.queueSong(msg, info["title"], totalSec, info["artwork_url"], info["permalink_url"], `${info["stream_url"]}?client_id=${config.apiKeys.soundcloudId}`, "soundcloud");
+        client.util.musicHandler.queueSong(msg, info.title, totalSec, info.artwork_url, info.permalink_url, `${info.stream_url}?client_id=${client.config.apiKeys.soundcloud}`, "soundcloud");
       }
     });
   }
 
-  else if (permLvl > 4 && url.match(/^https?:\/\/(.*)$/) && !url.match(/(youtube.com|youtu.be)/)) {
-    bot.musicHandler.addToQueue(bot, msg, suffix, "unknown", null, suffix, suffix, "other");
+  else if (perms > 4 && url.match(/^https?:\/\/(.*)$/) && !url.match(/(youtube.com|youtu.be)/)) {
+    client.util.musicHandler.queueSong(msg, suffix, "unknown", null, suffix, suffix, "other");
   }
 
   else {
     YouTube.getVideo(url).then(video => {
-      bot.musicHandler.addToQueue(bot, msg, video.title, video.durationSeconds, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+      client.util.musicHandler.queueSong(msg, video.title, video.durationSeconds, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
     }).catch(() => {
       // Search for one video
       YouTube.searchVideos(url, 1).then(videos => {
         YouTube.getVideoByID(videos[0].id).then(video => {
-          bot.musicHandler.addToQueue(bot, msg, video.title, video.durationSeconds, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
+          client.util.musicHandler.queueSong(msg, video.title, video.durationSeconds, `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`, video.url, video.url, "youtube");
         }).catch(err => msg.channel.sendMessage(`Error occured on adding song: ${err}`));
       }).catch(() => msg.channel.sendMessage("Error occured on adding song: Unable to obtain a search result."));
     });
