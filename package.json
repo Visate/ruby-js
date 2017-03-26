@@ -21,6 +21,6 @@
     "request": "^2.79.0",
     "simple-youtube-api": "^2.1.0",
     "sodium": "^2.0.1",
-    "ytdl-core": "^0.7.21"
+    "ytdl-core": "fent/node-ytdl-core#master"
   }
 }
