@@ -9,7 +9,7 @@ module.exports = member => {
 
   if (nyaaCh) nyaaCh.sendMessage(client.util.commonTags.oneLine`
     **Join:** \`${client.util.cleanText(member.user.username)}#${member.user.discriminator}\`
-    (${member.id}) on ${moment.utc().format("ddd, MMM DD YYY [at] HH:mm:ss [UTC]")}`);
+    (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`);
 
   // TODO: Anti-raid auto-role disable
   let guestRole = guild.roles.find(role => role.name === "Guest");
