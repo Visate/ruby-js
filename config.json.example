@@ -1,12 +1,6 @@
 {
-  "bot": {
-    "token": "discord token here"
-  },
-
-  "settings": {
-    "prefix": "prefix here",
-    "maxPurge": 2000
-  },
+  "token": "discord token here",
+  "prefix": "prefix here",
 
   "resources": {
     "banForm": "google form link to ban form"
@@ -17,23 +11,11 @@
   },
 
   "modes": {
-    
-  },
 
-  "defaults": {
-    "volume": 20
   },
 
   "apiKeys": {
-    "soundcloudId": "soundcloud id for music",
-    "googleAPIKey": "google api key for search"
-  },
-
-  "firebase": {
-    "apiKey": "firebase api key",
-    "authDomain": "firebase auth domain",
-    "databaseURL": "firebase database url",
-    "storageBucket": "firebase storage bucket",
-    "messagingSenderId": "firebase messaging sender id"
+    "soundcloud": "soundcloud id for music",
+    "google": "google api key for search"
   }
 }
