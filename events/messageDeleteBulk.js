@@ -5,7 +5,7 @@ module.exports = msgs => {
   let nyaaLogCh = msgs.first().guild.channels.find(channel => channel.name === "nyaa-log");
 
   let msgArray = [];
-  msgArray.push(`\`[Message Bulk Delete] Messages Count: ${msgs.size()}\``);
+  msgArray.push(`\`[Message Bulk Delete] Messages Count: ${msgs.size}\``);
   msgs.forEach(msg => {
     if (!msg.content && msg.attachments.size === 0) return;
     if (msg.system) return;

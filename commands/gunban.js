@@ -32,10 +32,10 @@ exports.run = (client, msg, suffix) => {
   originGuild.fetchBans().then(bans => {
     user = bans.get(userQuery);
     if (!user) user = originGuild.members.has(userQuery) ? originGuild.members.get(userQuery).user : {username: "?", discriminator: "?", id: userQuery, placeholder: true};
-    processGunban(client, msg, originGuild, user, reason).then((unbanUser, count) => {
-      msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count} servers ^-^`);
-    }).catch((unbanUser, count, countNoUnban) => {
-      msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned across ${count - countNoUnban} servers ^-^ (failed on ${countNoUnban} servers)`);
+    processGunban(client, msg, originGuild, user, reason).then(([ unbanUser, count ]) => {
+      msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned in ${count} server${count === 1 ? "" : "s"} ^-^`);
+    }).catch(([ unbanUser, count, countNoUnban ]) => {
+      msg.channel.sendMessage(`${msg.author}, ${unbanUser.username} (${unbanUser.id}) was unbanned in ${count - countNoUnban} server${count - countNoUnban === 1 ? "" : "s"} ^-^ (failed on ${countNoUnban} server${count - countNoUnban === 1 ? "" : "s"})`);
     });
   });
 };
@@ -47,8 +47,8 @@ function processGunban(client, msg, originGuild, user, reason) {
   return new Promise((resolve, reject) => {
 
     function checkPromise() {
-      if (count === client.guilds.size - 1 && countNoUnban === 0) resolve(user, count);
-      else if (count === client.guilds.size - 1 && countNoUnban > 0) reject(user, count, countNoUnban);
+      if (count === client.guilds.size - 1 && countNoUnban === 0) resolve([user, count]);
+      else if (count === client.guilds.size - 1 && countNoUnban > 0) reject([user, count, countNoUnban]);
     }
 
     client.guilds.forEach(guild => {

@@ -59,4 +59,4 @@ module.exports = msg => {
     cmd.run(client, msg, suffix);
     client.log(`Command run by ${msg.author.username}#${msg.author.discriminator} in ${location}: ${msg.content}`);
   }
-;
+};

@@ -28,6 +28,6 @@ module.exports = msg => {
     if (ultimatePower && ultimatePower.position <= topRole.position) permlvl = 6;
     if (member.id === guild.ownerID) permlvl = 7;
   }
-  if (config.permissions.master.includes(msg.author.id)) permlvl = 8;
+  if (client.config.permissions.master.includes(msg.author.id)) permlvl = 8;
   return permlvl;
 };

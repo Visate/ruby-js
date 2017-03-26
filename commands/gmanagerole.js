@@ -25,33 +25,32 @@ exports.run = (client, msg, suffix) => {
 
   if (isNaN(userQuery)) return msg.channel.sendMessage("You did not specify a user correctly! Only provide a user mention or ID. Please try again~");
 
-  processGrole(bot, msg, action, userQuery, role.join(" ")).then((action, memberName, roleName, count) => {
-    if (action === "add") msg.channel.sendMessage(`${msg.author}, added ${roleName} to ${memberName} across ${count} servers.`);
-    else if (action === "remove") msg.channel.sendMessage(`${msg.author}, removed ${roleName} from ${memberName} across ${count} servers.`);
-  }).catch((action, memberName, roleName, count, countNoRole) => {
+  processGrole(client, msg, action, userQuery, role.join(" ")).then(([ action, memberName, roleName, count ]) => {
+    if (action === "add") msg.channel.sendMessage(`${msg.author}, added ${roleName} to ${memberName} in ${count} server${count === 1 ? "" : "s"}.`);
+    else if (action === "remove") msg.channel.sendMessage(`${msg.author}, removed ${roleName} from ${memberName} in ${count} server${count === 1 ? "" : "s"}.`);
+  }).catch(([ action, memberName, roleName, count, countNoRole ]) => {
     if (count - countNoRole <= 0) msg.channel.sendMessage(`${msg.author}, unable to find user or role in the servers.`);
     else {
-      if (action === "add") msg.channel.sendMessage(`${msg.author}, added ${roleName} to ${memberName} across ${count - countNoRole} servers.`);
-      else if (action === "remove") msg.channel.sendMessage(`${msg.author}, removed ${roleName} from ${memberName} across ${count - countNoRole} servers.`);
+      if (action === "add") msg.channel.sendMessage(`${msg.author}, added ${roleName} to ${memberName} in ${count - countNoRole} server${count - countNoRole === 1 ? "" : "s"}.`);
+      else if (action === "remove") msg.channel.sendMessage(`${msg.author}, removed ${roleName} from ${memberName} in ${count - countNoRole} server${count - countNoRole === 1 ? "" : "s"}.`);
     }
   });
 };
 
-function processGrole(bot, msg, action, userQuery, roleQuery) {
-  let count = 0;
-  let countNoRole = 0;
-  let memberName;
-  let roleName;
-
+function processGrole(client, msg, action, userQuery, roleQuery) {
   return new Promise((resolve, reject) => {
 
+    let count = 0;
+    let countNoRole = 0;
+    let memberName;
+    let roleName;
+
     function checkPromise() {
-      if (count === bot.guilds.size - 1 && countNoRole === 0) resolve(action, memberName, roleName, count);
-      else if (count === bot.guilds.size - 1 && countNoRole > 0) reject(action, memberName, roleName, count, countNoRole);
+      if (count === client.guilds.size && countNoRole === 0) resolve([action, memberName, roleName, count]);
+      else if (count === client.guilds.size && countNoRole > 0) reject([action, memberName, roleName, count, countNoRole]);
     }
 
-    bot.guilds.forEach(guild => {
-      if (guild.id === "235144885101920256") return; //ignore testing server
+    client.guilds.forEach(guild => {
       count++;
 
       let member = guild.members.get(userQuery);
@@ -60,7 +59,7 @@ function processGrole(bot, msg, action, userQuery, roleQuery) {
         checkPromise();
         return;
       }
-      if (typeof memberName !== "string") memberName = member.user.username;
+      if (!memberName) memberName = member.user.username;
 
       let role = guild.roles.find(r => r.name.toLowerCase() === roleQuery);
       if (!role) {
@@ -68,7 +67,7 @@ function processGrole(bot, msg, action, userQuery, roleQuery) {
         checkPromise();
         return;
       }
-      if (typeof roleName !== "string") roleName = role.name;
+      if (!roleName) roleName = role.name;
 
       if (action === "add") {
         member.addRole(role).then(() => {

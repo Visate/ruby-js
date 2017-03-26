@@ -2,10 +2,10 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = client => {
-  const files = fs.readdirSync(path.resolve("../commands"));
-  for (const file in files) {
+  const files = fs.readdirSync(path.resolve(__dirname, "../", "commands"));
+  files.forEach(file => {
     if (file.endsWith(".js")) {
-      let command = require(path.resolve("../", "commands", file));
+      let command = require(path.resolve(__dirname, "../", "commands", file));
       client.log(`Loading command: ${command.help.name}`);
 
       // Setting references to command collections
@@ -14,7 +14,7 @@ module.exports = client => {
         client.aliases.set(alias, command.help.name);
       });
     }
-  }
+  });
 
   client.log("All commands loaded!");
 };

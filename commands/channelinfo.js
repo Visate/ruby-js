@@ -39,7 +39,7 @@ exports.run = (client, msg) => {
     ],
     footer: {
       text: "Channel Info",
-      icon_url: bot.user.avatarURL
+      icon_url: client.user.avatarURL
     }
   };
 

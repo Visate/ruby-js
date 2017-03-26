@@ -19,7 +19,7 @@ exports.run = (client, msg, suffix) => {
   let msgArray = [];
 
   if (!suffix) {
-    msgArray.push("= Your Guide to Using ${client.user.username}=\n");
+    msgArray.push(`= Your Guide to Using ${client.user.username}=\n`);
     msgArray.push(`[Use ${client.config.prefix}help <command> for details]\n`);
     client.commands.forEach(cmd => {
       if (perms < cmd.config.permLevel) return;
@@ -29,7 +29,7 @@ exports.run = (client, msg, suffix) => {
       msgArray.push(message);
     });
 
-    if (msg.guild) msg.react(":mailbox_with_mail:").then(() => setTimeout(() => msg.clearReactions(), 5000));
+    if (msg.guild) msg.react("📬").then(() => setTimeout(() => msg.clearReactions(), 5000));
     msg.author.sendCode("asciidoc", msgArray);
   }
 

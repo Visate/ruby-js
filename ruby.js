@@ -2,6 +2,8 @@
 require("events").EventEmitter.prototype._maxListeners = 0;
 
 // Libraries and constants
+const MusicHandler = require("./util/MusicHandler");
+const StreamManager = require("./util/StreamManager");
 const Discord = require("discord.js");
 const client = new Discord.Client({
   autoReconnect: true,
@@ -15,6 +17,7 @@ const client = new Discord.Client({
 });
 
 client.config = require("./config.json");
+require("./util/attachLogger")(client);
 
 client.util = {
   // All util methods go here
@@ -24,14 +27,13 @@ client.util = {
   createID: require("./util/createID"),
   database: require("./util/database"),
   linkServer: require("./util/linkServer"),
-  musicHandler: require("./util/MusicHandler")(client),
+  musicHandler: new MusicHandler(client),
   reloadConfig: () => client.config = require("./config.json"),
-  streamManager: require("./util/StreamManager")(client),
+  streamManager: new StreamManager(client),
   shuffle: require("./util/shuffle"),
   toHHMMSS: require("./util/toHHMMSS")
 };
 
-require("./util/attachLogger")(client);
 require("./util/loadAssets")(client);
 
 client.login(client.config.token);

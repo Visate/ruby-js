@@ -1,11 +1,10 @@
 // Purge command
-const msgsCount = {};
 
 exports.help = {
   name: "purge",
   usage: "<number of messages>",
   description: "Deletes a certain amount of messages.",
-  extendedhelp: `Deletes a number of messages from the chat. Maximum is 200 messages. Use with caution.`
+  extendedhelp: `Deletes a number of messages from the chat. Maximum is 100 messages. Use with caution.`
 };
 
 exports.config = {
@@ -17,57 +16,18 @@ exports.config = {
 };
 
 exports.run = (client, msg, suffix) => {
-  let channel = msg.channel;
-  if (!suffix || isNaN(suffix)) return channel.sendMessage("Please define an amount of messages for me to delete~").then(m => m.delete(5000));
-  msgsCount[channel.id] = parseInt(suffix, 10);
-  if (msgsCount[channel.id] < 0) return channel.sendMessage("I cannot delete a negative number of messages!").then(m => m.delete(5000));
-
-  if (msgsCount[channel.id] > 200) return channel.sendMessage(`Sorry, I cannot delete more than 200 messages >///<`).then(m => m.delete(5000));
-  else if (msgsCount[channel.id] > 100) {
-    let collector = channel.createCollector(m => m.author === msg.author, {time: 30000});
-    channel.sendMessage(`You are about to delete ${msgsCount[channel.id]} messages. Once this starts, it cannot be stopped. Are you sure you want to continue? (yes/no)`);
-
-    collector.on("message", message => {
-      if (message.content === "yes") collector.stop("delete");
-      else if (message.content === "no") collector.stop("abort");
-    });
-
-    collector.on("end", (collection, reason) => {
-      if (reason === "abort") return channel.sendMessage("Cancelled~").then(m => m.delete(5000));
-      else if (reason === "time") return channel.sendMessage("Time's up! Purge cancelled~").then(m => m.delete(5000));
-      else if (reason === "delete") {
-        msgsCount[channel.id] += 2;
-        delMsgs(collection.last().id, channel);
-        collection.last().delete();
-      }
-    });
-  }
-  else if (suffix > 0) {
-    msg.delete().then(m => m.channel.bulkDelete(suffix));
-  }
-};
-
-function delMsgs(id, channel) {
-  // Recursively deleting more than 100 messages
-  // Can only be done 100 messages at a time
   let delCount = 0;
-  if (msgsCount[channel.id] > 100) {
-    msgsCount[channel.id] -= 100;
-    delCount = 100;
-  }
+  if (!suffix || isNaN(suffix)) return msg.channel.sendMessage("Please define an amount of messages for me to delete~").then(m => m.delete(5000));
+  delCount = parseInt(suffix, 10);
 
-  else if (msgsCount > 0 && msgsCount <= 100) {
-    delCount = msgsCount[channel.id];
-    msgsCount[channel.id] = 0;
-  }
-
-  // Deleting the messages and then recursively running again
-  if (delCount > 0) {
-    channel.fetchMessages({limit: delCount, before: id}).then(msgs => {
+  if (delCount < 0) return msg.channel.sendMessage("I cannot delete a negative number of messages!").then(m => m.delete(5000));
+  if (delCount > 100) return msg.channel.sendMessage(`Sorry, I cannot delete more than 100 messages >///<`).then(m => m.delete(5000));
+  else if (delCount > 0) {
+    msg.channel.fetchMessages({limit: delCount, before: msg.id}).then(msgs => {
       msgs.forEach(m => {
         m.delete();
       });
-      delMsgs(msgs.last().id, channel));
     });
+    msg.delete();
   }
-}
+};
