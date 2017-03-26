@@ -11,23 +11,19 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
+exports.run = (client, msg) => {
   if (!msg.member.voiceChannel) return msg.channel.sendMessage("Please join a voice channel first then use the command! :heart:");
-  if (bot.musicHandler.getPlayer(bot, msg.guild)) return msg.channel.sendMessage("There is already an active music player in this guild!");
+  if (client.util.musicHandler.getPlayer(msg.guild)) return msg.channel.sendMessage("There is already an active music player in this guild!");
 
-  msg.member.voiceChannel.join().then(connection => {
-    let djMode = false;
-    msg.member.voiceChannel.members.forEach(m => {
-      if (m.id === bot.user.id) return;
-      if (bot.checkPerms({guild: m.guild, member: m, author: m.user}) > 1) djMode = true;
-    });
-
-    bot.musicHandler.createPlayer(bot, msg, djMode);
+  msg.member.voiceChannel.join()
+  .then(connection => {
+    client.util.musicHandler.createPlayer(msg);
 
     connection.on("disconnect", () => {
-      let player = bot.musicHandler.getPlayer(bot, msg.guild);
-      player.tChannel.sendMessage("Disconnected from voice!");
-      bot.musicHandler.deletePlayer(bot, msg.guild);
+      let player = client.util.musicHandler.getPlayer(msg.guild);
+      player.notify("Disconnected from voice!");
+      client.util.musicHandler.deletePlayer(msg.guild);
     });
-  }).catch(e => msg.channel.sendMessage(`Error on joining channel: ${e}`));
+  })
+  .catch(e => msg.channel.sendMessage(`Error on joining channel: ${e}`));
 };

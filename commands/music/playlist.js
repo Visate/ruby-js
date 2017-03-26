@@ -1,8 +1,5 @@
 // Playlist command
-const config = require("../../config.json");
 const YouTubeAPI = require("simple-youtube-api");
-const YouTube = new YouTubeAPI(config.apiKeys.googleAPIKey);
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "playlist",
@@ -18,8 +15,8 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
-  if (!bot.musicHandler.checkDJ(bot, msg)) return;
+exports.run = (client, msg, suffix) => {
+  const YouTube = new YouTubeAPI(client.config.apiKeys.google);
 
   let count = 50;
   let playlistQuery = suffix;
@@ -33,18 +30,18 @@ exports.run = (bot, msg, suffix) => {
 
   YouTube.getPlaylist(playlistQuery).then(playlist => {
     playlist.getVideos(count).then(videos => {
-      bot.musicHandler.addPlaylistToQueue(bot, msg, YouTube, videos).then(videoCount => {
+      client.util.musicHandler.queuePlaylist(msg, YouTube, videos).then(videoCount => {
         let embed = {
           color: 3447003,
           author: {
             name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
             icon_url: msg.author.avatarURL
           },
-          description: stripIndents`
+          description: client.util.commonTags.stripIndents`
           :thumbsup: Added **${videoCount} ${videoCount !== 1 ? "videos" : "video"}** from playlist [${playlist.title}](${playlist.url}) to the queue!`,
           footer: {
             text: "Music Playlist",
-            icon_url: bot.user.avatarURL
+            icon_url: client.user.avatarURL
           }
         };
         msg.channel.sendEmbed(embed);

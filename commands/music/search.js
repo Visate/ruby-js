@@ -1,8 +1,5 @@
 // Search command
-const config = require("../../config.json");
 const YouTubeAPI = require("simple-youtube-api");
-const YouTube = new YouTubeAPI(config.apiKeys.googleAPIKey);
-const stripIndents = require("common-tags").stripIndents;
 
 exports.help = {
   name: "search",
@@ -18,9 +15,9 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
-  if (!bot.musicHandler.checkDJ(bot, msg)) return;
-  
+exports.run = (client, msg, suffix) => {
+  const YouTube = new YouTubeAPI(client.config.apiKeys.google);
+
   let index = 0;
   let count = 5;
   let search = suffix;
@@ -44,7 +41,7 @@ exports.run = (bot, msg, suffix) => {
           name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
           icon_url: msg.author.avatarURL
         },
-        description: stripIndents`
+        description: client.util.commonTags.stripIndents`
         **Result ${index + 1}/${count}:**
         [${video.title}](${video.url})
 
@@ -55,7 +52,7 @@ exports.run = (bot, msg, suffix) => {
         },
         footer: {
           text: "Music Search",
-          icon_url: bot.user.avatarURL
+          icon_url: client.user.avatarURL
         }
       }).then(m => {
         lastMsg = m;
@@ -73,6 +70,7 @@ exports.run = (bot, msg, suffix) => {
       else if (m.content === "n") {
         m.delete();
         lastMsg.delete();
+        lastMsg = null;
         visible = false;
         index++;
         if (index === count) return collector.stop("finished");
@@ -84,7 +82,7 @@ exports.run = (bot, msg, suffix) => {
               name: `${msg.author.username}#${msg.author.discriminator} (${msg.author.id})`,
               icon_url: msg.author.avatarURL
             },
-            description: stripIndents`
+            description: client.util.commonTags.stripIndents`
             **Result ${index + 1}/${count}:**
             [${video.title}](${video.url})
 
@@ -95,7 +93,7 @@ exports.run = (bot, msg, suffix) => {
             },
             footer: {
               text: "Music Search",
-              icon_url: bot.user.avatarURL
+              icon_url: client.user.avatarURL
             }
           }).then(m => {
             lastMsg = m;
@@ -103,6 +101,7 @@ exports.run = (bot, msg, suffix) => {
           });
         });
       }
+
       else if (m.content === "exit") {
         m.delete();
         lastMsg.delete();
@@ -111,16 +110,13 @@ exports.run = (bot, msg, suffix) => {
     });
 
     collector.on("end", (collection, reason) => {
-      if (reason === "finished") msg.channel.sendMessage("Oh well~");
+      if (reason === "finished") msg.channel.sendMessage("Oh well~").then(m => m.delete(5000));
       else if (reason === "time") {
         lastMsg.delete();
-        msg.channel.sendMessage("Time's up! Try again later~");
+        msg.channel.sendMessage("Time's up! Try again later~").then(m => m.delete(5000));
       }
       else if (reason === "queue") {
-        let min = ~~(currentVideo.durationSeconds / 60);
-        let sec = currentVideo.durationSeconds % 60;
-        if (sec < 10) sec = `0${sec}`;
-        bot.musicHandler.addToQueue(bot, msg, currentVideo.title, `${min}:${sec}`, `https://img.youtube.com/vi/${currentVideo.id}/mqdefault.jpg`, currentVideo.url, currentVideo.url, "youtube");
+        client.util.musicHandler.queueSong(msg, currentVideo.title, currentVideo.durationSeconds, `https://img.youtube.com/vi/${currentVideo.id}/mqdefault.jpg`, currentVideo.url, currentVideo.url, "youtube");
       }
     });
   });

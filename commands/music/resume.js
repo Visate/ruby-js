@@ -11,10 +11,7 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
-  let player = bot.musicHandler.getPlayer(bot, msg.guild);
-  if (player) {
-    if (!bot.musicHandler.checkDJ(bot, msg)) return;
-    bot.musicHandler.resumePlayback(bot, msg);
-  }
+exports.run = (client, msg) => {
+  let player = client.util.musicHandler.getPlayer(msg.guild);
+  if (player) player.resumePlayback(msg);
 };

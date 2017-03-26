@@ -1,12 +1,10 @@
 // stream command
-const config = require("../../config.json");
-const streams = require("../../lists/streams.js");
 
 exports.help = {
   name: "stream",
   usage: "[source]",
   description: "Starts up a music stream.",
-  extendedhelp: `Starts up a music stream. The stream source can be defined, ${config.settings.prefix}music stream list to see available streams. If there is currently music playback, it must be stopped before a stream can be started.`
+  extendedhelp: `Starts up a music stream. The stream source can be defined, #prefixmusic stream list to see available streams. If there is currently music playback, it must be stopped before a stream can be started.`
 };
 
 exports.config = {
@@ -16,15 +14,15 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg, suffix) => {
+exports.run = (client, msg, suffix) => {
   let stream;
-  if (bot.musicHandler.isPlaying(bot, msg.guild)) return msg.channel.sendMessage("Stop music playback first before you request a stream!");
-  if (!bot.musicHandler.checkDJ(bot, msg)) return;
+  let player = client.util.musicHandler.getPlayer(msg.guild);
+  if (player.isPlaying()) return msg.channel.sendMessage("Stop music playback first before you request a stream!");
 
-  if (suffix.toLowerCase() === "random" || !suffix) stream = streams.randomStream();
-  else if (streams.hasStream(suffix)) stream = streams.getStream(suffix);
-  else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:**\n${streams.getStreams().map(stream => stream.name).join(", ")}`);
-  else return msg.channel.sendMessage(`Invalid stream name, use \`${config.settings.prefix}music stream list\` to view available streams!~`);
+  if (suffix.toLowerCase() === "random" || !suffix) stream = client.util.streamManager.randomStream();
+  else if (streams.hasStream(suffix)) stream = client.util.streamManager.getStream(suffix);
+  else if (suffix.toLowerCase() === "list") return msg.channel.sendMessage(`**Available Streams:**\n${client.util.streamManager.getStreams().map(stream => stream.name).join(", ")}`);
+  else return msg.channel.sendMessage(`Invalid stream name, use \`${client.config.prefix}music stream list\` to view available streams!~`);
 
-  if (stream) bot.musicHandler.startStreaming(bot, msg, stream);
+  if (stream) client.util.musicHandler.startStreaming(msg, stream);
 };

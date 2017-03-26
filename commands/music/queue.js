@@ -1,6 +1,4 @@
 // queue command
-const stripIndents = require("common-tags").stripIndents;
-const config = require("../../config.json");
 
 exports.help = {
   name: "queue",
@@ -17,21 +15,18 @@ exports.config = {
 };
 
 exports.run = (bot, msg, suffix) => {
-  let player = bot.musicHandler.getPlayer(bot, msg.guild);
+  let player = client.util.musicHandler.getPlayer(msg.guild);
   if (player) {
     let queueMsg;
     let milliSec = player.dispatcher.time;
     let totalSec = ~~(milliSec / 1000);
-    let min = ~~(totalSec / 60);
-    let sec = totalSec % 60;
-    if (sec < 10) sec = `0${sec}`;
 
     if (player.streaming) {
       queueMsg = stripIndents`
       __**Now streaming:**__
       ${player.stream.np()} from [${player.stream.name}](${player.stream.queueUrl})
 
-      **Total streaming time:** ${min}:${sec}
+      **Total streaming time:** ${client.util.toHHMMSS(totalSec)}
       \u200b
       `;
     }
@@ -39,19 +34,20 @@ exports.run = (bot, msg, suffix) => {
     else if (player.playing) {
       if (isNaN(suffix) || suffix === "") suffix = 1;
       let maxPages = Math.ceil(player.queue.length / 10);
+      if (suffix < 1) suffix = 1;
       if (suffix > maxPages) suffix = maxPages;
       let startingIndex = (parseInt(suffix, 10) - 1) * 10;
       let currentSong = player.queue[0];
       if (!currentSong) return msg.channel.sendMessage("There's nothing playing right now!");
 
-      queueMsg = stripIndents`
-      __**Song queue for ${player.vChannel.name}, page ${suffix}**__
-      ${player.queue.slice(startingIndex, startingIndex + 10).map(song => `**-** ${song.queueUrl ? `[${song.title}](${song.queueUrl})` : `**${song.title}**`} requested by **${song.requestedBy.username}** (${song.length === "unknown" ? "?:??" : song.length})`).join("\n")}
-      ${maxPages > 1 ? `\nUse \`${config.settings.prefix}music queue <page>\` to view a specific page.\n` : ""}
+      queueMsg = client.util.commonTags.stripIndents`
+      __**Song queue for ${player.voice.name}, page ${suffix}**__
+      ${player.queue.slice(startingIndex, startingIndex + 10).map(song => `**-** ${song.queueURL ? `[${song.title}](${song.queueURL})` : `**${song.title}**`} requested by **${song.requestedBy}** (${song.length === "unknown" ? "?:??" : client.util.toHHMMSS(song.length)})`).join("\n")}
+      ${maxPages > 1 ? `\nUse \`${client.config.prefix}music queue <page>\` to view a specific page.\n` : ""}
 
-      **Now playing:** ${currentSong.queueUrl ? `[${currentSong.title}](${currentSong.queueUrl})` : currentSong.title}
-      **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${min}:${sec} / ${currentSong.length} (${bot.musicHandler.songTimeLeft(bot, msg.guild, min, sec)} left)
-      **Total queue time:** ${bot.musicHandler.getQueueLength(bot, msg.guild)}${player.looping ? `\n**Looping ${player.queue.length} songs**` : ""}
+      **Now playing:** ${currentSong.queueURL ? `[${currentSong.title}](${currentSong.queueURL})` : currentSong.title}
+      **Progress:** ${player.dispatcher.paused ? "Paused: " : ""}${client.util.toHHMMSS(totalSec)} / ${client.util.toHHMMSS(currentSong.length)} (${player.timeRemaining()} left)
+      **Total queue time:** ${player.getQueueLength()}${player.looping ? `\n**Looping ${player.queue.length} songs**` : ""}
       \u200b
       `;
     }
@@ -65,7 +61,7 @@ exports.run = (bot, msg, suffix) => {
       description: queueMsg,
       footer: {
         text: "Music Queue",
-        icon_url: bot.user.avatarURL
+        icon_url: client.user.avatarURL
       }
     });
     else return msg.channel.sendMessage("There's nothing playing right now!");

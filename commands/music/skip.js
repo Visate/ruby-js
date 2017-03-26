@@ -12,5 +12,5 @@ exports.config = {
 };
 
 exports.run = (bot, msg) => {
-  bot.musicHandler.skipSong(bot, msg);
+  client.util.musicHandler.skipSong(msg);
 };

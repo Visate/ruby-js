@@ -13,8 +13,6 @@ exports.config = {
   permLevel: 0
 };
 
-exports.run = (bot, msg) => {
-  if (!bot.musicHandler.checkDJ(bot, msg)) return;
-
-  if (bot.musicHandler.isPlaying(bot, msg.guild)) bot.musicHandler.shuffleQueue(bot, msg);
+exports.run = (client, msg) => {
+  client.util.musicHandler.shuffleQueue(msg);
 };
