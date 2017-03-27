@@ -29,8 +29,7 @@ function setCooldown(channel, server) {
 }
 
 module.exports = (msg, query) => {
-  let server = servers.get(aliases.get(query) || query);
-  //if (!server) server = servers.get(aliases.get(query));
+  let server = servers.has(query) ? servers.get(query) : servers.get(aliases.get(query));
   if (server && !onCooldown(msg.channel, server)) {
     setCooldown(msg.channel, server);
     msg.channel.sendMessage(`${server.name} Server: ${server.invite}`);
