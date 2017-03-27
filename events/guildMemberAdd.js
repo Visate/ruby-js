@@ -31,7 +31,7 @@ module.exports = member => {
     guild.defaultChannel.sendMessage(msg);
 
     let pm = client.util.commonTags.stripIndents`
-    Hi ${bot.cleanText(member.user.username)}!
+    Hi ${client.util.cleanText(member.user.username)}!
     Welcome to the ${guild.name} server - We're excited for you to join us!~
     We have a few rules here to ensure everyone has a great time, so please go over them in the ${rules ? rules : "read the rules"} channel :heart:
     If you have any questions, feel free to ask the moderation team. Also check out the ${help ? help : "help"} channel as it has a lot of useful information.

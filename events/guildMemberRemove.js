@@ -8,7 +8,7 @@ module.exports = member => {
   client.log(`${member.user.username}#${member.user.discriminator} (${member.id}) left ${guild.name}`);
 
   if (nyaaCh) nyaaCh.sendMessage(client.util.commonTags.oneLine(`
-    **Leave:** \`${bot.cleanText(member.user.username)}#${member.user.discriminator}\`
+    **Leave:** \`${client.util.cleanText(member.user.username)}#${member.user.discriminator}\`
     (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`));
 
   guild.defaultChannel.sendMessage(`(◕︵◕) ${member.user.username} (${member}) left the server. Bye~`)

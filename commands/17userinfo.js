@@ -36,7 +36,7 @@ exports.run = (client, msg, suffix) => {
 
       if (members.size > 1 && members.size <= 10) {
         return msg.channel.sendMessage(client.util.commonTags.stripIndents`
-          Multiple users were found with that search, run the command with \`${config.settings.prefix}userinfo <id>\`
+          Multiple users were found with that search, run the command with \`${client.config.prefix}userinfo <id>\`
           ${members.map(m => `**${m.user.username}#${m.user.discriminator}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
         `);
       }
