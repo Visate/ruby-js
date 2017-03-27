@@ -47,18 +47,17 @@ function processGunban(client, msg, originGuild, user, reason) {
   return new Promise((resolve, reject) => {
 
     function checkPromise() {
-      if (count === client.guilds.size - 1 && countNoUnban === 0) resolve([user, count]);
-      else if (count === client.guilds.size - 1 && countNoUnban > 0) reject([user, count, countNoUnban]);
+      if (count === client.guilds.size && countNoUnban === 0) resolve([user, count]);
+      else if (count === client.guilds.size && countNoUnban > 0) reject([user, count, countNoUnban]);
     }
 
     client.guilds.forEach(guild => {
-      if (guild.id === "235144885101920256") return; // exempt testing server
       count++;
 
       let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
       let caseNum;
-      rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
+      if (rubyLogCh) rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
         let pastCase = msgs.first();
         if (!pastCase) caseNum = 1;
         else if (pastCase.embeds.length === 0) {
@@ -97,11 +96,24 @@ function processGunban(client, msg, originGuild, user, reason) {
 
           rubyLogCh.sendEmbed(logMsg);
           checkPromise();
-        }).catch(() => {
+        }).catch(err => {
+          client.warn(`Unable to unban in ${guild.name}: ${err}`);
           countNoUnban++;
           checkPromise();
         });
       });
+
+      else {
+        client.warn(`No ruby-log channel in ${guild.name}!`);
+        guild.unban(user.id).then(unbanUser => {
+          if (user.placeholder && typeof unbanUser !== "string") user = unbanUser;
+          checkPromise();
+        }).catch(err => {
+          client.warn(`Unable to unban in ${guild.name}: ${err}`);
+          countNoUnban++;
+          checkPromise();
+        })
+      }
     });
   });
 }
