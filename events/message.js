@@ -34,10 +34,8 @@ module.exports = msg => {
   else if (msg.content.startsWith(`${client.user} `)) prefix = `${client.user} `;
 
   // Message reactions
-  else if (tableflipRegex.test(msg.content)) tableUnflipper(msg);
-  else if (serverMentionRegex.test(msg.content)) serverLinker(msg);
-
-  else return;
+  if (tableflipRegex.test(msg.content)) tableUnflipper(msg);
+  if (serverMentionRegex.test(msg.content)) serverLinker(msg);
 
   // Prevent issues after message reactions
   if (!prefix) return;
