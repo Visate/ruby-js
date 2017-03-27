@@ -49,7 +49,7 @@ exports.run = (client, msg, suffix) => {
     else if (members.length === 1) processVkick(msg, members[0]);
     else if (members.length > 1) {
       let idsInfo = client.util.commonTags.stripIndents`
-      Multiple users with that search were found, run the command again with \`${config.settings.prefix}vkick <id>\`
+      Multiple users with that search were found, run the command again with \`${client.config.prefix}vkick <id>\`
       ${members.map(m => `**${m.user.username}${m.nickname ? ` (${m.nickname})` : ""}:** ${m.id}`).join("\n")}
       `;
 

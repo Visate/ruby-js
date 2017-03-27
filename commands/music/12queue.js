@@ -24,7 +24,7 @@ exports.run = (client, msg, suffix) => {
     if (player.streaming) {
       queueMsg = client.util.commonTags.stripIndents`
       __**Now streaming:**__
-      ${player.stream.np()} from [${player.stream.name}](${player.stream.queueUrl})
+      ${player.stream.np()} from [${player.stream.name}](${player.stream.queueURL})
 
       **Total streaming time:** ${client.util.toHHMMSS(totalSec)}
       \u200b
