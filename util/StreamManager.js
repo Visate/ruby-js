@@ -71,7 +71,7 @@ class RADio extends Stream {
         this.jsonInfo = JSON.parse(body);
         let timeRemaining = this.jsonInfo.end_time - this.jsonInfo.current;
         if (this.timeout) clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => this.update(), timeRemaining * 1000);
+        this.timeout = setTimeout(() => this.update(), timeRemaining * 1000 + 500);
       }
     });
   }
