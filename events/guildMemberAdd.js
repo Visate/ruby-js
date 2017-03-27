@@ -18,7 +18,7 @@ module.exports = member => {
 
   else {
     let rules = guild.channels.find(channel => channel.name === "read-the-rules");
-    let help = guild.channels.find(channel = channel.name === "help");
+    let help = guild.channels.find(channel => channel.name === "help");
 
     let msg = client.util.commonTags.stripIndents`
     ${member} has just joined us! **Say hi ヾ(〃^∇^)ﾉ** :heart:
