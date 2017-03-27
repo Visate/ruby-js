@@ -7,9 +7,7 @@ module.exports = member => {
   let nyaaCh = guild.channels.find(channel => channel.name === "nyaa");
   client.log(`${member.user.username}#${member.user.discriminator} (${member.id}) joined ${guild.name}`);
 
-  if (nyaaCh) nyaaCh.sendMessage(client.util.commonTags.oneLine`
-    **Join:** \`${client.util.cleanText(member.user.username)}#${member.user.discriminator}\`
-    (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`);
+  if (nyaaCh) nyaaCh.sendMessage(`**Join:** \`${client.util.cleanText(member.user.username)}#${member.user.discriminator}\` (${member.id}) on ${moment.utc().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}`);
 
   // TODO: Anti-raid auto-role disable
   let guestRole = guild.roles.find(role => role.name === "Guest");
