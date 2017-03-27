@@ -748,8 +748,8 @@ long@^3.2.0:
   resolved "https://registry.yarnpkg.com/long/-/long-3.2.0.tgz#d821b7138ca1cb581c172990ef14db200b5c474b"
 
 mathjs@^3.8.1:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-3.10.0.tgz#cae0a27340483a00499253fb2c82f5818b9683fe"
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-3.10.1.tgz#0c67b7e0a1a20d536a8555146e7cb43804811333"
   dependencies:
     complex.js "2.0.1"
     decimal.js "7.1.1"
@@ -834,8 +834,8 @@ mongodb@2.2.25, mongodb@^2.2.25:
     readable-stream "2.1.5"
 
 mongoose@^4.9.1:
-  version "4.9.1"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.9.1.tgz#e621d9e7356f46d1e39980a71063857405fa9099"
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.9.2.tgz#df137675eed76a14dc1e6952ede54497c7547926"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
@@ -879,7 +879,7 @@ muri@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/muri/-/muri-1.2.1.tgz#ec7ea5ce6ca6a523eb1ab35bacda5fa816c9aa3c"
 
-nan@2, nan@^2.1.0, nan@^2.2.1, nan@^2.3.0, nan@^2.3.2, nan@~2.5.0:
+nan@2, nan@^2.1.0, nan@^2.3.0, nan@^2.3.2, nan@~2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.1.tgz#d5b01691253326a97a2bbee9e61c55d8d60351e2"
 
@@ -1251,12 +1251,6 @@ sntp@1.x.x:
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
   dependencies:
     hoek "2.x.x"
-
-sodium@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/sodium/-/sodium-2.0.1.tgz#64efff6d7699c8f26f91b9ac5b6fc3aa550b2579"
-  dependencies:
-    nan "^2.2.1"
 
 sshpk@^1.7.0:
   version "1.11.0"
