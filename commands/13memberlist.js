@@ -16,7 +16,7 @@ exports.config = {
 
 exports.run = (client, msg) => {
   let memberList = client.util.commonTags.stripIndents`
-  Members on ${msg.guild.name} as of ${moment().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}
+  ${msg.guild.memberCount} Members on ${msg.guild.name} as of ${moment().format("ddd, MMM DD YYYY [at] HH:mm:ss [UTC]")}
   -------------------------------------------------`;
   memberList += "\n\n";
   memberList += msg.guild.members.map(m => `${m.user.username}#${m.user.discriminator} (${m.id}) || Role: ${m.highestRole.name}`).join("\n");

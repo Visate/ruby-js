@@ -14,9 +14,6 @@ exports.config = {
 };
 
 exports.run = (client, msg) => {
-  let hours = ~~(client.uptime / 3600000) % 24;
-  let minutes = ~~(client.uptime / 60000) % 60;
-  let seconds = ~~(client.uptime / 1000) % 60;
   let embed = {
     color: 3447003,
     author: {
@@ -52,7 +49,7 @@ exports.run = (client, msg) => {
       },
       {
         name: "❯ Uptime",
-        value: `${hours} ${hours === 1 ? "hour" : "hours"}, ${minutes} ${minutes === 1 ? "minute" : "minutes"} and ${seconds} ${seconds === 1 ? "second" : "seconds"}`,
+        value: client.util.toHHMMSS(client.uptime / 1000),
         inline: true
       }
     ],
