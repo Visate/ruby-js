@@ -12,6 +12,7 @@ module.exports = client => {
   // Logging
   client.on("guildMemberAdd", reqEvent("guildMemberAdd"));
   client.on("guildMemberRemove", reqEvent("guildMemberRemove"));
+  client.on("guildMemberUpdate", reqEvent("guildMemberUpdate"))
   client.on("userUpdate", reqEvent("userUpdate"));
   client.on("messageDelete", reqEvent("messageDelete"));
   client.on("messageDeleteBulk", reqEvent("messageDeleteBulk"));
