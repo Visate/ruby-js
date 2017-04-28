@@ -54,6 +54,12 @@ function processGunban(client, msg, originGuild, user, reason) {
     client.guilds.forEach(guild => {
       count++;
 
+      if (!guild.members.get(client.user.id).hasPermission("BAN_MEMBERS")) {
+        client.warn(`Unable to unban in ${guild.name}: No permission.`);
+        countNoUnban++;
+        checkPromise();
+      }
+
       let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
       let caseNum;

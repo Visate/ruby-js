@@ -77,6 +77,12 @@ function processGban(client, msg, originGuild, originChannel, origUser, reason, 
     client.guilds.forEach(guild => {
       count++;
 
+      if (!guild.members.get(client.user.id).hasPermission("BAN_MEMBERS")) {
+        client.warn(`Unable to ban in ${guild.name}: No permission.`);
+        countNoBan++;
+        checkPromise();
+      }
+
       let rubyLogCh = guild.channels.find(channel => channel.name === "ruby-log");
 
       let caseNum;
