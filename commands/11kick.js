@@ -16,7 +16,6 @@ exports.config = {
 };
 
 exports.run = (client, msg, suffix) => {
-
   let guild = msg.guild;
 
   let userQuery = suffix.split(" ")[0];
@@ -33,6 +32,7 @@ exports.run = (client, msg, suffix) => {
 
   if (!member) return msg.channel.sendMessage(`${msg.author}, that user cannot be found!`).then(m => m.delete(5000));
   if (!member.bannable) return msg.channel.sendMessage(`${msg.author}, I cannot kick that user!`).then(m => m.delete(5000));
+  if (!guild.members.get(client.user.id).hasPermission("KICK_MEMBERS")) return msg.channel.sendMessage(`${msg.author}, I don't have permission to kick!`).then(m => m.delete(5000));
 
   let caseNum;
   rubyLogCh.fetchMessages({limit: 1}).then(msgs => {
